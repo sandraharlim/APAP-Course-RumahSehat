@@ -35,7 +35,7 @@ public class ResepModel implements Serializable {
     @Column(name = "confirmer_uuid", nullable = false)
     private String confirmerUUID;
 
-    @OneToMany(mappedBy = "obat",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "resep", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<JumlahModel> listJumlah; // harus ada (nullable = false)
 
 //    @ManyToOne(fetch = FetchType.EAGER, optional = false)

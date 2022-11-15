@@ -32,10 +32,6 @@ public class AppointmentModel implements Serializable {
     @Column(name = "isDone", nullable = false)
     private Boolean isDone; // initial value nya false
 
-
-
-
-
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "uuid_dokter", referencedColumnName = "uuid")
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -54,5 +50,4 @@ public class AppointmentModel implements Serializable {
 
 //    @OneToMany(mappedBy = "appointment",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 //    private List<ResepModel> listResep;
-
 }
