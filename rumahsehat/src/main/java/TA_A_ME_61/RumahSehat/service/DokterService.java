@@ -9,4 +9,5 @@ public interface DokterService {
 
     List<DokterModel> getListDokter();
 
+    DokterModel getDokterByUuid(String uuid);
 }

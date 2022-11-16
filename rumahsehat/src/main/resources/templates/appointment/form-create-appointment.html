@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Rumah Sehat</title>
+  <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+  <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+<body>
+<nav th:replace="fragments/fragment :: navbar"></nav>
+<div class="container">
+  <div class="card m-4 p-4">
+    <div class="card-body">
+      <div class="justify-content-center">
+        <div class="alert alert-danger" role="alert" th:text="${error}" th:if="${error}"></div>
+
+        <h2>Create Appointment</h2>
+        <br>
+        <form th:action="@{/appointment/create}" th:object="${appointment}" method="POST">
+
+          Tanggal dan Waktu Mulai Appointment: <br>
+          <input required class="form-control" type="datetime-local" th:field="*{waktuAwal}" />
+          <br><br>
+
+          Pilih Dokter yang ingin Anda temui: <br>
+          <select th:field="*{dokter.uuid}" class="form-control">
+            <div th:each="dokterRS, iterationStatus : ${listDokter}">
+              <option th:value="${dokterRS.uuid}" th:text="${dokterRS.nama} + ' - ' + ${dokterRS.tarif}"></option>
+            </div>
+          </select>
+          <br><br>
+
+          <button name="save" class="btn btn-primary" type="submit">Submit</button>
+          <a class="btn btn-primary" href="/">Home</a>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

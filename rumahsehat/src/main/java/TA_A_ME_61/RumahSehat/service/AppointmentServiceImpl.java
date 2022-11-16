@@ -15,8 +15,12 @@ public class AppointmentServiceImpl implements AppointmentService{
     @Autowired
     AppointmentDb appointmentDb;
 
+    @Autowired
+    DokterService dokterService;
+
     @Override
     public void addAppointment(AppointmentModel appointment) {
+        appointment.setIsDone(Boolean.FALSE);
         appointmentDb.save(appointment);
     }
 
@@ -28,19 +32,32 @@ public class AppointmentServiceImpl implements AppointmentService{
         appointment.setKode(kode);
 
         // override data sebelumnya agar terupdate kode nya yg semula masih null.
-        addAppointment(appointment);
+        updateAppointment(appointment);
+    }
+
+    @Override
+    public void updateAppointment(AppointmentModel appointment) {
+        appointmentDb.save(appointment);
     }
 
     @Override
     public String validasi(AppointmentModel appointment) {
+
+        String uuidDokter = appointment.getDokter().getUuid();
+        if (dokterService.getDokterByUuid(uuidDokter) == null) {
+            return "Dokter tidak ditemukan";
+        }
+
         // Kalau error akan ditampilkan pesan:
         // Appointment A (13.05-14.05), akan dibuat Appointment B dari jam (13.45-14.45)
-
         LocalDateTime waktuAwalNewAppt = appointment.getWaktuAwal();
         LocalDateTime waktuAkhirNewAppt = waktuAwalNewAppt.plusHours(1); // https://www.geeksforgeeks.org/localdatetime-plushours-method-in-java-with-examples/
 
-        String uuidDokter = appointment.getDokter().getUuid();
         List<AppointmentModel> listApptSameDokter = appointmentDb.findAllByDokter(uuidDokter);
+
+//        int year = waktuAwalNewAppt.getYear();
+//        int dayOfYear = waktuAwalNewAppt.getDayOfYear();
+//        List<AppointmentModel> listApptSameDokterAndDate = appointmentDb.findAllByDokterAndDate(uuidDokter, year, dayOfYear);
 
         for (AppointmentModel appt : listApptSameDokter) {
             // "old" disini maksutnya appt yg udh terdaftar di DB,
@@ -60,7 +77,7 @@ public class AppointmentServiceImpl implements AppointmentService{
             }
         }
         // valid
-        return null;
+        return "Valid";
     }
 
     @Override

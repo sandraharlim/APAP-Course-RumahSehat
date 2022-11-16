@@ -21,4 +21,7 @@ public interface AppointmentDb  extends JpaRepository<AppointmentModel, Long> {
 
     @Query("SELECT a FROM AppointmentModel a WHERE a.dokter.uuid = :uuid")
     List<AppointmentModel> findAllByDokter(@Param("uuid") String uuid);
+
+//    @Query("SELECT a FROM AppointmentModel a WHERE a.dokter.uuid = :uuid AND a.waktuAwal.getYear() = :year AND a.waktuAwal.getDayOfYear() = :dayOfYear")
+//    List<AppointmentModel> findAllByDokterAndDate(@Param("uuid") String uuid, @Param("year") int year, @Param("dayOfYear") int dayOfYear);
 }
