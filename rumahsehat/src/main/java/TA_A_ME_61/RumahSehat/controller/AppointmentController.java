@@ -2,8 +2,10 @@ package TA_A_ME_61.RumahSehat.controller;
 
 import TA_A_ME_61.RumahSehat.model.AppointmentModel;
 import TA_A_ME_61.RumahSehat.model.DokterModel;
+import TA_A_ME_61.RumahSehat.model.PasienModel;
 import TA_A_ME_61.RumahSehat.service.AppointmentService;
 import TA_A_ME_61.RumahSehat.service.DokterService;
+import TA_A_ME_61.RumahSehat.service.PasienService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,6 +28,9 @@ public class AppointmentController {
     @Autowired
     private DokterService dokterService;
 
+    @Autowired
+    private PasienService pasienService;
+
     @GetMapping("/create")
     public String createAppointmentFormPage(Model model) {
         AppointmentModel newAppointment = new AppointmentModel();
@@ -36,13 +41,29 @@ public class AppointmentController {
         return "appointment/form-create-appointment";
     }
 
-    @PostMapping(value = "/create", params = {"save"})
+    @PostMapping(value = "/create")
     public String createAppointmentSubmitPage(@ModelAttribute AppointmentModel appointment,
                                               RedirectAttributes redirectAttrs,
                                               Model model,
                                               Principal principal) {
         // set uuid pasien
+//        appointment.setPasien(    );
+        PasienModel pasien = pasienService.getPasienByUuid("a9ad1618-6597-11ed-85c8-803253019798");
+        appointment.setPasien(pasien);
 
+        // set ulang dokter
+        DokterModel dokter = appointment.getDokter();
+        if (dokter == null) {
+            redirectAttrs.addFlashAttribute("error", "Anda belum memilih dokter");
+            return "redirect:/appointment/create";
+        }
+
+        DokterModel dokterDariDb = dokterService.getDokterByUuid(dokter.getUuid());
+        if (dokterDariDb == null) {
+            redirectAttrs.addFlashAttribute("error", "Dokter tidak ditemukan");
+            return "redirect:/appointment/create";
+        }
+        appointment.setDokter(dokterDariDb);
 
         // set uuid dokter udh dr form page
         // set isDone udh di service pas nge add

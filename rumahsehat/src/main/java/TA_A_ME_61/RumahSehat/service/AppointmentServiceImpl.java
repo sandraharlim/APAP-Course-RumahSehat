@@ -42,19 +42,16 @@ public class AppointmentServiceImpl implements AppointmentService{
 
     @Override
     public String validasi(AppointmentModel appointment) {
-        if (appointment.getDokter() == null) {
-            return "Anda belum memilih dokter";
-        }
-        String uuidDokter = appointment.getDokter().getUuid();
-        if (dokterService.getDokterByUuid(uuidDokter) == null) {
-            return "Dokter tidak ditemukan";
-        }
 
         // Kalau error akan ditampilkan pesan:
         // Appointment A (13.05-14.05), akan dibuat Appointment B dari jam (13.45-14.45)
         LocalDateTime waktuAwalNewAppt = appointment.getWaktuAwal();
         LocalDateTime waktuAkhirNewAppt = waktuAwalNewAppt.plusHours(1); // https://www.geeksforgeeks.org/localdatetime-plushours-method-in-java-with-examples/
 
+        int yearNewAppt = waktuAwalNewAppt.getYear();
+        int dayOfYearNewAppt = waktuAwalNewAppt.getDayOfYear();
+
+        String uuidDokter = appointment.getDokter().getUuid();
         List<AppointmentModel> listApptSameDokter = appointmentDb.findAllByDokter(uuidDokter);
 
 //        int year = waktuAwalNewAppt.getYear();
@@ -67,15 +64,23 @@ public class AppointmentServiceImpl implements AppointmentService{
             LocalDateTime waktuAwalOldAppt = appt.getWaktuAwal();
             LocalDateTime waktuAkhirOldAppt = appt.getWaktuAwal().plusHours(1);
 
-            Boolean tabrakanPrevAppt = waktuAwalNewAppt.isBefore(waktuAkhirOldAppt); // tabrakan dengan appt sebelumnya
-            Boolean tabrakanNextAppt = waktuAkhirNewAppt.isAfter(waktuAwalOldAppt); // tabrakan dengan appt setelahnya
+            int yearOldAppt = waktuAwalOldAppt.getYear();
+            int dayOfYearOldAppt = waktuAwalOldAppt.getDayOfYear();
 
-            if (tabrakanPrevAppt || tabrakanNextAppt) { // ga valid
-                String rangeWaktuOldAppt = getWaktuAwalWaktuAkhir(appt);
-                String rangeWaktuNewAppt = getWaktuAwalWaktuAkhir(appointment);
-                return "Appointment baru di jam " + rangeWaktuNewAppt +
-                        " memiliki konflik jadwal dengan Appointment " +
-                        appt.getKode() + " di jam " + rangeWaktuOldAppt + ".";
+            Boolean sameYear = (yearNewAppt == yearOldAppt);
+            Boolean sameDayOfYear = (dayOfYearNewAppt == dayOfYearOldAppt);
+
+            if (sameYear && sameDayOfYear) {
+                Boolean tabrakanPrevAppt = waktuAwalNewAppt.isBefore(waktuAkhirOldAppt) && waktuAwalOldAppt.isBefore(waktuAwalNewAppt); // tabrakan dengan appt sebelumnya
+                Boolean tabrakanNextAppt = waktuAkhirNewAppt.isAfter(waktuAwalOldAppt) && waktuAkhirOldAppt.isAfter(waktuAkhirNewAppt); // tabrakan dengan appt setelahnya
+
+                if (tabrakanPrevAppt || tabrakanNextAppt) { // ga valid
+                    String rangeWaktuOldAppt = getWaktuAwalWaktuAkhir(appt);
+                    String rangeWaktuNewAppt = getWaktuAwalWaktuAkhir(appointment);
+                    return "Appointment baru di jam " + rangeWaktuNewAppt +
+                            " memiliki konflik jadwal dengan Appointment " +
+                            appt.getKode() + " di jam " + rangeWaktuOldAppt + ".";
+                }
             }
         }
         // valid
