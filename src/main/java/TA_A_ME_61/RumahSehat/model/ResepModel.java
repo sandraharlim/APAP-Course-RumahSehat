@@ -30,10 +30,10 @@ public class ResepModel implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime createdAt;
 
-    @NotNull
-    @Size(max = 255)
-    @Column(name = "confirmer_uuid", nullable = false)
-    private String confirmerUUID;
+//    @NotNull
+//    @Size(max = 255)
+//    @Column(name = "confirmer_uuid", nullable = false)
+//    private String confirmerUUID;
 
     @OneToMany(mappedBy = "resep", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<JumlahModel> listJumlah; // harus ada (nullable = false)
