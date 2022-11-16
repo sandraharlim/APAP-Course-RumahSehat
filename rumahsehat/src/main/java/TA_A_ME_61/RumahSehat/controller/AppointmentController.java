@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.constraints.Positive;
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -38,16 +39,26 @@ public class AppointmentController {
     @PostMapping(value = "/create", params = {"save"})
     public String createAppointmentSubmitPage(@ModelAttribute AppointmentModel appointment,
                                               RedirectAttributes redirectAttrs,
-                                              Model model) {
+                                              Model model,
+                                              Principal principal) {
         // set uuid pasien
+
 
         // set uuid dokter udh dr form page
         // set isDone udh di service pas nge add
         String hasilValidasi = appointmentService.validasi(appointment);
         if (hasilValidasi.equals("Valid")) {
             appointmentService.addAppointment(appointment);
-            appointmentService.setKodeNewAppointment(appointment);
-            return "appointment/success-create-appointment";
+            appointmentService.setKodeNewAppointment(appointment); // udh langsung ke update di db juga
+
+//            model.addAttribute("appointment", appointment);
+//            return "appointment/success-create-appointment";
+
+            String successMessage = "Berhasil menambahkan Appointment " +
+                    appointment.getKode() + " di jam " +
+                    appointmentService.getWaktuAwalWaktuAkhir(appointment);
+            redirectAttrs.addFlashAttribute("success", successMessage);
+            return "redirect:/appointment"; // di redirect ke viewall
         }
 
         redirectAttrs.addFlashAttribute("error", hasilValidasi);

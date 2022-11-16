@@ -42,7 +42,9 @@ public class AppointmentServiceImpl implements AppointmentService{
 
     @Override
     public String validasi(AppointmentModel appointment) {
-
+        if (appointment.getDokter() == null) {
+            return "Anda belum memilih dokter";
+        }
         String uuidDokter = appointment.getDokter().getUuid();
         if (dokterService.getDokterByUuid(uuidDokter) == null) {
             return "Dokter tidak ditemukan";

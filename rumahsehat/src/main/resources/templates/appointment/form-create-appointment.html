@@ -7,7 +7,7 @@
   <object th:include="fragments/fragment :: js" th:remove="tag"></object>
 </head>
 <body>
-<nav th:replace="fragments/fragment :: navbar"></nav>
+<nav th:replace="fragments/fragment :: navbar('appointment')"></nav>
 <div class="container">
   <div class="card m-4 p-4">
     <div class="card-body">
@@ -37,6 +37,6 @@
     </div>
   </div>
 </div>
-
+<footer th:replace="fragments/fragment :: footer"></footer>
 </body>
 </html>
