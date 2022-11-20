@@ -1,0 +1,11 @@
+- api get dokter DONE
+- tampilin dropdown namadokter-tarif DONE
+
+- submit: ngirim data
+- nampilin snackbar untuk error or success message PROGRESS
+
+https://www.flutterbeads.com/dropdown-in-flutter/
+stackoverflow.com/questions/49780858/flutter-dropdown-text-field
+
+
+

@@ -4,11 +4,15 @@ import TA_A_ME_61.RumahSehat.model.AppointmentModel;
 import TA_A_ME_61.RumahSehat.model.DokterModel;
 import TA_A_ME_61.RumahSehat.model.PasienModel;
 import TA_A_ME_61.RumahSehat.repository.AppointmentDb;
+import TA_A_ME_61.RumahSehat.restmodel.DokterDropdownItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -123,6 +127,30 @@ public class AppointmentServiceImpl implements AppointmentService{
 
         return "(" + waktuAwalStr + "-" + waktuAkhirStr + ")"; // ex: (13.05-14.05)
     }
+
+    @Override
+    public List<DokterDropdownItem> getDokterDropdownItems(List<DokterModel> listDokter) {
+
+        List<DokterDropdownItem> data = new ArrayList<>();
+        for (DokterModel dokter : listDokter) {
+            DokterDropdownItem dokterDropdownItem = new DokterDropdownItem();
+            dokterDropdownItem.setUuid(dokter.getUuid());
+            dokterDropdownItem.setNamaTarif(getNamaTarif(dokter));
+
+            data.add(dokterDropdownItem);
+        }
+
+        return data;
+    }
+
+    private String getNamaTarif(DokterModel dokter) {
+        return dokter.getNama() + "-" + dokter.getTarif();
+    }
+
+
+
+
+    // ========= method untuk fitur 7: view all appt ============
 
     @Override
     public List<AppointmentModel> getAllAppt() {
