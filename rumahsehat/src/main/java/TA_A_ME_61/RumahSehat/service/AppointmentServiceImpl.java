@@ -65,7 +65,7 @@ public class AppointmentServiceImpl implements AppointmentService{
 //        int dayOfYear = waktuAwalNewAppt.getDayOfYear();
 //        List<AppointmentModel> listApptSameDokterAndDate = appointmentDb.findAllByDokterAndDate(uuidDokter, year, dayOfYear);
     }
-    public String validasiJadwal(AppointmentModel appointment, List<AppointmentModel> listOldAppt) {
+    private String validasiJadwal(AppointmentModel appointment, List<AppointmentModel> listOldAppt) {
         LocalDateTime waktuAwalNewAppt = appointment.getWaktuAwal();
         LocalDateTime waktuAkhirNewAppt = waktuAwalNewAppt.plusHours(1); // https://www.geeksforgeeks.org/localdatetime-plushours-method-in-java-with-examples/
 
@@ -145,6 +145,50 @@ public class AppointmentServiceImpl implements AppointmentService{
 
     private String getNamaTarif(DokterModel dokter) {
         return dokter.getNama() + "-" + dokter.getTarif();
+    }
+
+    @Override
+    public LocalDateTime convertWaktuAwalFromFlutter(String date, String time) {
+        LocalDateTime waktuAwal = LocalDateTime.now();
+
+        time = convertTo24(time);
+        date = convertDate(date);
+
+        String waktuAwalStr = date + "T" + time;
+        System.out.println(waktuAwalStr);
+        waktuAwal = LocalDateTime.parse(waktuAwalStr);
+
+        // "yyyy-MM-dd'T'HH:mm"
+
+        return waktuAwal;
+    }
+
+    private String convertTo24(String time) {
+        // 12:23 AM or 04:35 PM
+        String amOrFm = time.substring(time.length()-2); // ambil 2 char terakhir
+        time = time.substring(0, 5); // 12:23 (asumsi kalo hh mm nya pasti 2 digit)
+        String hh = time.substring(0, 2);
+        String mm = time.substring(3);
+
+        if (amOrFm.equals("PM")) {
+            int hhInteger = Integer.parseInt(hh);
+            hhInteger += 12;
+            if (hhInteger>23) {
+                System.out.println("Error: jam bernilai " + hhInteger + " (lebih dari 23)");
+            }
+            hh = String.valueOf(hhInteger);
+        }
+
+        return hh + ":" + mm;
+    }
+
+    private String convertDate(String date) { // yyyy-MM-dd
+        String[] splittedDate = date.split("/"); // 12/21/2022
+        String yyyy = splittedDate[2];
+        String mm = splittedDate[0];
+        String dd = splittedDate[1];
+
+        return yyyy + "-" + mm + "-" + dd;
     }
 
 
