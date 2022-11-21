@@ -32,58 +32,6 @@ public class AppointmentController {
     @Autowired
     private PasienService pasienService;
 
-    @GetMapping("/create")
-    public String createAppointmentFormPage(Model model) {
-        AppointmentModel newAppointment = new AppointmentModel();
-        List<DokterModel> listDokter = dokterService.getListDokter();
-
-        model.addAttribute("appointment", newAppointment);
-        model.addAttribute("listDokter", listDokter);
-        return "appointment/form-create-appointment";
-    }
-
-    @PostMapping(value = "/create")
-    public String createAppointmentSubmitPage(@ModelAttribute AppointmentModel appointment,
-                                              RedirectAttributes redirectAttrs,
-                                              Model model,
-                                              Principal principal) {
-        // set uuid pasien
-//        PasienModel pasien = pasienService.getPasienByUsername(principal.getName());
-        PasienModel pasien = pasienService.getPasienByUuid("a9ad1618-6597-11ed-85c8-803253019798");
-        appointment.setPasien(pasien);
-
-        // set ulang dokter
-        DokterModel dokter = appointment.getDokter();
-        if (dokter == null) {
-            redirectAttrs.addFlashAttribute("error", "Anda belum memilih dokter");
-            return "redirect:/appointment/create";
-        }
-
-        DokterModel dokterDariDb = dokterService.getDokterByUuid(dokter.getUuid());
-        if (dokterDariDb == null) {
-            redirectAttrs.addFlashAttribute("error", "Dokter tidak ditemukan");
-            return "redirect:/appointment/create";
-        }
-        appointment.setDokter(dokterDariDb);
-
-        String hasilValidasi = appointmentService.validasi(appointment);
-        if (hasilValidasi.equals("Valid")) {
-            // set isDone jd false udh di service pas nge add
-            appointmentService.addAppointment(appointment);
-            appointmentService.setKodeNewAppointment(appointment); // udh langsung ke update di db juga
-
-            String successMessage = "Berhasil menambahkan Appointment " +
-                    appointment.getKode() + " di jam " +
-                    appointmentService.getWaktuAwalWaktuAkhir(appointment);
-            redirectAttrs.addFlashAttribute("success", successMessage);
-            return "redirect:/appointment"; // di redirect ke viewall
-        }
-
-        // ada jadwal yg tabrakan
-        redirectAttrs.addFlashAttribute("error", hasilValidasi);
-        return "redirect:/appointment/create";
-    }
-
     @GetMapping("/{role}")
     public String viewAllAppointment(@PathVariable("role") String role,
                                      Model model, Principal principal) {

@@ -50,15 +50,9 @@ public class AppointmentRestController {
 
     @PostMapping("/create")
     public ResponseNewAppointment createAppointmentSubmit(@RequestBody SubmittedAppointment appointment) {
-        String uuidDokter = appointment.getUuid();
-        String date = appointment.getDate();
-        String time = appointment.getTime();
-
-        System.out.println("masuk submit");
-
-        // System.out.println(uuidDokter); // "3e9ab0a6-6597-11ed-85c8-803253019798"
-        // System.out.println(date); // 12/21/2022
-        // System.out.println(time); // 12:23 AM
+        String uuidDokter = appointment.getUuid(); // "3e9ab0a6-6597-11ed-85c8-803253019798"
+        String date = appointment.getDate(); // 12/21/2022
+        String time = appointment.getTime(); // 12:23 AM
 
         AppointmentModel newAppointment = new AppointmentModel();
         ResponseNewAppointment response = new ResponseNewAppointment();
@@ -78,10 +72,17 @@ public class AppointmentRestController {
         // ganti format date dan time dari flutter (dari String) 
         // jadi LocalDateTime
         LocalDateTime waktuAwal = appointmentService.convertWaktuAwalFromFlutter(date, time);
+        if (waktuAwal == null) {
+            response.setError("Waktu yg dipilih tidak sesuai (jam > 23 atau menit > 59)");
+            return response;
+        }
+
+
         newAppointment.setWaktuAwal(waktuAwal);
 
         // validasi jadwal dokter dan pasien
         String hasilValidasi = appointmentService.validasi(newAppointment);
+
         if (hasilValidasi.equals("Valid")) {
             appointmentService.addAppointment(newAppointment);
             appointmentService.setKodeNewAppointment(newAppointment); // udh langsung ke update di db juga

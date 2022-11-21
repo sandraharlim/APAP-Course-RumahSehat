@@ -155,11 +155,14 @@ public class AppointmentServiceImpl implements AppointmentService{
         time = convertTo24(time);
         date = convertDate(date);
 
-        String waktuAwalStr = date + "T" + time;
-        System.out.println(waktuAwalStr);
-        waktuAwal = LocalDateTime.parse(waktuAwalStr);
+        if (time == null) { // ada kesalahan input jam (>23) / menit (>59)
+            return null;
+        }
 
         // "yyyy-MM-dd'T'HH:mm"
+
+        String waktuAwalStr = date + "T" + time;
+        waktuAwal = LocalDateTime.parse(waktuAwalStr);
 
         return waktuAwal;
     }
@@ -176,8 +179,15 @@ public class AppointmentServiceImpl implements AppointmentService{
             hhInteger += 12;
             if (hhInteger>23) {
                 System.out.println("Error: jam bernilai " + hhInteger + " (lebih dari 23)");
+                return null;
             }
             hh = String.valueOf(hhInteger);
+        }
+
+        int mmInteger = Integer.parseInt(mm);
+        if (mmInteger > 59) {
+            System.out.println("Error: menit bernilai " + mmInteger + " (lebih dari 59)");
+            return null;
         }
 
         return hh + ":" + mm;
