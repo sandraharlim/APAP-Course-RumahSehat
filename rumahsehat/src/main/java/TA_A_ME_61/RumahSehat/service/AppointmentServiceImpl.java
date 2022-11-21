@@ -87,8 +87,9 @@ public class AppointmentServiceImpl implements AppointmentService{
             if (sameYear && sameDayOfYear) {
                 Boolean tabrakanPrevAppt = waktuAwalNewAppt.isBefore(waktuAkhirOldAppt) && waktuAwalOldAppt.isBefore(waktuAwalNewAppt); // tabrakan dengan appt sebelumnya
                 Boolean tabrakanNextAppt = waktuAkhirNewAppt.isAfter(waktuAwalOldAppt) && waktuAkhirOldAppt.isAfter(waktuAkhirNewAppt); // tabrakan dengan appt setelahnya
+                Boolean tabrakanCurrAppt = waktuAwalNewAppt.isEqual(waktuAwalOldAppt); // tabrakan dengan appt di waktu yg sama
 
-                if (tabrakanPrevAppt || tabrakanNextAppt) { // ga valid
+                if (tabrakanPrevAppt || tabrakanNextAppt || tabrakanCurrAppt) { // ga valid
                     String rangeWaktuOldAppt = getWaktuAwalWaktuAkhir(appt);
                     String rangeWaktuNewAppt = getWaktuAwalWaktuAkhir(appointment);
                     // Kalau error akan ditampilkan pesan:
