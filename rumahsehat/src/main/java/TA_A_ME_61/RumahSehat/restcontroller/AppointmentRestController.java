@@ -40,6 +40,7 @@ public class AppointmentRestController {
 
     @GetMapping("/doctors-flutter")
     public List<DokterDropdownItem> createAppointmentFlutter() {
+        System.out.println("masuk get dokter");
         List<DokterModel> listDokter = dokterService.getListDokter();
 
         List<DokterDropdownItem> dokterDropdownItems = appointmentService.getDokterDropdownItems(listDokter);
@@ -52,6 +53,8 @@ public class AppointmentRestController {
         String uuidDokter = appointment.getUuid();
         String date = appointment.getDate();
         String time = appointment.getTime();
+
+        System.out.println("masuk submit");
 
         // System.out.println(uuidDokter); // "3e9ab0a6-6597-11ed-85c8-803253019798"
         // System.out.println(date); // 12/21/2022

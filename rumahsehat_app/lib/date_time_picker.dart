@@ -5,6 +5,7 @@ import 'package:date_format/date_format.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:dio/dio.dart';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -36,12 +37,18 @@ class _AppointmentFormState extends State<AppointmentForm> {
   String selectedNamaTarif = ""; // Tirta-1000
 
   Future<void> getListOfDokter() async {
-    // const url = 'http://localhost:8080/api/appointment/doctors-flutter';
+    // localhost yg bisa diakses dr emulator
+    const url = 'http://10.0.2.2:8080/api/appointment/doctors-flutter';
+
     // mock server
-    const url =
-        'https://22202f32-174d-4a73-abb7-98e3816b7709.mock.pstmn.io/api/appointment/doctors-flutter';
+    // const url =
+    //     'https://22202f32-174d-4a73-abb7-98e3816b7709.mock.pstmn.io/api/appointment/doctors-flutter';
     try {
       final response = await http.get(Uri.parse(url));
+
+      // print(response);
+      // print(response.body);
+      // print("berhasil get");
       List<dynamic> data = jsonDecode(response.body);
 
       print(data);
@@ -297,7 +304,7 @@ class _AppointmentFormState extends State<AppointmentForm> {
                           onPressed: () {
                             if (_formKey.currentState!.validate()) {}
 
-                            printAllVar();
+                            // printAllVar();
 
                             if (selectedNamaTarif == "") {
                               ScaffoldMessenger.of(context).showSnackBar(
@@ -307,8 +314,6 @@ class _AppointmentFormState extends State<AppointmentForm> {
                               );
                               return;
                             }
-
-                            // validasi tgl harus setelah hari ini
 
                             if (_formKey.currentState!.validate()) {
                               // Jika form valid, tampilkan sebuah snackbar
@@ -336,45 +341,42 @@ class _AppointmentFormState extends State<AppointmentForm> {
   }
 
   Future<void> submitForm() async {
-    const urlPost = "";
+    const urlPost = "http://10.0.2.2:8080/api/appointment/create";
     try {
       final response = await http.post(Uri.parse(urlPost),
           body: jsonEncode({
             "uuid": correspondingUuid[selectedNamaTarif],
             "date": _dateController.text,
             "time": _timeController.text
-          }));
+          }),
+          headers: {
+            // https://stackoverflow.com/questions/53388426/flutter-send-json-over-http-post
+            "content-type": "application/json",
+            "accept": "application/json"
+          });
 
-      Map<String, String> extractedData = jsonDecode(response.body);
-      extractedData.forEach((key, value) {
-        print(value);
-      });
+      Map<String, dynamic> extractedData = jsonDecode(response.body);
 
-      if (extractedData.containsKey("error")) {
-        String? errorMessage = extractedData["error"];
-        if (errorMessage != null) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(errorMessage)),
-          );
-        } else {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-                content: Text("Ada error tapi messagenya ngga ada.")),
-          );
-        }
-      } else if (extractedData.containsKey("success")) {
-        String? successMessage = extractedData['success'];
-        if (successMessage != null) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(successMessage)),
-          );
-          refreshPage();
-        }
-      } else {
+      String? errorMessage = extractedData["error"];
+      if (errorMessage != null) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Tidak ada respon dari server')),
+          SnackBar(content: Text(errorMessage)),
         );
+        return;
       }
+
+      String? successMessage = extractedData['success'];
+      if (successMessage != null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(successMessage)),
+        );
+        refreshPage(); // set ulang date, time, dokter.
+        return;
+      }
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Tidak ada respon dari server')),
+      );
     } catch (p) {
       print(p);
     }
