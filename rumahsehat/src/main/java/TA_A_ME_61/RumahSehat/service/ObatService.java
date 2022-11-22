@@ -6,4 +6,8 @@ import java.util.List;
 
 public interface ObatService {
     List<ObatModel> getDaftarObat();
+
+    ObatModel getObatByIdObat(String idObat);
+
+    ObatModel updateStok(ObatModel updatedObat);
 }

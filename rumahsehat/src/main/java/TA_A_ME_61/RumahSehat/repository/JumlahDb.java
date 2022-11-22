@@ -8,5 +8,5 @@ import java.util.Optional;
 
 @Repository
 public interface JumlahDb extends JpaRepository<JumlahModel, Long> {
-
+    Optional<JumlahModel> deleteJumlahModelByObat_IdObat(String idObat);
 }

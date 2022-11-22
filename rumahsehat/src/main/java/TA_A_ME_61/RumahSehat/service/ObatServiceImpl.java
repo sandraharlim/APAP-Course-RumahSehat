@@ -17,4 +17,12 @@ public class ObatServiceImpl implements ObatService{
     public List<ObatModel> getDaftarObat(){
         return obatDb.findAll();
     }
+
+    public ObatModel getObatByIdObat(String idObat){
+        return obatDb.findById(idObat).orElse(null);
+    }
+
+    public ObatModel updateStok(ObatModel updatedObat){
+        return obatDb.save(updatedObat);
+    }
 }
