@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Rumah Sehat</title>
+  <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+  <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+<body>
+<nav th:replace="fragments/fragment :: navbar('obat')"></nav>
+<div class="container">
+  <div class="card m-4 p-4">
+    <div class="card-body">
+      <div class="justify-content-center">
+        <h2>Ubah Stok Obat</h2>
+        <br>
+        <form th:action="@{/obat/ubah-stok/} + ${obat.idObat}" th:object="${obat}" method="POST">
+          <h4>Id Obat</h4>
+          <input class="form-control" type="text" name="idObat" th:field="*{idObat}" required readonly/>
+          <br>
+          <h4>Nama Obat</h4>
+          <input class="form-control" type="text" name="namaObat" th:field="*{namaObat}" required readonly/>
+          <br>
+          <h4>Harga Obat</h4>
+          <input class="form-control" type="text" name="harga" th:field="*{harga}" required readonly/>
+          <br>
+          <h4>Stok Obat</h4>
+          <input class="form-control" type="number" name="stok" th:field="*{stok}"/>
+          <br><br>
+          <button class="btn font-weight-bold" style="background-color: #dcc6ff" type="submit" name="save">Update</button>
+          <a class="btn" style="background-color: #ff94ad" href="/obat/">Batal</a>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
