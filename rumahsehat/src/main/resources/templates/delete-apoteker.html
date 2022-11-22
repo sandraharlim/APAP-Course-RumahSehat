@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Delete Apoteker</title>
+  <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+  <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+<body>
+<nav th:replace="fragments/fragment :: navbar('home')"></nav>
+<br><br>
+<div class="container">
+  <div class="card">
+    <div class="card-header" style="text-align: center; color: red">
+      <h5>
+        <b>Announcement!!!</b>
+      </h5>
+    </div>
+    <div class="card-body" style="text-align: center">
+      <h5 class="card-title">Perintah Hapus Berhasil Dijalankan</h5>
+      <p class="card-text" th:text="'Apoteker dengan nama ' + ${apoteker.nama} + ' berhasil dihapus.'"></p>
+      <a class="btn btn-outline-info" href="/apoteker/viewall">Kembali</a>
+      <br><br>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
+
