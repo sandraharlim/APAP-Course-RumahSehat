@@ -4,7 +4,7 @@ udh kepanggil API nya (ke print di spring), tp di flutternya error pas nerima re
 
 - tampilin dropdown namadokter-tarif DONE (blom tes lg kalo fetch ke local) DONE
 
-- handle waktu yg sama persisssss
+- handle waktu yg sama persisssss DONE
 
 - submit: ngirim data DONE
 - nampilin snackbar untuk error or success message DONE

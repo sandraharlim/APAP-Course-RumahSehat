@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-// import 'create_appointment_form.dart';
-import 'date_time_picker.dart';
+import 'appointment_form.dart';
 
 class NavigationDrawer extends StatelessWidget {
   const NavigationDrawer({Key? key}) : super(key: key);
@@ -18,7 +17,9 @@ class NavigationDrawer extends StatelessWidget {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => AppointmentForm()), // harusnya classnya Home()
+                MaterialPageRoute(
+                    builder: (context) =>
+                        AppointmentForm()), // harusnya classnya Home()
               );
             },
           ),
@@ -44,7 +45,9 @@ class NavigationDrawer extends StatelessWidget {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => AppointmentForm()), // harusnya class index aja
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            AppointmentForm()), // harusnya class index aja
                   );
                 },
               ),

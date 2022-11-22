@@ -46,9 +46,6 @@ class _AppointmentFormState extends State<AppointmentForm> {
     try {
       final response = await http.get(Uri.parse(url));
 
-      // print(response);
-      // print(response.body);
-      // print("berhasil get");
       List<dynamic> data = jsonDecode(response.body);
 
       print(data);
