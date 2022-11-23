@@ -42,7 +42,8 @@ public class AppointmentModel implements Serializable {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private PasienModel pasien;
 
-    @OneToOne(cascade = CascadeType.ALL, optional = false) // mandatory
+//    @OneToOne(cascade = CascadeType.ALL, optional = false) // mandatory
+    @OneToOne(cascade = CascadeType.ALL) // mandatory
     private TagihanModel tagihan;
 
     @OneToOne(cascade = CascadeType.ALL) // blom atur cardinality
