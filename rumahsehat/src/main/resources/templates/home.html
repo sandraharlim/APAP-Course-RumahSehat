@@ -2,13 +2,81 @@
 <html lang="en" xmlns:th="http://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+    <meta name="viewport" content="width-device-width, initial-scale-1.0">
     <title>Rumah Sehat</title>
     <object th:include="fragments/fragment :: css" th:remove="tag"></object>
     <object th:include="fragments/fragment :: js" th:remove="tag"></object>
-</head>
-<body>
-<nav th:replace="fragments/fragment :: navbar('home')"></nav>
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" type="text/css" />
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+
+<body>
+    <nav th:replace="fragments/fragment :: navbar('home')"></nav>
+
+    <div class="welcome">
+        <h2>Selamat Datang. Selamat Bekerja!</h2>
+    </div>
+    
+    <section class="services" id="services">
+
+        <div class="box-container">
+
+            <div class="box" sec:authorize='hasAnyAuthority("__${item.entitlements}__")'>
+                <img src="/image/doctor.png">
+                <h3>Tambah Dokter</h3>
+            </div>
+
+            <div class="box" sec:authorize='hasAnyAuthority("__${item.entitlements}__")'>
+                <img src="/image/doctor.png">
+                <h3>Lihat Daftar Dokter</h3>
+            </div>
+
+            <div class="box" sec:authorize='hasAnyAuthority("__${item.entitlements}__")'>
+                <img src="/image/pharmacy.png">
+                <h3>Tambah Apoteker</h3>
+            </div>
+
+            <div class="box" sec:authorize='hasAnyAuthority("__${item.entitlements}__")'>
+                <img src="/image/pharmacy.png">
+                <h3>Lihat Daftar Apoteker</h3>
+            </div>
+
+            <div class="box" sec:authorize='hasAnyAuthority("__${item.entitlements}__")'>
+                <img src="/image/medical-appointment.png">
+                <h3>Lihat Jadwal Appointment</h3>
+            </div>
+
+            <div class="box" sec:authorize='hasAnyAuthority("__${item.entitlements}__")'>
+                <img src="/image/transaction.png">
+                <h3>Lihat Resep Obat</h3>
+            </div>
+
+            <div class="box" sec:authorize='hasAnyAuthority("__${item.entitlements}__")'>
+                <img src="/image/transaction.png">
+                <h3>Buat Resep Obat</h3>
+            </div>
+            
+            <div class="box" sec:authorize='hasAnyAuthority("__${item.entitlements}__")'>
+                <img src="/image/medicine.png">
+                <h3>Lihat Daftar Obat</h3>
+            </div>
+
+        </div>
+    </section>
+
+     <!-- untuk home -->
+     <section class="home" id="home">
+        <div class="image">
+            <img src="https://img.freepik.com/free-vector/hospital-service-concept-flat-illustration_1150-50287.jpg?w=740&t=st=1669052966~exp=1669053566~hmac=66c36cb1dfafabefa8780a4840f2b88fcc5ca57797abff673009874061d172e4" width="400" height="300" />
+        </div>
+        <div class="content">
+            <h2>Stay Safe, Stay Healthy</h2>
+            <p>Kesehatan Anda, Prioritas Kami.</p>
+            
+        </div>
+    </section>
 <footer th:replace="fragments/fragment :: footer"></footer>
 </body>
 </html>

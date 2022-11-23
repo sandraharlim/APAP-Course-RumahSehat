@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -24,4 +25,25 @@ public class DokterServiceImpl implements DokterService{
     public List<DokterModel> getListDokter() {
         return dokterDb.findAll();
     }
+
+    @Override
+    public DokterModel getDokterByUuid(String uuid) {
+        Optional<DokterModel> dokter = dokterDb.findByUuid(uuid);
+        if (dokter.isPresent()) {
+            return dokter.get();
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public void updateDokter(DokterModel dokter){
+        dokterDb.save(dokter);
+    }
+
+    @Override
+    public void deleteDokter(DokterModel dokter) {
+        dokterDb.delete(dokter);
+    }
+
 }
