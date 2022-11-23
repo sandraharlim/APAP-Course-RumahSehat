@@ -21,4 +21,9 @@ public class JumlahServiceImpl implements JumlahService{
     public void deleteJumlahByIdObat(String idObat){
         jumlahDb.deleteJumlahModelByObat_IdObat(idObat);
     }
+
+    @Override
+    public void addJumlah(JumlahModel jumlah) {
+        jumlahDb.save(jumlah);
+    }
 }
