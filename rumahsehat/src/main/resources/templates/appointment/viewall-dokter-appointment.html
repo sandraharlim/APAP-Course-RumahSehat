@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Rumah Sehat</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+<body>
+<nav th:replace="fragments/fragment :: navbar('appointment')"></nav>
+<div class="container">
+    <div class="card m-4 p-4">
+        <div class="card-body">
+            <div class="justify-content-center">
+                <h2>Daftar Seluruh Appointment Milik Dokter (Anda)</h2>
+                <br>
+                <div class="col">
+                    <a class="btn btn-primary" href="/">Home</a>
+                </div>
+                <br>
+                <div th:if="${listAppointment.size() != 0}">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Pasien</th>
+                            <th>Waktu Awal</th>
+                            <th>Status</th>
+                            <th style="text-align: center">
+                                Aksi
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="appointment, iterationStatus : ${listAppointment}"
+                            th:style="${iterationStatus.even} ? 'font-weight:bold;'">
+                            <td th:text="${iterationStatus.count}"></td>
+                            <td th:text="${appointment.pasien.nama}"></td>
+                            <td th:text="${#temporals.format(appointment.waktuAwal, 'dd MMMM yyyy HH:mm')}"></td>
+                            <td th:if="${appointment.isDone}" th:text="'Sudah Selesai'" style="color: #28a745"></td>
+                            <td th:unless="${appointment.isDone}" th:text="'Belum Dimulai'" style="color: #a71d2a"></td>
+                            <td>
+                                <div class="col">
+                                    <div class="justify-content-center">
+                                        <a class="btn btn-primary" th:href="@{/appointment/detail(id=${appointment.id})}">Detail</a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div th:unless="${listAppointment.size() != 0}">
+                    <h3 th:text="'Tidak ada appointment'"></h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

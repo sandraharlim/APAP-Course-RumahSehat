@@ -222,7 +222,6 @@ public class AppointmentServiceImpl implements AppointmentService{
     public List<AppointmentModel> getAllApptByPasien(PasienModel pasien) {
         return appointmentDb.findAllByPasien(pasien.getUuid());
     }
-
     @Override
     public AppointmentModel getAppointmentById(Long id){
         Optional<AppointmentModel> appointment = appointmentDb.findById(id);
