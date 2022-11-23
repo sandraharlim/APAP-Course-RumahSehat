@@ -25,4 +25,20 @@ public class PasienRestServiceImpl implements PasienRestService{
             throw new NoSuchElementException();
         }
     }
+
+    @Override
+    public PasienModel topUpSaldo(String uuid, PasienModel pasienBaru) {
+        PasienModel pasienLama = getPasienById(uuid);
+        pasienLama.setSaldo(pasienBaru.getSaldo());
+        return pasienDb.save(pasienLama);
+    }
+
+    @Override
+    public void updateSaldo(String uuid, Long saldo) {
+        PasienModel pasienLama = getPasienById(uuid);
+        pasienLama.setSaldo(saldo);
+        pasienDb.save(pasienLama);
+    }
+
+
 }
