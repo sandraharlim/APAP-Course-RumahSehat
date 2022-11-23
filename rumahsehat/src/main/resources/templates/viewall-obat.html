@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Rumah Sehat</title>
+  <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+  <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
+  <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" type="text/css" />
+  <link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+<body>
+<nav th:replace="fragments/fragment :: navbar('obat')"></nav>
+<div class="container">
+  <div class="card m-4 p-4">
+    <div class="card-body">
+      <div class="justify-content-center">
+        <h1 class="text-center">Daftar Obat</h1>
+        <br>
+        <div class="card">
+          <div class="card-body">
+            <table class="table" id="daftar_obat">
+              <thead style="background-color: #e7e6ff">
+              <tr class="text-center">
+                <th>No</th>
+                <th>Id Obat</th>
+                <th>Nama</th>
+                <th>Harga</th>
+                <th>Stok</th>
+                <th>Action</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr th:each="obat, iterationStatus: ${listObat}"
+                  th:style="${iterationStatus.even} ? 'font-weight:bold;'"
+                  class="text-center">
+                <td th:text="${iterationStatus.count}"></td>
+                <td th:text="${obat.idObat}"></td>
+                <td th:text="${obat.namaObat}"></td>
+                <td th:text="${obat.harga}"></td>
+                <td th:text="${obat.stok}"></td>
+                <td>
+                  <div>
+                    <a class="btn" style="background-color: #b7a2ff"
+                       th:href="@{/obat/ubah-stok/} + ${obat.idObat}">Ubah stok obat</a>
+                  </div>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<footer th:replace="fragments/fragment :: footer"></footer>
+
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap5.min.js"></script>
+<script>
+  $(document).ready(function() {
+    $('#daftar_obat').DataTable();
+  });
+</script>
+
+</body>
+</html>

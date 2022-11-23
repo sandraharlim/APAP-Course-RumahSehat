@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Add Dokter</title>
+  <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+  <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" type="text/css" />
+  <link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+
+<body>
+<nav th:replace="fragments/fragment :: navbar('home')"></nav>
+
+<div class="container">
+  <div class="card m-4 p-4">
+    <div class="card-body">
+      <div class="justify-content-center">
+        <h2 style="text-align: center" >Tambah Dokter Baru</h2>
+        <br>
+        <form th:action="@{/dokter/update/} + ${dokter.nama}" th:object="${dokter}" method="POST">
+          <input type = "hidden" th:field="*{uuid}">
+
+          Nama : <br>
+          <input class="form-control" type="text" th:field="*{nama}" readonly/>
+          <br><br>
+
+          Username : <br>
+          <input class="form-control" type="text" th:field="*{username}" readonly/>
+          <br><br>
+
+          <input type = "hidden" th:field="*{role}">
+          <input type = "hidden" th:field="*{email}">
+          <input type = "hidden" th:field="*{password}">
+
+
+          Tarif : <br>
+          <input class="form-control" type="number" th:field="*{tarif}"/>
+          <br><br>
+
+          <button class="btn btn-success" type="submit" >Submit</button>
+          <a class="btn btn-outline-info" href="/dokter/viewall">Kembali</a>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<footer th:replace="fragments/fragment :: footer"></footer>
+
+</body>
+</html>

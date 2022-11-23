@@ -28,9 +28,22 @@ public class DokterServiceImpl implements DokterService{
 
     @Override
     public DokterModel getDokterByUuid(String uuid) {
-        Optional<DokterModel> dokter = dokterDb.findById(uuid);
+        Optional<DokterModel> dokter = dokterDb.findByUuid(uuid);
         if (dokter.isPresent()) {
             return dokter.get();
-        } else return null;
+        } else {
+            return null;
+        }
     }
+
+    @Override
+    public void updateDokter(DokterModel dokter){
+        dokterDb.save(dokter);
+    }
+
+    @Override
+    public void deleteDokter(DokterModel dokter) {
+        dokterDb.delete(dokter);
+    }
+
 }

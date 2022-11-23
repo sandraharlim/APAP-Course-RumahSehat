@@ -10,4 +10,9 @@ public interface DokterService {
     List<DokterModel> getListDokter();
 
     DokterModel getDokterByUuid(String uuid);
+
+    void updateDokter(DokterModel dokter);
+
+    void deleteDokter(DokterModel dokter);
+
 }

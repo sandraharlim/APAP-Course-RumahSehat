@@ -37,7 +37,6 @@ public class AppointmentController {
                                      Model model, Principal principal) {
         // cek role user
 
-
         List<AppointmentModel> listAppointment = new ArrayList<>();
 
         if (role.equals("admin")) {
@@ -64,8 +63,7 @@ public class AppointmentController {
             return "appointment/viewall-pasien-appointment"; // harusnya ke mobile
 
         } else { // error
-//            return "error/400"; // bad request
-            return "home";
+           return "error/400"; // bad request
         }
     }
 }
