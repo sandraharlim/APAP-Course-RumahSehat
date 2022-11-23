@@ -205,10 +205,15 @@ class ProfilePage extends State<ProfilePageState> {
                   style: TextStyle(fontSize: 12),
                 ),
                 onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const FormSaldo()));
+                  // Navigator.push(
+                  //     context,
+                  //     MaterialPageRoute(
+                  //         builder: (context) => const FormSaldo()));
+                  Navigator.of(context)
+                      .push(
+                        new MaterialPageRoute(builder: (_) => new FormSaldo()),
+                      )
+                      .then((val) => {fetchPasien()});
                 },
               ),
             )
@@ -218,74 +223,3 @@ class ProfilePage extends State<ProfilePageState> {
     );
   }
 }
-
-
-
-
-
-
-// Future<Pasien> fetchPasien() async {
-//   String token = "uuid-2";
-//   String url = 'http://127.0.0.1:8080/api/pasien/profile';
-
-//   final response = await http.get(Uri.parse(url),
-//       headers: {"Authorization": token, "Content-Type": "application/json"});
-//   if (response.statusCode == 200) {
-//     var data = json.decode(response.body);
-//     print(data);
-//     return Pasien.fromJson(jsonDecode(response.body));
-//   } else {
-//     throw Exception("Failed to fetch pasien data");
-//   }
-// }
-
-// void main() => runApp(const MyApp());
-
-// class MyApp extends StatefulWidget {
-//   const MyApp({super.key});
-
-//   @override
-//   State<MyApp> createState() => _MyAppState();
-// }
-
-// class _MyAppState extends State<MyApp> {
-//   late Future<Pasien> futurePasien;
-
-//   @override
-//   void initState() {
-//     super.initState();
-//     futurePasien = fetchPasien();
-//     // List<String> _attrs = <String>[];
-//     // fetchPasien().then((value) => print(value));
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       title: 'Fetch Data Example',
-//       theme: ThemeData(
-//         primarySwatch: Colors.blue,
-//       ),
-//       home: Scaffold(
-//         appBar: AppBar(
-//           title: const Text('Fetch Data Example'),
-//         ),
-//         body: Center(
-//           child: FutureBuilder<Pasien>(
-//             future: futurePasien,
-//             builder: (context, snapshot) {
-//               if (snapshot.hasData) {
-//                 return Text(snapshot.data!.uuid);
-//               } else if (snapshot.hasError) {
-//                 return Text('${snapshot.error}');
-//               }
-
-//               // By default, show a loading spinner.
-//               return const CircularProgressIndicator();
-//             },
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }

@@ -29,14 +29,16 @@ public class PasienRestServiceImpl implements PasienRestService{
     @Override
     public PasienModel topUpSaldo(String uuid, PasienModel pasienBaru) {
         PasienModel pasienLama = getPasienById(uuid);
-        pasienLama.setSaldo(pasienBaru.getSaldo());
+        Long saldoTerbaru = pasienLama.getSaldo() + pasienBaru.getSaldo();
+        pasienLama.setSaldo(saldoTerbaru);
         return pasienDb.save(pasienLama);
     }
 
     @Override
     public void updateSaldo(String uuid, Long saldo) {
         PasienModel pasienLama = getPasienById(uuid);
-        pasienLama.setSaldo(saldo);
+        Long saldoTerbaru = pasienLama.getSaldo() + saldo;
+        pasienLama.setSaldo(saldoTerbaru);
         pasienDb.save(pasienLama);
     }
 

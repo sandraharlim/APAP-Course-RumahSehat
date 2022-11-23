@@ -87,7 +87,10 @@ class FormSaldoState extends State<FormSaldo> {
                   return Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      Text((snapshot.data!.saldo).toString()),
+                      Text("Saldo Sekarang: " +
+                          (snapshot.data!.saldo).toString()),
+                      Padding(
+                          padding: EdgeInsets.only(bottom: 15.0, right: 40.0)),
                       TextField(
                         controller: saldoController,
                         decoration: const InputDecoration(
@@ -100,6 +103,7 @@ class FormSaldoState extends State<FormSaldo> {
                           FilteringTextInputFormatter.digitsOnly
                         ],
                       ),
+                      Padding(padding: EdgeInsets.only(bottom: 15)),
                       ElevatedButton(
                         onPressed: () {
                           setState(() {

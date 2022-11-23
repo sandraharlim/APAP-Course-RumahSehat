@@ -30,7 +30,6 @@ public class PasienRestController {
     }
     @GetMapping("/profile/{uuid}")
     private PasienModel cekPostman(@PathVariable("uuid") String uuid) {
-//        System.out.println(token);
         try {
             return pasienRestService.getPasienById(uuid);
         } catch (NoSuchElementException e) {
@@ -39,19 +38,6 @@ public class PasienRestController {
             );
         }
     }
-
-//    @PutMapping("/profile/update-saldo")
-//    private PasienModel topUpSaldo(@RequestHeader("Authorization") String token, @RequestBody PasienModel pasien) {
-//        System.out.println("Token top up saldo uuid: " + token);
-//        System.out.println(pasien);
-//        try {
-//            return pasienRestService.topUpSaldo(token, pasien);
-//        } catch (NoSuchElementException e) {
-//            throw new ResponseStatusException(
-//                    HttpStatus.NOT_FOUND, "User Id " + token + " Tidak ada"
-//            );
-//        }
-//    }
 
     @PutMapping("/profile/update-saldo")
     private String topUpSaldo(@RequestHeader("Authorization") String token, @RequestBody Map<String, String> saldo) {
