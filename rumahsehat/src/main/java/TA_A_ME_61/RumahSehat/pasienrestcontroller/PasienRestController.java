@@ -11,7 +11,7 @@ import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/api/pasien")
-public class UserRestController {
+public class PasienRestController {
 
     @Autowired
     private PasienRestService pasienRestService;
