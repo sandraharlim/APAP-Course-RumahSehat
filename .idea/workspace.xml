@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="619279da-afad-48ae-820a-b8813db62b39" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/rumahsehat/src/main/java/TA_A_ME_61/RumahSehat/model/ResepModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/rumahsehat/src/main/java/TA_A_ME_61/RumahSehat/model/ResepModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rumahsehat/src/main/java/TA_A_ME_61/RumahSehat/repository/UserDb.java" beforeDir="false" afterPath="$PROJECT_DIR$/rumahsehat/src/main/java/TA_A_ME_61/RumahSehat/repository/UserDb.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/rumahsehat/src/main/java/TA_A_ME_61/RumahSehat/repository/UserDb.java" root0="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2HXV4QSFWKVjcdEXLLyzv1v2yOd" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "C:/Users/ASUS/Desktop/SEMESTER 5/APAP A/ta_a_me_61/rumahsehat",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "spring.configuration.checksum": "683613bc85bf5c00a4b84c70e79f4722"
+  }
+}]]></component>
+  <component name="RunManager">
+    <configuration name="RumahSehatApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="RumahSehat.main" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="TA_A_ME_61.RumahSehat.RumahSehatApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="619279da-afad-48ae-820a-b8813db62b39" name="Changes" comment="" />
+      <created>1668431225606</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1668431225606</updated>
+      <workItem from="1668431229460" duration="8714000" />
+      <workItem from="1668564704037" duration="1279000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
