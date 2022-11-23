@@ -12,42 +12,43 @@
         <div class="card-body">
             <div class="justify-content-center">
                 <h2>Buat Resep</h2>
-                <br>
-                <form th:action="@{/resep/create}" th:object="${resep}" method="POST">
 
+                <br>
+                <form th:action="@{/resep/create/} " th:object="${resep}" method="POST">
+
+                    <input type="hidden" th:field="*{appointment.id}">
                     <table class="table">
                         <thead>
-                        <th>Obat yang dipilih</th>
-                        <th>
-                            <button class="btn btn-primary" type="submit" name="addRowObat">Tambah Jenis Obat</button>
-                        </th>
+                            <tr>
+                                <th>Obat</th>
+                                <th>Kuantity
+                                    <p style="color: red">Jangan melebihi stok!</p>
+                                </th>
+                                <th>
+                                    <button class="btn btn-primary" type="submit" name="addRowObat">Tambah Jenis Obat</button>
+                                </th>
+                            </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="isi, iterationStatus1 : *{listJumlah}">
-                            <td>
-                                Obat: <br>
-                                <input class="form-control" type="text" th:field="*{listJumlah[__${iterationStatus1.index}__].obat}" />
-                        <tr th:each="obat, iterationStatus2 : *{listObat}">
-                            <td>
-                                <select name="noObat" th:field="*{listObat[__${iterationStatus2.index}__]}"
-                                        class="form-control">
-                                    <div th:each="obatEx, iterationStatus3 : ${listObat}">
-                                        <option th:value="${obatEx}" th:text="${obatEx.namaObat}"></option>
+                            <tr th:each="isi, iterationStatus1 : *{listJumlah}">
+                                <td>
+                                    <div class="search_select_box">
+                                        <select data-live-search="true" name="noObat" th:field="*{listJumlah[__${iterationStatus1.index}__].obat.idObat}"
+                                                class="form-control">
+                                            <div th:each="obatEx, iterationStatus3 : ${listObat}">
+                                                <option th:value="${obatEx.idObat}" th:text="'Nama obat: '+${obatEx.namaObat} + ', Stok: '+ ${obatEx.stok}"></option>
+                                            </div>
+                                        </select>
                                     </div>
-                                </select>
-                            </td>
-                        </tr>
-                        </td>
-                        <td>
-                            Kuantity: <br>
-                            <input required class="form-control" type="number" th:field="*{listJumlah[__${iterationStatus1.index}__].kuantitas}" min="0" max="100"/>
-                            <br><br>
-                        </td>
-                        <td>
-                            <button th:value="${iterationStatus1.index}" class="btn btn-danger" type="submit"
-                                    name="deleteRowObat">Hapus</button>
-                        </td>
-                        </tr>
+                                </td>
+                                <td>
+                                    <input required class="form-control" type="number" th:field="*{listJumlah[__${iterationStatus1.index}__].kuantitas}"/>
+                                </td>
+                                <td>
+                                    <button th:value="${iterationStatus1.index}" class="btn btn-danger" type="submit"
+                                            name="deleteRowObat">Hapus</button>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
 
@@ -59,5 +60,10 @@
     </div>
 </div>
 
+<script>
+    $(document).ready(function(){
+        $('.search_select_box select').selectpicker();
+    })
+</script>
 </body>
 </html>
