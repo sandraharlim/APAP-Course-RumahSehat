@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface AppointmentService {
-//    ========= method untuk fitur 6: add appt ============
+    //    ========= method untuk fitur 6: add appt ============
     void addAppointment(AppointmentModel appointment);
     void setKodeNewAppointment(AppointmentModel appointment);
     void updateAppointment(AppointmentModel appointment);
@@ -19,8 +19,9 @@ public interface AppointmentService {
     List<DokterDropdownItem> getDokterDropdownItems(List<DokterModel> listDokter);
     LocalDateTime convertWaktuAwalFromFlutter(String date, String time);
 
-//    ========= method untuk fitur 7: view all appt ============
+    //    ========= method untuk fitur 7: view all appt ============
     List<AppointmentModel> getAllAppt();
     List<AppointmentModel> getAllApptByDokter(DokterModel dokter);
     List<AppointmentModel> getAllApptByPasien(PasienModel pasien);
+    AppointmentModel getAppointmentById(Long id);
 }
