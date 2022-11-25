@@ -129,11 +129,9 @@ public class ResepController {
 
     @GetMapping("/resep/")
     private String viewAllResep(Model model) {
-//        List<ResepModel> listResep = resepService.getDaftarResep();
-//
-//
-//        model.addAttribute("resep", resep);
-//        model.addAttribute("listObat", listObat);
+        List<ResepModel> listResep = resepService.getListResep();
+
+        model.addAttribute("listResep", listResep);
         return "viewall-resep";
     }
 }
