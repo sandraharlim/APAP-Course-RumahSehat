@@ -8,8 +8,8 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface PasienDb extends JpaRepository<PasienModel,String>  {
+public interface PasienDb extends JpaRepository<PasienModel,String> {
+    Optional<PasienModel> findByUsername(String username);
     //JPA
     Optional<PasienModel> findByUuid(String uuid);
-
 }
