@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <title>Rumah Sehat</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" type="text/css" />
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+<body>
+<nav th:replace="fragments/fragment :: navbar (${'/resep'})"></nav>
+<div class="container">
+    <div class="card m-4 p-4">
+        <div class="card-body">
+            <div class="justify-content-center">
+                <h2>Buat Resep</h2>
+
+                <br>
+                <form th:action="@{/resep/create/} " th:object="${resep}" method="POST">
+
+                    <input type="hidden" th:field="*{appointment.id}">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Obat</th>
+                                <th>Kuantity
+                                    <p style="color: red">Jangan melebihi stok!</p>
+                                </th>
+                                <th>
+                                    <button class="btn btn-primary" type="submit" name="addRowObat">Tambah Jenis Obat</button>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="isi, iterationStatus1 : *{listJumlah}">
+                                <td>
+                                    <select class="js-example-basic-single" name="noObat" th:field="*{listJumlah[__${iterationStatus1.index}__].obat.idObat}">
+                                        <div th:each="obatEx, iterationStatus3 : ${listObat}">
+                                            <option th:value="${obatEx.idObat}" th:text="'Nama obat: '+${obatEx.namaObat} + ', Stok: '+ ${obatEx.stok}"></option>
+                                        </div>
+                                    </select>
+                                </td>
+                                <td>
+                                    <input required class="form-control" type="number" th:field="*{listJumlah[__${iterationStatus1.index}__].kuantitas}"/>
+                                </td>
+                                <td>
+                                    <button th:value="${iterationStatus1.index}" class="btn btn-danger" type="submit"
+                                            name="deleteRowObat">Hapus</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <button class="btn btn-primary" type="submit" name="save">Submit</button>
+                    <a class="btn btn-primary" href="/">Home</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<footer th:replace="fragments/fragment :: footer"></footer>
+
+<script>
+    $(document).ready(function() {
+        $('.js-example-basic-single').select2();
+    });
+</script>
+</body>
+</html>
