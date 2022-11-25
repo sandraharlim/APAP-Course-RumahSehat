@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 @Transactional
@@ -15,5 +16,15 @@ public class ResepServiceImpl implements ResepService{
 
     public ResepModel getResepById(Long id){
         return resepDb.findById(id).orElse(null);
+    }
+
+    @Override
+    public void addResep(ResepModel resep) {
+        resepDb.save(resep);
+    }
+
+    @Override
+    public List<ResepModel> getListResep() {
+        return resepDb.findAll();
     }
 }
