@@ -122,8 +122,7 @@ class FormSaldoState extends State<FormSaldo> {
                     ],
                   );
                 } else if (snapshot.hasError) {
-                  return Text('${snapshot.error}');
-                  // return Text('Error telah terjadi, silahkan kembali');
+                  return Text('Error telah terjadi, silahkan kembali');
                 }
               }
               return const CircularProgressIndicator();

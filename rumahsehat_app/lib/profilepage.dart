@@ -6,7 +6,6 @@ import 'package:http/http.dart' as http;
 import 'package:rumahsehat_app/main.dart';
 import 'package:rumahsehat_app/models/pasienmodel.dart';
 import 'package:rumahsehat_app/saldoform.dart';
-import 'package:url_launcher/link.dart';
 
 class ProfilePageState extends StatefulWidget {
   const ProfilePageState({Key? key}) : super(key: key);
