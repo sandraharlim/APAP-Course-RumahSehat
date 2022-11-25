@@ -19,7 +19,7 @@ Future<Pasien> fetchPasien() async {
       headers: {"Authorization": token, "Content-Type": "application/json"});
   if (response.statusCode == 200) {
     var data = json.decode(response.body);
-    print(data);
+    // print(data);
     return Pasien.fromJson(jsonDecode(response.body));
   } else {
     throw Exception("Failed to fetch pasien data");
@@ -36,11 +36,10 @@ Future<Pasien> updateSaldo(int saldo) async {
       'Content-Type': 'application/json; charset=UTF-8',
       "Access-Control_Allow_Origin": "*",
     },
-    body: jsonEncode(<String, String>{
-      'saldo': saldo.toString(),
+    body: jsonEncode(<String, int>{
+      'saldo': saldo,
     }),
   );
-
   if (response.statusCode == 200) {
     return Pasien.fromJson(jsonDecode(response.body));
   } else {
@@ -76,6 +75,12 @@ class FormSaldoState extends State<FormSaldo> {
             },
           ),
         ),
+        floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.refresh),
+          onPressed: () => setState(() {
+            _futurePasien = fetchPasien();
+          }),
+        ),
         body: Container(
           alignment: Alignment.center,
           padding: const EdgeInsets.all(8.0),
@@ -109,6 +114,7 @@ class FormSaldoState extends State<FormSaldo> {
                           setState(() {
                             _futurePasien =
                                 updateSaldo(int.parse(saldoController.text));
+                            // _futurePasien = fetchPasien();
                           });
                         },
                         child: const Text("Update Saldo"),
@@ -117,6 +123,7 @@ class FormSaldoState extends State<FormSaldo> {
                   );
                 } else if (snapshot.hasError) {
                   return Text('${snapshot.error}');
+                  // return Text('Error telah terjadi, silahkan kembali');
                 }
               }
               return const CircularProgressIndicator();

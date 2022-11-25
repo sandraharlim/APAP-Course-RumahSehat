@@ -1,7 +1,9 @@
 import 'dart:convert';
 import 'dart:html';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
+import 'package:rumahsehat_app/main.dart';
 import 'package:rumahsehat_app/models/pasienmodel.dart';
 import 'package:rumahsehat_app/saldoform.dart';
 import 'package:url_launcher/link.dart';
@@ -28,7 +30,30 @@ Future<Pasien> fetchPasien() async {
   }
 }
 
+Future<Pasien> updateSaldo(int saldo) async {
+  String token = "uuid-1";
+  String url = 'http://127.0.0.1:8080/api/pasien/profile/update-saldo';
+  final response = await http.put(
+    Uri.parse(url),
+    headers: {
+      "Authorization": token,
+      'Content-Type': 'application/json; charset=UTF-8',
+      "Access-Control_Allow_Origin": "*",
+    },
+    body: jsonEncode(<String, String>{
+      'saldo': saldo.toString(),
+    }),
+  );
+
+  if (response.statusCode == 200) {
+    return Pasien.fromJson(jsonDecode(response.body));
+  } else {
+    throw Exception('Failed Top Up Saldo');
+  }
+}
+
 class ProfilePage extends State<ProfilePageState> {
+  final TextEditingController saldoController = TextEditingController();
   late Future<Pasien> futurePasien;
 
   @override
@@ -201,14 +226,22 @@ class ProfilePage extends State<ProfilePageState> {
               padding: EdgeInsets.all(12.0),
               child: ElevatedButton(
                 child: const Text(
+                  "Refresh Saldo",
+                  style: TextStyle(fontSize: 12),
+                ),
+                onPressed: () => setState(() {
+                  futurePasien = fetchPasien();
+                }),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.all(12.0),
+              child: ElevatedButton(
+                child: const Text(
                   "Top up saldo",
                   style: TextStyle(fontSize: 12),
                 ),
                 onPressed: () {
-                  // Navigator.push(
-                  //     context,
-                  //     MaterialPageRoute(
-                  //         builder: (context) => const FormSaldo()));
                   Navigator.of(context)
                       .push(
                         new MaterialPageRoute(builder: (_) => new FormSaldo()),

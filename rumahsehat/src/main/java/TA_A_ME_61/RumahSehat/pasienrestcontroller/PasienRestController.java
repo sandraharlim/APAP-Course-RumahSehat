@@ -40,12 +40,11 @@ public class PasienRestController {
     }
 
     @PutMapping("/profile/update-saldo")
-    private String topUpSaldo(@RequestHeader("Authorization") String token, @RequestBody Map<String, String> saldo) {
+    private void topUpSaldo(@RequestHeader("Authorization") String token, @RequestBody Map<String, Long> saldo) {
         System.out.println("Token top up saldo uuid: " + token);
         System.out.println(saldo);
         try {
-            pasienRestService.updateSaldo(token, Long.valueOf(saldo.get("saldo")));
-            return "Success";
+            pasienRestService.updateSaldo(token, saldo.get("saldo"));
 
         } catch (NoSuchElementException e) {
             throw new ResponseStatusException(
@@ -53,4 +52,5 @@ public class PasienRestController {
             );
         }
     }
+
 }
