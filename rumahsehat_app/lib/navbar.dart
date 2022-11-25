@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rumahsehat_app/profilepage.dart';
 import 'appointment_form.dart';
 
 class NavigationDrawer extends StatelessWidget {
@@ -51,6 +52,16 @@ class NavigationDrawer extends StatelessWidget {
                   );
                 },
               ),
+              ListTile(
+                leading: Icon(Icons.person),
+                title: Text("Profile"),
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const ProfilePageState()));
+                },
+              )
             ],
           )
         ],
