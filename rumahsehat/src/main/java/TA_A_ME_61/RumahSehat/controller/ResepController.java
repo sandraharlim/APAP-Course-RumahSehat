@@ -126,4 +126,14 @@ public class ResepController {
         model.addAttribute("listObat", listObat);
         return "form-create-resep";
     }
+
+    @GetMapping("/resep/")
+    private String viewAllResep(Model model) {
+//        List<ResepModel> listResep = resepService.getDaftarResep();
+//
+//
+//        model.addAttribute("resep", resep);
+//        model.addAttribute("listObat", listObat);
+        return "viewall-resep";
+    }
 }
