@@ -28,9 +28,7 @@
           <input class="form-control" type="text" th:field="*{username}"/>
           <br><br>
 
-          Role : <br>
-          <input class="form-control" type="text" th:field="*{role}"/>
-          <br><br>
+          <input type = "hidden" th:field="*{role}">
 
           Email : <br>
           <input class="form-control" type="text" th:field="*{email}"/>
@@ -41,7 +39,7 @@
           <br><br>
 
           <button class="btn btn-success" type="submit" >Submit</button>
-          <a class="btn btn-outline-info" href="/apoteker/viewall">Kembali</a>
+          <a class="btn btn-outline-info" href="/apoteker/">Kembali</a>
         </form>
       </div>
     </div>
