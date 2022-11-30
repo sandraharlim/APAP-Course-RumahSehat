@@ -19,7 +19,7 @@ public class PasienController {
     @Autowired
     private PasienService pasienService;
 
-    @GetMapping("/pasien/viewall")
+    @GetMapping("/pasien/")
     public String listPasien(Model model){
         List<PasienModel> listPasien = pasienService.getListPasien();
 
