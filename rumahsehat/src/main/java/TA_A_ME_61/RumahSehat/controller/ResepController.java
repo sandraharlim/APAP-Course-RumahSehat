@@ -68,7 +68,7 @@ public class ResepController {
                 obatDb.setStok(obatDb.getStok() - jumlahx.getKuantitas());
 
                 jumlahx.setObat(obatDb);
-            }
+            } //harusnya diceknya pas mau konfirm resep harusnya..
 
         }
         LocalDateTime now = LocalDateTime.now();
