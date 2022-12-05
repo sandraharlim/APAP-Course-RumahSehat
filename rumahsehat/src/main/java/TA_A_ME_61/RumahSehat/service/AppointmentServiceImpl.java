@@ -14,6 +14,7 @@ import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -220,5 +221,13 @@ public class AppointmentServiceImpl implements AppointmentService{
     @Override
     public List<AppointmentModel> getAllApptByPasien(PasienModel pasien) {
         return appointmentDb.findAllByPasien(pasien.getUuid());
+    }
+    @Override
+    public AppointmentModel getAppointmentById(Long id){
+        Optional<AppointmentModel> appointment = appointmentDb.findById(id);
+        if(appointment.isPresent()){
+            return appointment.get();
+        }
+        return null;
     }
 }

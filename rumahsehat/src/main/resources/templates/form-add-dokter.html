@@ -17,7 +17,7 @@
   <div class="card m-4 p-4">
     <div class="card-body">
       <div class="justify-content-center">
-        <h2 style="text-align: center" >Tambah Dokter Baru</h2>
+        <h1 style="text-align: center" >Tambah Dokter Baru</h1>
         <br>
         <form th:action="@{/dokter/add}" th:object="${dokter}" method="POST">
           Nama : <br>
@@ -28,9 +28,7 @@
           <input class="form-control" type="text" th:field="*{username}"/>
           <br><br>
 
-          Role : <br>
-          <input class="form-control" type="text" th:field="*{role}"/>
-          <br><br>
+          <input type = "hidden" th:field="*{role}">
 
           Email : <br>
           <input class="form-control" type="text" th:field="*{email}"/>
@@ -45,7 +43,7 @@
           <br><br>
 
           <button class="btn btn-success" type="submit" >Submit</button>
-          <a class="btn btn-outline-info" href="/dokter/viewall">Kembali</a>
+          <a class="btn btn-outline-info" href="/dokter/">Kembali</a>
         </form>
       </div>
     </div>

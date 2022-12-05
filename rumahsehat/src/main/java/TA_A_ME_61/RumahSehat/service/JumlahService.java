@@ -8,4 +8,6 @@ public interface JumlahService {
     List<JumlahModel> getListJumlah();
 
     void deleteJumlahByIdObat(String idObat);
+
+    void addJumlah (JumlahModel jumlah);
 }
