@@ -35,6 +35,10 @@ public class WebSecurityConfig {
 
 //                .antMatchers("/user/delete").hasAuthority("Admin")
 //                .antMatchers("/penyelenggara/add").hasAuthority("Manajer")
+
+                // .antMatchers("/appointment/viewall").hasAuthority("admin")
+                // .antMatchers("/appointment/viewall").hasAuthority("pasien")
+                // .antMatchers("/appointment/viewall").hasAuthority("dokter")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()

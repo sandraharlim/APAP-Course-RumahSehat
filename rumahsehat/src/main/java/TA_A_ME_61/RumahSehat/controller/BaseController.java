@@ -3,6 +3,7 @@ package TA_A_ME_61.RumahSehat.controller;
 import TA_A_ME_61.RumahSehat.model.AdminModel;
 import TA_A_ME_61.RumahSehat.model.ApotekerModel;
 import TA_A_ME_61.RumahSehat.model.DokterModel;
+import TA_A_ME_61.RumahSehat.model.PasienModel;
 import TA_A_ME_61.RumahSehat.model.UserModel;
 import TA_A_ME_61.RumahSehat.security.xml.Attributes;
 import TA_A_ME_61.RumahSehat.security.xml.ServiceResponse;
@@ -47,10 +48,16 @@ public class BaseController {
         String username = auth.getName();
         DokterModel dokter = dokterService.getDokterByUsername(username);
         ApotekerModel apoteker = apotekerService.getApotekerByUsername(username);
+        AdminModel admin = adminService.getAdminByUsername(username);
+        PasienModel pasien = pasienService.getPasienByUsername(username);
         if (dokter != null){
             model.addAttribute("user", dokter);
         } else if (apoteker != null){
             model.addAttribute("user", apoteker);
+        }else if (admin != null){
+            model.addAttribute("user", admin);
+        }else if (pasien != null){
+            model.addAttribute("user", pasien);
         }
         return "home";
     }
