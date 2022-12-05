@@ -5,6 +5,8 @@
     <title>List Dokter</title>
     <object th:include="fragments/fragment :: css" th:remove="tag"></object>
     <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" type="text/css" />
     <link rel="stylesheet" th:href="@{/css/style.css}"/>
@@ -18,41 +20,44 @@
     <div class="card m-4 p-4">
         <div class="card-body">
             <div class="justify-content-center">
-                <h2 style="text-align: center">Daftar Dokter</h2>
+                <h1 style="text-align: center">Daftar Dokter</h1>
                 <br>
                 <a class="btn btn-success" href="/dokter/add"> + Tambah Dokter</a>
                 <a class="btn btn-info" href="/">Beranda</a>
+                <br><br>
 
-                <div th:if="*{listDokter.size() != 0}">
-                    <br>
-                    <table class = "table">
-                        <thead>
-                        <tr style="text-align: center">
-                            <th>No</th>
-                            <th>Nama</th>
-                            <th>Username</th>
-                            <th>Email</th>
-                            <th>Tarif</th>
-                            <th>Action</th>
-                        </tr>
-                        </thead>
+                <div th:if="*{listDokter.size() != 0}" class="card">
+                    <div class="card-body">
+                        <br>
+                        <table class = "table" id="daftar_dokter" >
+                            <thead style="background-color: #e7e6ff" >
+                            <tr style="text-align: center">
+                                <th>No</th>
+                                <th>Nama</th>
+                                <th>Username</th>
+                                <th>Email</th>
+                                <th>Tarif</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
 
-                        <tbody style="text-align: center">
-                        <tr th:each="dokter, iterationStatus : ${listDokter}"
-                            th:style="${iterationStatus.even} ? 'font-weight:bold; background-color: #F5F5F5 ;'">
-                            <td th:text="${iterationStatus.count}"></td>
-                            <td th:text="${dokter.nama}"></td>
-                            <td th:text="${dokter.username}"></td>
-                            <td th:text="${dokter.email}"></td>
-                            <td th:text="${dokter.tarif}"></td>
-                            <td>
-                                <a class="btn btn-warning" th:href="@{/dokter/update/} + ${dokter.uuid}">Update</a>
-                                <a class="btn btn-danger" th:href="@{/dokter/delete/} + ${dokter.uuid}">Delete</a>
-                            </td>
-                        </tr>
-                        </tbody>
+                            <tbody style="text-align: center">
+                            <tr th:each="dokter, iterationStatus : ${listDokter}"
+                                th:style="${iterationStatus.even} ? 'font-weight:bold; background-color: #F5F5F5 ;'">
+                                <td th:text="${iterationStatus.count}"></td>
+                                <td th:text="${dokter.nama}"></td>
+                                <td th:text="${dokter.username}"></td>
+                                <td th:text="${dokter.email}"></td>
+                                <td th:text="${dokter.tarif}"></td>
+                                <td>
+                                    <a class="btn btn-warning" th:href="@{/dokter/update/} + ${dokter.uuid}">Update</a>
+                                    <a class="btn btn-danger" th:href="@{/dokter/delete/} + ${dokter.uuid}">Delete</a>
+                                </td>
+                            </tr>
+                            </tbody>
 
-                    </table>
+                        </table>
+                    </div>
                 </div>
                 <div th:unless="*{listDokter.size() != 0}">
                     <br><br>
@@ -67,5 +72,15 @@
 
 </body>
 <footer th:replace="fragments/fragment :: footer"></footer>
+
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap5.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#daftar_dokter').DataTable();
+    });
+</script>
+
 </html>
 

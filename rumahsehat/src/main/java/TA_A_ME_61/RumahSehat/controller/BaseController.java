@@ -1,17 +1,21 @@
 package TA_A_ME_61.RumahSehat.controller;
 
+import TA_A_ME_61.RumahSehat.model.AdminModel;
+import TA_A_ME_61.RumahSehat.model.ApotekerModel;
+import TA_A_ME_61.RumahSehat.model.DokterModel;
 import TA_A_ME_61.RumahSehat.model.UserModel;
 import TA_A_ME_61.RumahSehat.security.xml.Attributes;
 import TA_A_ME_61.RumahSehat.security.xml.ServiceResponse;
-import TA_A_ME_61.RumahSehat.service.UserService;
+import TA_A_ME_61.RumahSehat.service.*;
 import TA_A_ME_61.RumahSehat.setting.Setting;
 import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-//import org.springframework.security.core.Authentication;
-//import org.springframework.security.core.context.SecurityContext;
-//import org.springframework.security.core.context.SecurityContextHolder;
-//import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,19 +28,37 @@ import java.security.Principal;
 
 @Controller
 public class BaseController {
-//    @Autowired
-//    UserService userService;
-//
-//    private WebClient webClient = WebClient.builder().build();
+    @Autowired
+    DokterService dokterService;
+
+    @Autowired
+    ApotekerService apotekerService;
+
+    @Autowired
+    AdminService adminService;
+
+    @Autowired
+    PasienService pasienService;
+
+    private WebClient webClient = WebClient.builder().build();
     @GetMapping("/")
-    private String Home(){
+    private String Home(Model model){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();
+        DokterModel dokter = dokterService.getDokterByUsername(username);
+        ApotekerModel apoteker = apotekerService.getApotekerByUsername(username);
+        if (dokter != null){
+            model.addAttribute("user", dokter);
+        } else if (apoteker != null){
+            model.addAttribute("user", apoteker);
+        }
         return "home";
     }
 
-//    @RequestMapping("/login")
-//    public String login() {
-//        return "login";
-//    }
+    @RequestMapping("/login")
+    public String login() {
+        return "login";
+    }
 //
 //    @GetMapping("/validate-ticket")
 //    public ModelAndView adminLoginSSO(

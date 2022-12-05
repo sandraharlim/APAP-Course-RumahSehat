@@ -21,7 +21,7 @@ public class DokterController {
     @Autowired
     private DokterService dokterService;
 
-    @GetMapping("/dokter/viewall")
+    @GetMapping("/dokter/")
     public String listDokter(Model model){
         List<DokterModel> listDokter = dokterService.getListDokter();
 
@@ -41,6 +41,7 @@ public class DokterController {
     @PostMapping(value = "/dokter/add")
     public String addDokterSubmitPage(@ModelAttribute DokterModel dokter, BindingResult result,
                                        RedirectAttributes redirectAttrs) {
+        dokter.setRole("Dokter");
         dokterService.addDokter(dokter);
         if (result.hasErrors()) {
             redirectAttrs.addFlashAttribute("error", "The error occurred.");
@@ -50,7 +51,7 @@ public class DokterController {
         redirectAttrs.addFlashAttribute("success",
                 String.format("Dokter dengan nama " + dokter.getNama() + "  berhasil ditambahkan "));
 
-        return "redirect:/dokter/viewall";
+        return "redirect:/dokter/";
     }
 
     @GetMapping("/dokter/update/{uuid}")
@@ -73,7 +74,7 @@ public class DokterController {
         redirectAttrs.addFlashAttribute("success",
                 String.format("Dokter dengan nama " + dokter.getNama() + "  berhasil diubah "));
 
-        return "redirect:/dokter/viewall";
+        return "redirect:/dokter/";
     }
 
     @GetMapping("/dokter/delete/{uuid}")
