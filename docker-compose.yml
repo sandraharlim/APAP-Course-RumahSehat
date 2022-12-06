@@ -17,6 +17,24 @@ services:
     networks:
       - frontend-network
       - backend-network
+  
+  web2:
+    build:
+      context: .
+    # image: localhost:15000/denny/apap-001
+    restart: always
+    ports:
+      - "10062:2020"
+    volumes:
+      - ./file-storage:/file-storage
+      - ./log:/log
+    env_file:
+      - app.env
+    depends_on:
+      - db
+    networks:
+      - frontend-network
+      - backend-network
 
   db:
     image: mariadb:10.4.24
