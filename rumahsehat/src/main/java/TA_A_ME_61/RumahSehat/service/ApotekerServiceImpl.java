@@ -1,8 +1,10 @@
 package TA_A_ME_61.RumahSehat.service;
 
+import TA_A_ME_61.RumahSehat.model.AdminModel;
 import TA_A_ME_61.RumahSehat.model.ApotekerModel;
 import TA_A_ME_61.RumahSehat.repository.ApotekerDb;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -17,9 +19,16 @@ public class ApotekerServiceImpl implements ApotekerService{
 
     @Override
     public void addApoteker(ApotekerModel apoteker) {
+        String encryptedPass = encrypt(apoteker.getPassword());
+        apoteker.setPassword(encryptedPass);
         apotekerDb.save(apoteker);
     }
 
+    public String encrypt(String password) {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String hashedPassword = passwordEncoder.encode(password);
+        return hashedPassword;
+    }
     @Override
     public List<ApotekerModel> getListApoteker() {
         return apotekerDb.findAll();
@@ -38,6 +47,11 @@ public class ApotekerServiceImpl implements ApotekerService{
     @Override
     public void deleteApoteker(ApotekerModel apoteker) {
         apotekerDb.delete(apoteker);
+    }
+
+    @Override
+    public ApotekerModel getApotekerByUsername(String username){
+        return apotekerDb.findByUsername(username);
     }
 
 
