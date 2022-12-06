@@ -21,7 +21,7 @@ public class ApotekerController {
     @Autowired
     private ApotekerService apotekerService;
 
-    @GetMapping("/apoteker/viewall")
+    @GetMapping("/apoteker/")
     public String listApoteker(Model model){
         List<ApotekerModel> listApoteker = apotekerService.getListApoteker();
 
@@ -42,6 +42,7 @@ public class ApotekerController {
     @PostMapping(value = "/apoteker/add")
     public String addApotekerSubmitPage(@ModelAttribute ApotekerModel apoteker, BindingResult result,
                                       RedirectAttributes redirectAttrs) {
+        apoteker.setRole("Apoteker");
         apotekerService.addApoteker(apoteker);
         if (result.hasErrors()) {
             redirectAttrs.addFlashAttribute("error", "The error occurred.");
@@ -51,7 +52,7 @@ public class ApotekerController {
         redirectAttrs.addFlashAttribute("success",
                 String.format("Apoteker dengan nama " + apoteker.getNama() + "  berhasil ditambahkan "));
 
-        return "redirect:/apoteker/viewall";
+        return "redirect:/apoteker/";
     }
 
     @GetMapping("/apoteker/delete/{uuid}")

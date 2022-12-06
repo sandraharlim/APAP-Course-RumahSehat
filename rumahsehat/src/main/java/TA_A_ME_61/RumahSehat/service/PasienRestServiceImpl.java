@@ -1,8 +1,11 @@
 package TA_A_ME_61.RumahSehat.service;
 
+import TA_A_ME_61.RumahSehat.model.AdminModel;
+import TA_A_ME_61.RumahSehat.model.DokterModel;
 import TA_A_ME_61.RumahSehat.model.PasienModel;
 import TA_A_ME_61.RumahSehat.repository.PasienDb;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,6 +18,19 @@ public class PasienRestServiceImpl implements PasienRestService{
 
     @Autowired
     private PasienDb pasienDb;
+
+    @Override
+    public void addPasien(PasienModel pasien) {
+        String encryptedPass = encrypt(pasien.getPassword());
+        pasien.setPassword(encryptedPass);
+        pasienDb.save(pasien);
+    }
+
+    public String encrypt(String password) {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String hashedPassword = passwordEncoder.encode(password);
+        return hashedPassword;
+    }
 
     @Override
     public PasienModel getPasienById(String uuid) {
@@ -40,6 +56,11 @@ public class PasienRestServiceImpl implements PasienRestService{
         Long saldoTerbaru = pasienLama.getSaldo() + saldo;
         pasienLama.setSaldo(saldoTerbaru);
         pasienDb.save(pasienLama);
+    }
+
+    @Override
+    public PasienModel getPasienByUsername(String username){
+        return pasienDb.findByUsername(username);
     }
 
 

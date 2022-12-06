@@ -16,7 +16,8 @@
     <nav th:replace="fragments/fragment :: navbar('home')"></nav>
 
     <div class="welcome">
-        <h2>Selamat Datang. Selamat Bekerja!</h2>
+        <h2 th:text="'Selamat Datang ' + ${user.username} + '. Selamat Bekerja!'"></h2>
+        <h2 th:text="'Role : ' + ${user.role}"></h2>
     </div>
     
     <section class="services" id="services">
