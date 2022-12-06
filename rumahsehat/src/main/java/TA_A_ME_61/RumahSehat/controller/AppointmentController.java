@@ -73,6 +73,7 @@ public class AppointmentController {
             return "appointment/viewall-pasien-appointment"; // harusnya ke mobile
 
         } else { // role nya gabener, tp harusnya nanti udh di handle websecurityconfig sih
+            model.addAttribute("errorMessage", "Anda (" + username + ") tidak memiliki akses untuk membuka halaman ini (role salah).");
             return "error/400";
         }
     }
