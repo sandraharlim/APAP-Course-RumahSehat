@@ -88,7 +88,7 @@ public class AppointmentRestController {
 
         newAppointment.setDokter(selectedDokter);
 
-        // ganti format date dan time dari flutter (dari String) 
+        // ganti format date dan time dari flutter (dari String)
         // jadi LocalDateTime
         LocalDateTime waktuAwal = appointmentRestService.convertWaktuAwalFromFlutter(date, time);
         if (waktuAwal == null) {
@@ -108,8 +108,8 @@ public class AppointmentRestController {
 
             String successMessage = "Berhasil menambahkan Appointment " +
                 newAppointment.getKode() + " di jam " +
-                appointmentRestService.getWaktuAwalWaktuAkhir(newAppointment);
-            
+                appointmentService.getWaktuAwalWaktuAkhir(newAppointment);
+
             response.setSuccess(successMessage);
             return response;
         }

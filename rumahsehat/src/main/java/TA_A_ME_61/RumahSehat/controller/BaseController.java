@@ -42,6 +42,7 @@ public class BaseController {
     PasienService pasienService;
 
     private WebClient webClient = WebClient.builder().build();
+
     @GetMapping("/")
     private String Home(Model model){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -49,15 +50,12 @@ public class BaseController {
         DokterModel dokter = dokterService.getDokterByUsername(username);
         ApotekerModel apoteker = apotekerService.getApotekerByUsername(username);
         AdminModel admin = adminService.getAdminByUsername(username);
-        PasienModel pasien = pasienService.getPasienByUsername(username);
         if (dokter != null){
             model.addAttribute("user", dokter);
         } else if (apoteker != null){
             model.addAttribute("user", apoteker);
-        }else if (admin != null){
+        } else if (admin != null){
             model.addAttribute("user", admin);
-        }else if (pasien != null){
-            model.addAttribute("user", pasien);
         }
         return "home";
     }
@@ -66,6 +64,62 @@ public class BaseController {
     public String login() {
         return "login";
     }
+
+    @GetMapping("/validate-ticket")
+    public ModelAndView adminLoginSSO(
+            @RequestParam(value = "ticket", required = false) String ticket,
+            HttpServletRequest request
+    ){
+        ServiceResponse serviceResponse = this.webClient.get().uri(
+                String.format(
+                        Setting.SERVER_VALIDATE_TICKET,
+                        ticket,
+                        Setting.CLIENT_LOGIN
+                )
+        ).retrieve().bodyToMono(ServiceResponse.class).block();
+
+        Attributes attributes = serviceResponse.getAuthenticationSuccess().getAttributes();
+        String username = serviceResponse.getAuthenticationSuccess().getUser();
+
+        AdminModel admin = adminService.getAdminByUsername(username);
+
+        if(admin == null){
+            admin = new AdminModel();
+            admin.setEmail(username + "@ui.ac.id");
+            admin.setNama(attributes.getNama());
+            admin.setPassword("belajarbelajar");
+            admin.setUsername(username);
+            admin.setIsSso(true);
+            admin.setRole("Admin");
+            adminService.addAdmin(admin);
+        }
+
+        Authentication authentication = new UsernamePasswordAuthenticationToken(username, "belajarbelajar");
+
+        SecurityContext securityContext = SecurityContextHolder.getContext();
+        securityContext.setAuthentication(authentication);
+
+        HttpSession httpSession = request.getSession(true);
+        httpSession.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, securityContext);
+
+        return new ModelAndView("redirect:/");
+    }
+
+    @GetMapping(value = "/logout-sso")
+    public ModelAndView logoutSSO(Principal principal){
+        AdminModel admin = adminService.getAdminByUsername(principal.getName());
+        if (admin.getIsSso() == false) {
+            return new ModelAndView("redirect:/logout");
+        }
+
+        return new ModelAndView("redirect:" + Setting.SERVER_LOGOUT + Setting.CLIENT_LOGOUT);
+    }
+
+    @GetMapping(value = "/login-sso")
+    public ModelAndView loginSSO(){
+        return new ModelAndView("redirect:"+Setting.SERVER_LOGIN + Setting.CLIENT_LOGIN);
+    }
+
 //
 //    @GetMapping("/validate-ticket")
 //    public ModelAndView adminLoginSSO(
