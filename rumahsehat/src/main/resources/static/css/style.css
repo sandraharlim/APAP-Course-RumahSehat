@@ -77,11 +77,18 @@ section{
 }
 
 .services .box-container .box{
+    transition: box-shadow .3s;
+    float: left;
     background: #d2daff;;
     border-radius: .5rem;
     box-shadow: var(--box-shadow);
     border: var(--border);
     padding: 2.5rem;
+}
+
+
+.services .box-container .box:hover {
+    box-shadow: 0 0 11px rgba(33,33,33,.2);
 }
 
 .services .box-container .box i {
