@@ -34,7 +34,7 @@ public class WebSecurityConfig {
                     .antMatchers("/login-sso", "/validate-ticket").permitAll()
                     .antMatchers("/obat/").hasAnyAuthority("Admin","Apoteker")
                     .antMatchers("/obat/ubah-stok/{idObat}").hasAuthority("Apoteker")
-                    .antMatchers("/view/{kode}").hasAnyAuthority("Admin","Dokter")
+                    .antMatchers("/appointment/view/{kode}").hasAnyAuthority("Admin","Dokter")
                     .antMatchers("/finish").hasAuthority("Apoteker")
 //                .antMatchers("/penyelenggara/add").hasAuthority("Manajer")
 //                .antMatchers("/user/viewall").hasAuthority("Admin")
