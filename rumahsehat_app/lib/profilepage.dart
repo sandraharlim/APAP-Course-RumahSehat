@@ -4,105 +4,75 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:rumahsehat_app/main.dart';
-// import 'package:rumahsehat_app/models/pasienmodel.dart';
+import 'package:rumahsehat_app/models/pasienmodel.dart';
 import 'package:rumahsehat_app/saldoform.dart';
 
 class ProfilePageState extends StatefulWidget {
-  final String jwtToken;
-  final String nama;
-  final String username;
-  final String email;
-  final int saldo;
+  // final String jwtToken;
   const ProfilePageState({
     Key? key,
-    required this.jwtToken,
-    required this.nama,
-    required this.username,
-    required this.email,
-    required this.saldo,
+    // required this.jwtToken,
   }) : super(key: key);
 
   @override
   ProfilePage createState() => ProfilePage();
 }
 
-Future<Pasien> fetchPasien(String jwtToken) async {
-  String token = "uuid-1";
-  String url = 'http://127.0.0.1:8080/api/pasien/profile';
-
-  final response = await http.get(Uri.parse(url), headers: <String, String>{
-    "Authorization": "Bearer $jwtToken",
-    "Content-Type": "application/json;charset=UTF-8"
-  });
-  if (response.statusCode == 200) {
-    var data = json.decode(response.body);
-    print(data);
-    return Pasien.fromJson(jsonDecode(response.body));
-  } else {
-    throw Exception("Failed to fetch pasien data");
-  }
-}
-
-class Pasien {
-  late String uuid;
-  late String nama;
-  late String email;
-  late String username;
-  late int saldo;
-
-  Pasien(
-      {required this.uuid,
-      required this.nama,
-      required this.email,
-      required this.username,
-      required this.saldo});
-
-  factory Pasien.fromJson(Map<String, dynamic> json) {
-    return Pasien(
-        uuid: json['uuid'],
-        nama: json['nama'],
-        email: json['email'],
-        username: json['username'],
-        saldo: json['saldo']);
-  }
-}
-
 class ProfilePage extends State<ProfilePageState> {
+  // late String jwtToken;
   late Future<Pasien> futurePasien;
-  late String jwtToken;
-  late String nama;
-  late String username;
-  late String email;
-  late int saldo;
+  String token = "";
+
+  Future<void> loginPasien() async {
+    const urlPost = "http://localhost:8080/login";
+    String username = "pasien3";
+    String password = "Pasienpasien3";
+    try {
+      final response = await http.post(Uri.parse(urlPost),
+          body: jsonEncode({"username": username, "password": password}),
+          headers: {"Authorization": token});
+      Map<String, String> headers = response.headers;
+      String? jwtToken = headers["authorization"];
+
+      if (jwtToken != null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("berhasil login dengan username " + username)),
+        );
+        setState(() {
+          token = jwtToken;
+          print(token);
+          // token = Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJkb2t0ZXIxIiwiZXhwIjoxNjcxMjcwNjU4fQ.RlSo0uZnTibReemyzony7An7Na9_ajiqxJPid9l4BlZdAg30q5ODxQaYZsRE3sMjNOhBo_Ai7LhP2SSbPoJQew
+        });
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Username atau password salah")),
+        );
+      }
+    } catch (p) {
+      print(p);
+    }
+  }
+
+  Future<Pasien> fetchPasien() async {
+    String url = 'http://localhost:8080/api/pasien/profile';
+
+    final response = await http.get(Uri.parse(url), headers: <String, String>{
+      "Authorization": token,
+      "Content-Type": "application/json;charset=UTF-8"
+    });
+    if (response.statusCode == 200) {
+      var data = json.decode(response.body);
+      print(data);
+      return Pasien.fromJson(jsonDecode(response.body));
+    } else {
+      throw Exception("Failed to fetch pasien data");
+    }
+  }
 
   @override
   void initState() {
-    super.initState();
-    jwtToken = widget.jwtToken;
-    nama = widget.nama;
-    username = widget.username;
-    email = widget.email;
-    saldo = widget.saldo;
-    futurePasien = fetchPasien(jwtToken);
-  }
-
-  Widget fieldMaker(String label, String data) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 27.0),
-      child: TextField(
-        enabled: false,
-        decoration: InputDecoration(
-            contentPadding: EdgeInsets.only(bottom: 4),
-            labelText: "$label",
-            floatingLabelBehavior: FloatingLabelBehavior.always,
-            hintText: data,
-            hintStyle: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
-            )),
-      ),
-    );
+    loginPasien();
+    futurePasien = fetchPasien();
   }
 
   @override
@@ -171,120 +141,128 @@ class ProfilePage extends State<ProfilePageState> {
                     );
                   default:
                     if (snapshot.hasData) {
-                      return ListView(
-                        children: [
-                          // Container(alignment: Alignment.center),
-                          fieldMaker("Nama", nama),
-                          fieldMaker("Username", username),
-                          fieldMaker("Email", email),
-                          fieldMaker("Saldo", saldo.toString()),
-                        ],
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 27.0),
+                        child: TextField(
+                          enabled: false,
+                          decoration: InputDecoration(
+                              contentPadding: EdgeInsets.only(bottom: 4),
+                              labelText: "Nama",
+                              floatingLabelBehavior:
+                                  FloatingLabelBehavior.always,
+                              hintText: snapshot.data!.nama,
+                              hintStyle: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              )),
+                        ),
                       );
                     } else {
                       return Text('Error: ${snapshot.error}');
                     }
                 }
-                // if (snapshot.hasData) {
-                //   return Padding(
-                //     padding: const EdgeInsets.only(bottom: 27.0),
-                //     child: TextField(
-                //       enabled: false,
-                //       decoration: InputDecoration(
-                //           contentPadding: EdgeInsets.only(bottom: 4),
-                //           labelText: "Nama",
-                //           floatingLabelBehavior: FloatingLabelBehavior.always,
-                //           hintText: snapshot.data!.nama,
-                //           hintStyle: TextStyle(
-                //             fontSize: 16,
-                //             fontWeight: FontWeight.bold,
-                //             color: Colors.black,
-                //           )),
-                //     ),
-                //   );
-                // } else if (snapshot.hasError) {
-                //   return Text('${snapshot.error}');
-                // }
-                // return const CircularProgressIndicator();
               },
             ),
-            // FutureBuilder<Pasien>(
-            //   future: futurePasien,
-            //   builder: (context, snapshot) {
-            //     if (snapshot.hasData) {
-            //       return Padding(
-            //         padding: const EdgeInsets.only(bottom: 27.0),
-            //         child: TextField(
-            //           enabled: false,
-            //           decoration: InputDecoration(
-            //               contentPadding: EdgeInsets.only(bottom: 3),
-            //               labelText: "Username",
-            //               floatingLabelBehavior: FloatingLabelBehavior.always,
-            //               hintText: snapshot.data!.username,
-            //               hintStyle: TextStyle(
-            //                 fontSize: 16,
-            //                 fontWeight: FontWeight.bold,
-            //                 color: Colors.black,
-            //               )),
-            //         ),
-            //       );
-            //     } else if (snapshot.hasError) {
-            //       return Text('${snapshot.error}');
-            //     }
-            //     return const CircularProgressIndicator();
-            //   },
-            // ),
-            // FutureBuilder<Pasien>(
-            //   future: futurePasien,
-            //   builder: (context, snapshot) {
-            //     if (snapshot.hasData) {
-            //       return Padding(
-            //         padding: const EdgeInsets.only(bottom: 27.0),
-            //         child: TextField(
-            //           enabled: false,
-            //           decoration: InputDecoration(
-            //               contentPadding: EdgeInsets.only(bottom: 3),
-            //               labelText: "Email",
-            //               floatingLabelBehavior: FloatingLabelBehavior.always,
-            //               hintText: snapshot.data!.email,
-            //               hintStyle: TextStyle(
-            //                 fontSize: 16,
-            //                 fontWeight: FontWeight.bold,
-            //                 color: Colors.black,
-            //               )),
-            //         ),
-            //       );
-            //     } else if (snapshot.hasError) {
-            //       return Text('${snapshot.error}');
-            //     }
-            //     return const CircularProgressIndicator();
-            //   },
-            // ),
-            // FutureBuilder<Pasien>(
-            //   future: futurePasien,
-            //   builder: (context, snapshot) {
-            //     if (snapshot.hasData) {
-            //       return Padding(
-            //         padding: const EdgeInsets.only(bottom: 27.0),
-            //         child: TextField(
-            //           enabled: false,
-            //           decoration: InputDecoration(
-            //               contentPadding: EdgeInsets.only(bottom: 3),
-            //               labelText: "Saldo",
-            //               floatingLabelBehavior: FloatingLabelBehavior.always,
-            //               hintText: (snapshot.data!.saldo).toString(),
-            //               hintStyle: TextStyle(
-            //                 fontSize: 16,
-            //                 fontWeight: FontWeight.bold,
-            //                 color: Colors.black,
-            //               )),
-            //         ),
-            //       );
-            //     } else if (snapshot.hasError) {
-            //       return Text('${snapshot.error}');
-            //     }
-            //     return const CircularProgressIndicator();
-            //   },
-            // ),
+            FutureBuilder<Pasien>(
+              future: futurePasien,
+              builder: (context, AsyncSnapshot<Pasien> snapshot) {
+                switch (snapshot.connectionState) {
+                  case ConnectionState.waiting:
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  default:
+                    if (snapshot.hasData) {
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 27.0),
+                        child: TextField(
+                          enabled: false,
+                          decoration: InputDecoration(
+                              contentPadding: EdgeInsets.only(bottom: 4),
+                              labelText: "Username",
+                              floatingLabelBehavior:
+                                  FloatingLabelBehavior.always,
+                              hintText: snapshot.data!.username,
+                              hintStyle: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              )),
+                        ),
+                      );
+                    } else {
+                      return Text('Error: ${snapshot.error}');
+                    }
+                }
+              },
+            ),
+            FutureBuilder<Pasien>(
+              future: futurePasien,
+              builder: (context, AsyncSnapshot<Pasien> snapshot) {
+                switch (snapshot.connectionState) {
+                  case ConnectionState.waiting:
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  default:
+                    if (snapshot.hasData) {
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 27.0),
+                        child: TextField(
+                          enabled: false,
+                          decoration: InputDecoration(
+                              contentPadding: EdgeInsets.only(bottom: 4),
+                              labelText: "Email",
+                              floatingLabelBehavior:
+                                  FloatingLabelBehavior.always,
+                              hintText: snapshot.data!.email,
+                              hintStyle: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              )),
+                        ),
+                      );
+                    } else {
+                      return Text('Error: ${snapshot.error}');
+                    }
+                }
+              },
+            ),
+            FutureBuilder<Pasien>(
+              future: futurePasien,
+              builder: (context, AsyncSnapshot<Pasien> snapshot) {
+                switch (snapshot.connectionState) {
+                  case ConnectionState.waiting:
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  default:
+                    if (snapshot.hasData) {
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 27.0),
+                        child: TextField(
+                          enabled: false,
+                          decoration: InputDecoration(
+                              contentPadding: EdgeInsets.only(bottom: 4),
+                              labelText: "Saldo",
+                              floatingLabelBehavior:
+                                  FloatingLabelBehavior.always,
+                              hintText: (snapshot.data!.saldo).toString(),
+                              hintStyle: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              )),
+                        ),
+                      );
+                    } else {
+                      return Text('Error: ${snapshot.error}');
+                    }
+                }
+              },
+            ),
             Padding(
               padding: EdgeInsets.all(12.0),
               child: ElevatedButton(
@@ -293,7 +271,7 @@ class ProfilePage extends State<ProfilePageState> {
                   style: TextStyle(fontSize: 12),
                 ),
                 onPressed: () => setState(() {
-                  futurePasien = fetchPasien(jwtToken);
+                  futurePasien = fetchPasien();
                 }),
               ),
             ),
@@ -305,11 +283,12 @@ class ProfilePage extends State<ProfilePageState> {
                   style: TextStyle(fontSize: 12),
                 ),
                 onPressed: () {
-                  Navigator.of(context)
-                      .push(
-                        new MaterialPageRoute(builder: (_) => new FormSaldo()),
-                      )
-                      .then((val) => {fetchPasien(jwtToken)});
+                  Navigator.of(context).push(
+                    new MaterialPageRoute(
+                        builder: (_) => new FormSaldo(
+                              token: token,
+                            )),
+                  );
                 },
               ),
             )

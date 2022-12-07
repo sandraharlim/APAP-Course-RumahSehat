@@ -51,8 +51,8 @@ public class PasienRestServiceImpl implements PasienRestService{
     }
 
     @Override
-    public void updateSaldo(String uuid, Long saldo) {
-        PasienModel pasienLama = getPasienById(uuid);
+    public void updateSaldo(String username, Long saldo) {
+        PasienModel pasienLama = getPasienByUsername(username);
         Long saldoTerbaru = pasienLama.getSaldo() + saldo;
         pasienLama.setSaldo(saldoTerbaru);
         pasienDb.save(pasienLama);
@@ -60,8 +60,14 @@ public class PasienRestServiceImpl implements PasienRestService{
 
     @Override
     public PasienModel getPasienByUsername(String username){
-        return pasienDb.findByUsername(username);
+        PasienModel pasien = pasienDb.findByUsername(username);
+//        if (pasien.isPresent()) {
+//            return pasien.get();
+//        } else {
+//            throw new NoSuchElementException();
+//        }
+        return pasien;
+//        return pasienDb.findByUsername(username);
     }
-
 
 }

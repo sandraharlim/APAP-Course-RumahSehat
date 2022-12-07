@@ -5,54 +5,57 @@ import 'package:http/http.dart' as http;
 import 'package:rumahsehat_app/models/pasienmodel.dart';
 
 class FormSaldo extends StatefulWidget {
-  const FormSaldo({Key? key}) : super(key: key);
+  final String token;
+  const FormSaldo({Key? key, required this.token}) : super(key: key);
 
   @override
   FormSaldoState createState() => FormSaldoState();
 }
 
-Future<Pasien> fetchPasien() async {
-  String token = "uuid-1";
-  String url = 'http://127.0.0.1:8080/api/pasien/profile';
-
-  final response = await http.get(Uri.parse(url),
-      headers: {"Authorization": token, "Content-Type": "application/json"});
-  if (response.statusCode == 200) {
-    var data = json.decode(response.body);
-    // print(data);
-    return Pasien.fromJson(jsonDecode(response.body));
-  } else {
-    throw Exception("Failed to fetch pasien data");
-  }
-}
-
-Future<Pasien> updateSaldo(int saldo) async {
-  String token = "uuid-1";
-  String url = 'http://127.0.0.1:8080/api/pasien/profile/update-saldo';
-  final response = await http.put(
-    Uri.parse(url),
-    headers: {
-      "Authorization": token,
-      'Content-Type': 'application/json; charset=UTF-8',
-      "Access-Control_Allow_Origin": "*",
-    },
-    body: jsonEncode(<String, int>{
-      'saldo': saldo,
-    }),
-  );
-  if (response.statusCode == 200) {
-    return Pasien.fromJson(jsonDecode(response.body));
-  } else {
-    throw Exception('Failed Top Up Saldo');
-  }
-}
-
 class FormSaldoState extends State<FormSaldo> {
   final TextEditingController saldoController = TextEditingController();
   late Future<Pasien>? _futurePasien;
+  late String jwtToken;
+
+  Future<Pasien> fetchPasien() async {
+    String url = 'http://localhost:8080/api/pasien/profile';
+
+    final response = await http.get(Uri.parse(url), headers: <String, String>{
+      "Authorization": jwtToken,
+      "Content-Type": "application/json;charset=UTF-8"
+    });
+    if (response.statusCode == 200) {
+      var data = json.decode(response.body);
+      print(data);
+      return Pasien.fromJson(jsonDecode(response.body));
+    } else {
+      throw Exception("Failed to fetch pasien data");
+    }
+  }
+
+  Future<Pasien> updateSaldo(int saldo) async {
+    String url = 'http://127.0.0.1:8080/api/pasien/profile/update-saldo';
+    final response = await http.put(
+      Uri.parse(url),
+      headers: {
+        "Authorization": jwtToken,
+        'Content-Type': 'application/json; charset=UTF-8',
+        "Access-Control_Allow_Origin": "*",
+      },
+      body: jsonEncode(<String, int>{
+        'saldo': saldo,
+      }),
+    );
+    if (response.statusCode == 200) {
+      return Pasien.fromJson(jsonDecode(response.body));
+    } else {
+      throw Exception('Failed Top Up Saldo');
+    }
+  }
 
   @override
   void initState() {
+    jwtToken = widget.token;
     super.initState();
     _futurePasien = fetchPasien();
   }
@@ -86,7 +89,7 @@ class FormSaldoState extends State<FormSaldo> {
           padding: const EdgeInsets.all(8.0),
           child: FutureBuilder<Pasien>(
             future: _futurePasien,
-            builder: (context, snapshot) {
+            builder: (context, AsyncSnapshot<Pasien> snapshot) {
               if (snapshot.connectionState == ConnectionState.done) {
                 if (snapshot.hasData) {
                   return Column(
@@ -122,7 +125,7 @@ class FormSaldoState extends State<FormSaldo> {
                     ],
                   );
                 } else if (snapshot.hasError) {
-                  return Text('Error telah terjadi, silahkan kembali');
+                  return Text('Saldo telah berhasil di update!');
                 }
               }
               return const CircularProgressIndicator();
