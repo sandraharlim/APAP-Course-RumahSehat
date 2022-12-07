@@ -65,11 +65,11 @@ public class AppointmentRestController {
         if (selectedDokter == null) {
             response.setError("Anda belum memilih dokter, atau dokter tidak ditemukan");
             return response;
-        } 
+        }
 
         newAppointment.setDokter(selectedDokter);
 
-        // ganti format date dan time dari flutter (dari String) 
+        // ganti format date dan time dari flutter (dari String)
         // jadi LocalDateTime
         LocalDateTime waktuAwal = appointmentService.convertWaktuAwalFromFlutter(date, time);
         if (waktuAwal == null) {
@@ -90,7 +90,7 @@ public class AppointmentRestController {
             String successMessage = "Berhasil menambahkan Appointment " +
                 newAppointment.getKode() + " di jam " +
                 appointmentService.getWaktuAwalWaktuAkhir(newAppointment);
-            
+
             response.setSuccess(successMessage);
             return response;
         }
