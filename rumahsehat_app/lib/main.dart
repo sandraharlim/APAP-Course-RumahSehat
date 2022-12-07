@@ -28,6 +28,7 @@ class MyHomePage extends StatelessWidget {
       appBar: AppBar(
         title: Text("Rumah Sehat"),
       ),
+      drawer: const NavigationDrawer(),
       body: Container(
         child: Padding(
           padding: const EdgeInsets.all(10.0),
@@ -47,7 +48,8 @@ class MyHomePage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Icon(
-                        Icons.medical_information_rounded,
+                        // Icons.medical_information_rounded,
+                        Icons.medical_services_rounded,
                         size: 50,
                         color: Colors.white,
                       ),
@@ -73,7 +75,8 @@ class MyHomePage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Icon(
-                        Icons.medical_information_rounded,
+                        // Icons.medical_information_rounded,
+                        Icons.medical_services_rounded,
                         size: 50,
                         color: Colors.white,
                       ),

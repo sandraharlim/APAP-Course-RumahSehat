@@ -23,7 +23,7 @@
                         <span style="color: red">Invalid username and password.</span>
                     </div>
                     <br>
-                    <form th:action="@{/login}" method="post">
+                    <form  th:action="@{/login}" method="post" id="myForm">
                         <div class="row form-group">
                             <label class="col-sm-4">Username:</label>
                             <input type="text" class="col-sm-8 form-control input-sm" name="username">
@@ -33,12 +33,15 @@
                             <input type="password" class="col-sm-8 form-control input-sm" name="password">
                         </div>
                         <div class="row form-group justify-content-center">
-                            <button type="submit" class="btn btn-primary">Sign In</button>
+                            <button type="submit" class="btn btn-primary" onclick="submitform()">Sign In</button>
                         </div>
                         <div>
                             atau <a th:href="@{/login-sso}">Masuk sebagai Admin (SSO UI)</a>
                         </div>
                     </form>
+                    <div class="row form-group justify-content-center">
+                        <button type="submit" class="btn btn-primary" onclick="tes()">tes</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -46,4 +49,24 @@
 </div>
 
 </body>
+<script>
+    function submitform() {
+        var formData = JSON.stringify($("#myForm").serializeArray());
+        // alert("Sending Json");
+        // print(formData);
+        console.log(formData);
+        demo();
+    }
+    function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    async function demo() {
+        for (let i = 0; i < 5; i++) {
+            console.log(`Waiting ${i} seconds...`);
+            await sleep(i * 1000);
+        }
+        console.log('Done');
+    }
+</script>
 </html>

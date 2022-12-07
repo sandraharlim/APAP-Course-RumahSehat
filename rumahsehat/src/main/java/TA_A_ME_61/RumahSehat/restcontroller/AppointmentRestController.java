@@ -4,6 +4,8 @@ import TA_A_ME_61.RumahSehat.restmodel.DokterDropdownItem;
 import TA_A_ME_61.RumahSehat.restmodel.ResponseNewAppointment;
 import TA_A_ME_61.RumahSehat.restmodel.SubmittedAppointment;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -58,14 +60,24 @@ public class AppointmentRestController {
         ResponseNewAppointment response = new ResponseNewAppointment();
 
         // pasiennya masih statis, nanti bisa ambil dari token login
-        PasienModel pasien = pasienService.getPasienByUuid("a9ad1618-6597-11ed-85c8-803253019798");
-        newAppointment.setPasien(pasien);
+//        PasienModel pasien = pasienService.getPasienByUuid("a9ad1618-6597-11ed-85c8-803253019798");
+//        newAppointment.setPasien(pasien);
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();
+        response.setUsername(username);
+        PasienModel loggedInPasien = pasienService.getPasienByUsername(username);
+        if (loggedInPasien == null) {
+            response.setError("Anda bukan pasien.");
+            return response;
+        }
+        newAppointment.setPasien(loggedInPasien);
 
         DokterModel selectedDokter = dokterService.getDokterByUuid(uuidDokter);
         if (selectedDokter == null) {
             response.setError("Anda belum memilih dokter, atau dokter tidak ditemukan");
             return response;
-        } 
+        }
 
         newAppointment.setDokter(selectedDokter);
 
