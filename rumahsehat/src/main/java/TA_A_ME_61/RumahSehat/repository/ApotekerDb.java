@@ -11,4 +11,6 @@ import java.util.Optional;
 public interface ApotekerDb extends JpaRepository<ApotekerModel,String>  {
     //JPA
     Optional<ApotekerModel> findByUuid(String uuid);
+
+    ApotekerModel findByUsername(String username);
 }

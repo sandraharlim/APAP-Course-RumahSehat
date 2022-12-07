@@ -15,4 +15,6 @@ public interface DokterService {
 
     void deleteDokter(DokterModel dokter);
 
+    DokterModel getDokterByUsername(String username);
+
 }

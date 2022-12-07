@@ -22,11 +22,12 @@
         <div class="card-body" style="text-align: center">
             <h5 class="card-title">Perintah Hapus Berhasil Dijalankan</h5>
             <p class="card-text" th:text="'Pasien dengan nama ' + ${pasien.nama} + ' berhasil dihapus.'"></p>
-            <a class="btn btn-outline-info" href="/pasien/viewall">Kembali</a>
+            <a class="btn btn-outline-info" href="/pasien/">Kembali</a>
             <br><br>
         </div>
     </div>
 </div>
+<br><br>
 <footer th:replace="fragments/fragment :: footer"></footer>
 
 </body>
