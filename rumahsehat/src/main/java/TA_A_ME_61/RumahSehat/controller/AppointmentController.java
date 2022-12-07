@@ -45,11 +45,10 @@ public class AppointmentController {
 
 
     @GetMapping("/viewall")
-    public String viewAllAppointment(Model model) {
+    public String viewAllAppointment(Model model) { // admin dan dokter only
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
         DokterModel dokter = dokterService.getDokterByUsername(username);
-        PasienModel pasien = pasienService.getPasienByUsername(username);
         AdminModel admin = adminService.getAdminByUsername(username);
 
         List<AppointmentModel> listAppointment = new ArrayList<>();
@@ -65,12 +64,6 @@ public class AppointmentController {
             listAppointment = (listAppointment == null) ? new ArrayList<>() : listAppointment; // kalau null diisi list kosong aja
             model.addAttribute("listAppointment", listAppointment);
             return "appointment/viewall-dokter-appointment";
-
-        } else if (pasien != null) {
-            listAppointment = appointmentService.getAllApptByPasien(pasien);
-            listAppointment = (listAppointment == null) ? new ArrayList<>() : listAppointment; // kalau null diisi list kosong aja
-            model.addAttribute("listAppointment", listAppointment);
-            return "appointment/viewall-pasien-appointment"; // harusnya ke mobile
 
         } else { // role nya gabener, tp harusnya nanti udh di handle websecurityconfig sih
             model.addAttribute("errorMessage", "Anda (" + username + ") tidak memiliki akses untuk membuka halaman ini (role salah).");
