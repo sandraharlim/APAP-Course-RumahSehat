@@ -30,11 +30,13 @@ public class WebSecurityConfig {
                 .antMatchers("/login-sso", "/validate-ticket").permitAll()
 //                .antMatchers("/user/viewall").hasAuthority("Admin")
 //                .antMatchers("/user/add").hasAuthority("Admin")
-//                .antMatchers("/dokter/viewall").hasAuthority("dokter")
-//                .antMatchers("/apoteker/viewall").hasAuthority("apoteker")
-
+//                .antMatchers("/dokter/viewall").hasAuthority("Dokter")
+//                .antMatchers("/apoteker/viewall").hasAuthority("Apoteker")
 //                .antMatchers("/user/delete").hasAuthority("Admin")
-//                .antMatchers("/penyelenggara/add").hasAuthority("Manajer")
+//
+//                .antMatchers("/resep/**").hasAuthority("Dokter")
+//                .antMatchers("/resep/**").hasAuthority("Admin")
+//                .antMatchers("/resep/detail/**").hasAuthority("Apoteker")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()

@@ -21,6 +21,16 @@ public class TagihanServiceImpl implements TagihanService{
         return tagihanDb.findAll();
     }
 
+    @Override
+    public void addTagihan(TagihanModel tagihan) {
+        tagihanDb.save(tagihan);
+    }
+
+    @Override
+    public TagihanModel getTagihanById(Long id) {
+        return tagihanDb.findById(id).orElse(null);
+    }
+
 //    @Override
 //    public List<TagihanModel> getListTagihanByUuid(String uuid) {
 //        List<TagihanModel> allTagihan = tagihanDb.findAll();

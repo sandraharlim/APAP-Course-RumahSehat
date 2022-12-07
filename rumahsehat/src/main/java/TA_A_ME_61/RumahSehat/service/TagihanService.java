@@ -6,6 +6,8 @@ import java.util.List;
 
 public interface TagihanService {
     List<TagihanModel> getListTagihan();
+    void addTagihan(TagihanModel tagihan);
+    TagihanModel getTagihanById(Long id);
 
 //    List<TagihanModel> getListTagihanByUuid(String uuid);
 

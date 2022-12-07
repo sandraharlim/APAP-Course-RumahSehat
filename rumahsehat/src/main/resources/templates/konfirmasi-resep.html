@@ -7,7 +7,6 @@
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" type="text/css" />
   <link rel="stylesheet" th:href="@{/css/style.css}"/>
-
 </head>
 <body>
 <nav th:replace="fragments/fragment :: navbar (${'/resep'})"></nav>
@@ -15,13 +14,17 @@
   <div class="card m-4 p-4">
     <div class="card-body">
       <div class="justify-content-center">
-        <h2 th:text="'Belum bisa menambahkan resep karena stok tidak cukup'"></h2>
+        <h2 th:text="'Resep untuk appointment code ' + ${resep.appointment.kode} + ' berhasil dikonfirmasi.'"></h2>
         <br>
-        <a class="btn btn-primary" href="/">Home</a>
+        <a class="btn btn-primary" th:href="@{/resep/detail/} + ${resep.id}">Lihat Resep</a>
+        <a class="btn btn-primary" href="/">     Home      </a>
       </div>
     </div>
   </div>
 </div>
+
+<br><br>
 <footer th:replace="fragments/fragment :: footer"></footer>
+
 </body>
 </html>
