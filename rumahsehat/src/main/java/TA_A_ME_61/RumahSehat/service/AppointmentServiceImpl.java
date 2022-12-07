@@ -198,7 +198,9 @@ public class AppointmentServiceImpl implements AppointmentService{
         String[] splittedDate = date.split("/"); // 12/21/2022
         String yyyy = splittedDate[2];
         String mm = splittedDate[0];
+        mm = (mm.length() == 1) ? ("0" + mm) : mm;
         String dd = splittedDate[1];
+        dd = (dd.length() == 1) ? ("0" + dd) : dd;
 
         return yyyy + "-" + mm + "-" + dd;
     }
