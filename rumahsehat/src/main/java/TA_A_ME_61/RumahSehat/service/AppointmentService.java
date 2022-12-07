@@ -24,4 +24,8 @@ public interface AppointmentService {
     List<AppointmentModel> getAllApptByDokter(DokterModel dokter);
     List<AppointmentModel> getAllApptByPasien(PasienModel pasien);
     AppointmentModel getAppointmentById(Long id);
+
+    AppointmentModel getAppointmentByKode(String kode);
+
+    AppointmentModel saveAppointment(AppointmentModel appointment);
 }

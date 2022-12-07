@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring_security">
+<head>
+  <meta charset="UTF-8">
+  <title>Rumah Sehat</title>
+  <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+  <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+<body>
+<nav th:replace="fragments/fragment :: navbar('appointment')"></nav>
+<div class="container">
+  <div class="card m-4 p-4">
+    <div class="card-body">
+      <div class="justify-content-center">
+        <div class="row">
+          <div class="col">
+            <a class="btn" style="background-color: #e7e6ff" href="/appointment/">Back</a>
+          </div>
+        </div>
+        <br>
+        <h2>Detail Appointment</h2>
+        <br>
+        <div class="card">
+          <div class="card-header">
+            <div class="row">
+              <div class="col">
+                <h3>Nama Dokter</h3>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <h7 th:text="${appointment.dokter.nama}"></h7>
+              </div>
+            </div>
+            <br>
+            <div class="row">
+              <div class="col">
+                <h3>Nama Pasien</h3>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <h7 th:text="${appointment.pasien.nama}"></h7>
+              </div>
+            </div>
+            <br>
+            <div class="row">
+              <div class="col">
+                <h3>Waktu Awal</h3>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <h7 th:text="${#temporals.format(appointment.waktuAwal,'d MMMM yyyy HH:mm')}"></h7>
+              </div>
+            </div>
+            <br>
+            <div class="row">
+              <div class="col">
+                <h3>Status Appointment</h3>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <h7 th:if="${appointment.isDone}">Sudah Selesai</h7>
+                <h7 th:unless="${appointment.isDone}">Belum Dimulai</h7>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <a class="btn float-sm-right" style="background-color: #e7e6ff"
+                   href="#" th:if="${appointment.resep} != null">Detail Resep</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br>
+        <div class="row justify-content-center">
+          <div class="col justify-content-center" sec:authorize="hasAuthority('Dokter')">
+            <a class="btn float-sm-right" style="background-color: #e7e6ff"
+               href="#" th:if="${appointment.isDone} == false">Create Resep</a>
+          </div>
+          <div class="col justify-content-center" sec:authorize="hasAuthority('Dokter')">
+            <a class="btn justify-content-center" style="background-color: #e7e6ff"
+               href="#" th:if="${appointment.isDone} == false" data-toggle="modal"
+               data-target="#exampleModal">Appointment Selesai</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Konfirmasi Appointment</h5>
+        <button type="button" class="btn-close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div th:if="${appointment.resep == null}">
+          <form action="/appointment/finish" method="post">
+            <h7>Apakah Anda ingin menyelesaikan appointment tanpa resep?</h7>
+            <div class="form-group">
+              <input type="text" th:value="${appointment.kode}" class="form-control" name="kode" hidden>
+              <button type="submit" class="btn" style="background-color: #b7a2ff">Ya</button>
+              <button type="button" class="btn" style="background-color: #ffbac0" data-dismiss="modal">Batal</button>
+            </div>
+          </form>
+        </div>
+        <div th:unless="${appointment.resep == null}">
+          <div th:if="${appointment.resep.isDone == false}">
+            <h7>Anda tidak dapat menyelesaikan appointment karena ada resep yang belum selesai.</h7>
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Ok</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
