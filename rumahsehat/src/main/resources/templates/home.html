@@ -17,52 +17,52 @@
     <nav th:replace="fragments/fragment :: navbar('home')"></nav>
 
     <div class="welcome">
-        <h2 th:text="'Selamat Datang ' + ${user.username} + '. Selamat Bekerja!'"></h2>
-        <h2 th:text="'Role : ' + ${user.role}"></h2>
+        <h2 class="text-center text-black" th:text="'Hello '+${#httpServletRequest.remoteUser}+'!'"></h2>
     </div>
-    
+
     <section class="services" id="services">
 
         <div class="box-container">
 
-            <div class="box" sec:authorize='hasAnyAuthority("__${item.entitlements}__")'>
-                <img src="/image/doctor.png">
+            <div class="box" sec:authorize="hasAuthority('Admin')">
+                <img src="https://o.remove.bg/downloads/2956ed72-388e-4dda-bfb5-f779f8ce318c/doctor__1_-removebg-preview.png">
                 <h3>Tambah Dokter</h3>
             </div>
 
-            <div class="box" sec:authorize='hasAnyAuthority("__${item.entitlements}__")'>
-                <img src="/image/doctor.png">
+            <div class="box" sec:authorize="hasAuthority('Admin')">
+                <img src="https://o.remove.bg/downloads/2956ed72-388e-4dda-bfb5-f779f8ce318c/doctor__1_-removebg-preview.png">
                 <h3>Lihat Daftar Dokter</h3>
             </div>
 
-            <div class="box" sec:authorize='hasAnyAuthority("__${item.entitlements}__")'>
-                <img src="/image/pharmacy.png">
+            <div class="box" sec:authorize="hasAuthority('Admin')">
+                <img src="https://o.remove.bg/downloads/603e1c47-52be-4f0b-9b5f-b04d964f1098/pharmacy__2_-removebg-preview.png">
                 <h3>Tambah Apoteker</h3>
             </div>
 
-            <div class="box" sec:authorize='hasAnyAuthority("__${item.entitlements}__")'>
-                <img src="/image/pharmacy.png">
+            <div class="box" sec:authorize="hasAuthority('Admin')">
+                <img src="https://o.remove.bg/downloads/603e1c47-52be-4f0b-9b5f-b04d964f1098/pharmacy__2_-removebg-preview.png">
                 <h3>Lihat Daftar Apoteker</h3>
             </div>
 
-            <div class="box" sec:authorize='hasAnyAuthority("__${item.entitlements}__")'>
-                <img src="/image/medical-appointment.png">
+            <div class="box" sec:authorize="hasAuthority('Dokter')">
+                <img src="https://o.remove.bg/downloads/3c8560b2-3f79-4d05-82b8-9faeae8ef951/mobile-transfer-removebg-preview.png">
                 <h3>Lihat Jadwal Appointment</h3>
             </div>
 
-            <div class="box" sec:authorize='hasAnyAuthority("__${item.entitlements}__")'>
-                <img src="/image/transaction.png">
+            <div class="box" sec:authorize="hasAuthority('Apoteker')">
+                <img src="https://o.remove.bg/downloads/2628f3d2-9b7a-4991-a7a9-ac4979f8397f/drug-removebg-preview.png">
                 <h3>Lihat Resep Obat</h3>
             </div>
 
-            <div class="box" sec:authorize='hasAnyAuthority("__${item.entitlements}__")'>
-                <img src="/image/transaction.png">
+            <div class="box" sec:authorize="hasAuthority('Apoteker')">
+                <img src="https://o.remove.bg/downloads/2628f3d2-9b7a-4991-a7a9-ac4979f8397f/drug-removebg-preview.png">
                 <h3>Buat Resep Obat</h3>
             </div>
-            
-            <div class="box" sec:authorize="hasAnyAuthority('Admin', 'Apoteker')"
+
+            <div class="box"
+                 sec:authorize="hasAnyAuthority('Admin','Apoteker')"
                  onclick="location.href='/obat/'">
-                <img src="/image/medicine.png">
+                <img src="https://o.remove.bg/downloads/2188d8d8-7fc0-46f8-bbe4-9b3309ea4a72/medicine__1_-removebg-preview.png">
                 <h3>Lihat Daftar Obat</h3>
             </div>
 
@@ -77,7 +77,7 @@
         <div class="content">
             <h2>Stay Safe, Stay Healthy</h2>
             <p>Kesehatan Anda, Prioritas Kami.</p>
-            
+
         </div>
     </section>
 <footer th:replace="fragments/fragment :: footer"></footer>

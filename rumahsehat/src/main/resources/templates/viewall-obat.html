@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://thymeleaf.org"
-                xmlns:sec="http://www.thymeleaf.org/extras/spring_security">
+      xmlns:sec="http://www.thymeleaf.org/extras/spring_security">
 <head>
   <meta charset="UTF-8">
   <title>Rumah Sehat</title>
@@ -42,10 +42,11 @@
                 <td th:text="${obat.namaObat}"></td>
                 <td th:text="${obat.harga}"></td>
                 <td th:text="${obat.stok}"></td>
-                <td>
+                <td sec:authorize="hasAuthority('Apoteker')">
                   <div>
                     <a class="btn" style="background-color: #b7a2ff"
-                       th:href="@{/obat/ubah-stok/} + ${obat.idObat}">Ubah stok obat</a>
+                       th:href="@{/obat/ubah-stok/} + ${obat.idObat}"
+                      >Ubah stok obat</a>
                   </div>
                 </td>
               </tr>
