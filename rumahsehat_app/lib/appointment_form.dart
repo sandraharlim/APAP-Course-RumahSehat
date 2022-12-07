@@ -5,9 +5,7 @@ import 'package:date_format/date_format.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:dio/dio.dart';
 
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:collection';
@@ -35,16 +33,18 @@ class _AppointmentFormState extends State<AppointmentForm> {
   };
 
   String selectedNamaTarif = ""; // Tirta-1000
+  String token = "";
+  // "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwYXNpZW4yIiwiZXhwIjoxNjcxMjQ0MTc3fQ.4vuSC4zLB67MMvnNSN-s36ELL2iVRO5aUl3DNRlXKWrNWCErEjFRJZQO1zzXSSBYuoAXtgsCx0XhpIjvYLbLRA";
 
   Future<void> getListOfDokter() async {
     // localhost yg bisa diakses dr emulator
     const url = 'http://10.0.2.2:8080/api/appointment/doctors-flutter';
-
     // mock server
     // const url =
     //     'https://22202f32-174d-4a73-abb7-98e3816b7709.mock.pstmn.io/api/appointment/doctors-flutter';
     try {
-      final response = await http.get(Uri.parse(url));
+      final response =
+          await http.get(Uri.parse(url), headers: {"Authorization": token});
 
       List<dynamic> data = jsonDecode(response.body);
 
@@ -68,6 +68,11 @@ class _AppointmentFormState extends State<AppointmentForm> {
       });
     } catch (p) {
       print(p);
+      if (token == "") {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Anda belum login")),
+        );
+      }
     }
   }
 
@@ -83,7 +88,7 @@ class _AppointmentFormState extends State<AppointmentForm> {
 
   DateTime selectedDate = DateTime.now();
 
-  TimeOfDay selectedTime = TimeOfDay(hour: 00, minute: 00);
+  TimeOfDay selectedTime = const TimeOfDay(hour: 00, minute: 00);
 
   TextEditingController _dateController = TextEditingController();
   TextEditingController _timeController = TextEditingController();
@@ -279,6 +284,17 @@ class _AppointmentFormState extends State<AppointmentForm> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
+                      Padding(
+                        padding: EdgeInsets.only(right: 20.0),
+                        child: ElevatedButton(
+                          child: const Text(
+                            "login",
+                          ),
+                          onPressed: () {
+                            login();
+                          },
+                        ),
+                      ),
                       ElevatedButton(
                         onPressed: () {
                           getListOfDokter();
@@ -337,6 +353,35 @@ class _AppointmentFormState extends State<AppointmentForm> {
     print(correspondingUuid[selectedNamaTarif]);
   }
 
+  Future<void> login() async {
+    const urlPost = "http://10.0.2.2:8080/login";
+    String username = "pasien1";
+    String password = "Qwerty123";
+    try {
+      final response = await http.post(Uri.parse(urlPost),
+          body: jsonEncode({"username": username, "password": password}),
+          // body: jsonEncode({"username": "apoteker1", "password": "Qwerty123"}), // ngetes kalo salah user
+          headers: {"Authorization": token});
+      Map<String, String> headers = response.headers;
+      String? jwtToken = headers["authorization"];
+
+      if (jwtToken != null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("berhasil login dengan username " + username)),
+        );
+        setState(() {
+          token = jwtToken;
+        });
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Username atau password salah")),
+        );
+      }
+    } catch (p) {
+      print(p);
+    }
+  }
+
   Future<void> submitForm() async {
     const urlPost = "http://10.0.2.2:8080/api/appointment/create";
     try {
@@ -349,7 +394,8 @@ class _AppointmentFormState extends State<AppointmentForm> {
           headers: {
             // https://stackoverflow.com/questions/53388426/flutter-send-json-over-http-post
             "content-type": "application/json",
-            "accept": "application/json"
+            "accept": "application/json",
+            "Authorization": token
           });
 
       Map<String, dynamic> extractedData = jsonDecode(response.body);
