@@ -24,42 +24,42 @@
 
         <div class="box-container">
 
-            <div class="box" >
+            <div class="box" sec:authorize='hasAnyAuthority("__${item.entitlements}__")'>
                 <img src="https://i.ibb.co/xsWY6st/doctor-1-removebg-preview.png">
                 <h3>Tambah Dokter</h3>
             </div>
 
-            <div class="box" >
+            <div class="box" sec:authorize='hasAnyAuthority("__${item.entitlements}__")'>
                 <img src="https://i.ibb.co/xsWY6st/doctor-1-removebg-preview.png">
                 <h3>Lihat Daftar Dokter</h3>
             </div>
 
-            <div class="box" >
+            <div class="box" sec:authorize='hasAnyAuthority("__${item.entitlements}__")'>
                 <img src="https://i.ibb.co/Ss9xCXg/pharmacy-2-removebg-preview.png">
                 <h3>Tambah Apoteker</h3>
             </div>
 
-            <div class="box" >
+            <div class="box" sec:authorize='hasAnyAuthority("__${item.entitlements}__")'>
                 <img src="https://i.ibb.co/Ss9xCXg/pharmacy-2-removebg-preview.png">
                 <h3>Lihat Daftar Apoteker</h3>
             </div>
 
-            <div class="box" >
+            <div class="box" sec:authorize='hasAnyAuthority("__${item.entitlements}__")'>
                 <img src="https://i.ibb.co/5L3K8MS/appointment-removebg-preview.png">
                 <h3>Lihat Jadwal Appointment</h3>
             </div>
 
-            <div class="box" sec:authorize="hasRole('APOTEKER')">
+            <div class="box" sec:authorize='hasAnyAuthority("__${item.entitlements}__")'>
                 <img src="https://i.ibb.co/qNz3rqM/drug-removebg-preview-1.png">
                 <h3>Lihat Resep Obat</h3>
             </div>
 
-            <div class="box" sec:authorize="hasRole('APOTEKER')">
+            <div class="box" sec:authorize='hasAnyAuthority("__${item.entitlements}__")'>
                 <img src="https://i.ibb.co/qNz3rqM/drug-removebg-preview-1.png">
                 <h3>Buat Resep Obat</h3>
             </div>
             
-            <div class="box" sec:authorize="hasRole('APOTEKER')">
+            <div class="box" sec:authorize='hasAnyAuthority("__${item.entitlements}__")'>
                 <img src="https://i.ibb.co/gd8WXrc/drugs-removebg-preview.png">
                 <h3>Lihat Daftar Obat</h3>
             </div>
