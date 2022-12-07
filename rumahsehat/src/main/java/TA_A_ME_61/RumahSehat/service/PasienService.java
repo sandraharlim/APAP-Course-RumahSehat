@@ -17,3 +17,4 @@ public interface PasienService {
     void addPasien(PasienModel pasien);
 
 }
+

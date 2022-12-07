@@ -3,7 +3,6 @@ package TA_A_ME_61.RumahSehat.controller;
 import TA_A_ME_61.RumahSehat.model.AdminModel;
 import TA_A_ME_61.RumahSehat.model.ApotekerModel;
 import TA_A_ME_61.RumahSehat.model.DokterModel;
-import TA_A_ME_61.RumahSehat.model.PasienModel;
 import TA_A_ME_61.RumahSehat.model.UserModel;
 import TA_A_ME_61.RumahSehat.security.xml.Attributes;
 import TA_A_ME_61.RumahSehat.security.xml.ServiceResponse;
@@ -174,3 +173,4 @@ public class BaseController {
 //        return new ModelAndView("redirect:" + Setting.SERVER_LOGOUT + Setting.CLIENT_LOGOUT);
 //    }
 }
+

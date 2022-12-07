@@ -1,20 +1,17 @@
 package TA_A_ME_61.RumahSehat.restcontroller;
 
-import TA_A_ME_61.RumahSehat.restmodel.AppointmentRestModel;
 import TA_A_ME_61.RumahSehat.restmodel.DokterDropdownItem;
 import TA_A_ME_61.RumahSehat.restmodel.ResponseNewAppointment;
 import TA_A_ME_61.RumahSehat.restmodel.SubmittedAppointment;
-import TA_A_ME_61.RumahSehat.restservice.AppointmentRestService;
-
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import TA_A_ME_61.RumahSehat.model.*;
 import TA_A_ME_61.RumahSehat.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -36,23 +33,17 @@ public class AppointmentRestController {
     private AppointmentService appointmentService;
 
     @Autowired
-    private AppointmentRestService appointmentRestService;
-
-    @Autowired
     private DokterService dokterService;
 
     @Autowired
     private PasienService pasienService;
-
-    // @Autowired
-    // private AdminService adminService;
 
     @GetMapping("/doctors-flutter")
     public List<DokterDropdownItem> createAppointmentFlutter() {
         System.out.println("masuk get dokter");
         List<DokterModel> listDokter = dokterService.getListDokter();
 
-        List<DokterDropdownItem> dokterDropdownItems = appointmentRestService.getDokterDropdownItems(listDokter);
+        List<DokterDropdownItem> dokterDropdownItems = appointmentService.getDokterDropdownItems(listDokter);
 
         return dokterDropdownItems;
     }
@@ -67,18 +58,8 @@ public class AppointmentRestController {
         ResponseNewAppointment response = new ResponseNewAppointment();
 
         // pasiennya masih statis, nanti bisa ambil dari token login
-//        PasienModel pasien = pasienService.getPasienByUuid("a9ad1618-6597-11ed-85c8-803253019798");
-//        newAppointment.setPasien(pasien);
-
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String username = auth.getName();
-        response.setUsername(username);
-        PasienModel loggedInPasien = pasienService.getPasienByUsername(username);
-        if (loggedInPasien == null) {
-            response.setError("Anda bukan pasien.");
-            return response;
-        }
-        newAppointment.setPasien(loggedInPasien);
+        PasienModel pasien = pasienService.getPasienByUuid("a9ad1618-6597-11ed-85c8-803253019798");
+        newAppointment.setPasien(pasien);
 
         DokterModel selectedDokter = dokterService.getDokterByUuid(uuidDokter);
         if (selectedDokter == null) {
@@ -90,7 +71,7 @@ public class AppointmentRestController {
 
         // ganti format date dan time dari flutter (dari String)
         // jadi LocalDateTime
-        LocalDateTime waktuAwal = appointmentRestService.convertWaktuAwalFromFlutter(date, time);
+        LocalDateTime waktuAwal = appointmentService.convertWaktuAwalFromFlutter(date, time);
         if (waktuAwal == null) {
             response.setError("Waktu yg dipilih tidak sesuai (jam > 23 atau menit > 59)");
             return response;
@@ -100,15 +81,15 @@ public class AppointmentRestController {
         newAppointment.setWaktuAwal(waktuAwal);
 
         // validasi jadwal dokter dan pasien
-        String hasilValidasi = appointmentRestService.validasi(newAppointment);
+        String hasilValidasi = appointmentService.validasi(newAppointment);
 
         if (hasilValidasi.equals("Valid")) {
-            appointmentRestService.addAppointment(newAppointment);
-            appointmentRestService.setKodeNewAppointment(newAppointment); // udh langsung ke update di db juga
+            appointmentService.addAppointment(newAppointment);
+            appointmentService.setKodeNewAppointment(newAppointment); // udh langsung ke update di db juga
 
             String successMessage = "Berhasil menambahkan Appointment " +
-                newAppointment.getKode() + " di jam " +
-                appointmentService.getWaktuAwalWaktuAkhir(newAppointment);
+                    newAppointment.getKode() + " di jam " +
+                    appointmentService.getWaktuAwalWaktuAkhir(newAppointment);
 
             response.setSuccess(successMessage);
             return response;
@@ -119,23 +100,5 @@ public class AppointmentRestController {
         return response;
     }
 
-    @GetMapping("/viewall")
-    public List<AppointmentRestModel> viewAllAppointment() { // hanya boleh pasien
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String username = auth.getName();
-        PasienModel pasien = pasienService.getPasienByUsername(username);
-
-        List<AppointmentModel> listAppointment = new ArrayList<>();
-        List<AppointmentRestModel> listRestAppt = new ArrayList<>();
-
-        if (pasien != null) {
-            listAppointment = appointmentService.getAllApptByPasien(pasien);
-            listAppointment = (listAppointment == null) ? new ArrayList<>() : listAppointment; // kalau null diisi list kosong aja
-            listRestAppt = appointmentRestService.convertApptToRestAppt(listAppointment);
-            return listRestAppt;
-
-        } else { // role nya gabener, tp harusnya nanti udh di handle websecurityconfig sih
-            return null;
-        }
-    }
 }
+

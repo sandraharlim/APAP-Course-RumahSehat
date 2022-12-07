@@ -5,11 +5,6 @@ import TA_A_ME_61.RumahSehat.service.AdminService;
 import TA_A_ME_61.RumahSehat.service.AppointmentService;
 import TA_A_ME_61.RumahSehat.service.DokterService;
 import TA_A_ME_61.RumahSehat.service.PasienService;
-import TA_A_ME_61.RumahSehat.service.UserService;
-
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -89,3 +84,4 @@ public class AppointmentController {
         return kembalian;
     }
 }
+
