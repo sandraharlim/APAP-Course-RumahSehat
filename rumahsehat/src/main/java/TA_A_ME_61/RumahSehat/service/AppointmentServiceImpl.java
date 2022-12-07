@@ -230,4 +230,15 @@ public class AppointmentServiceImpl implements AppointmentService{
         }
         return null;
     }
+
+    @Override
+    public AppointmentModel getAppointmentByKode(String kode){
+        return appointmentDb.getAppointmentModelByKode(kode).orElse(null);
+    }
+
+    @Override
+    public AppointmentModel saveAppointment(AppointmentModel appointment){
+        return appointmentDb.save(appointment);
+
+    }
 }
