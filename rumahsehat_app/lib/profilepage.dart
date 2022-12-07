@@ -4,22 +4,36 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:rumahsehat_app/main.dart';
-import 'package:rumahsehat_app/models/pasienmodel.dart';
+// import 'package:rumahsehat_app/models/pasienmodel.dart';
 import 'package:rumahsehat_app/saldoform.dart';
 
 class ProfilePageState extends StatefulWidget {
-  const ProfilePageState({Key? key}) : super(key: key);
+  final String jwtToken;
+  final String nama;
+  final String username;
+  final String email;
+  final int saldo;
+  const ProfilePageState({
+    Key? key,
+    required this.jwtToken,
+    required this.nama,
+    required this.username,
+    required this.email,
+    required this.saldo,
+  }) : super(key: key);
 
   @override
   ProfilePage createState() => ProfilePage();
 }
 
-Future<Pasien> fetchPasien() async {
+Future<Pasien> fetchPasien(String jwtToken) async {
   String token = "uuid-1";
   String url = 'http://127.0.0.1:8080/api/pasien/profile';
 
-  final response = await http.get(Uri.parse(url),
-      headers: {"Authorization": token, "Content-Type": "application/json"});
+  final response = await http.get(Uri.parse(url), headers: <String, String>{
+    "Authorization": "Bearer $jwtToken",
+    "Content-Type": "application/json;charset=UTF-8"
+  });
   if (response.statusCode == 200) {
     var data = json.decode(response.body);
     print(data);
@@ -29,36 +43,66 @@ Future<Pasien> fetchPasien() async {
   }
 }
 
-Future<Pasien> updateSaldo(int saldo) async {
-  String token = "uuid-1";
-  String url = 'http://127.0.0.1:8080/api/pasien/profile/update-saldo';
-  final response = await http.put(
-    Uri.parse(url),
-    headers: {
-      "Authorization": token,
-      'Content-Type': 'application/json; charset=UTF-8',
-      "Access-Control_Allow_Origin": "*",
-    },
-    body: jsonEncode(<String, String>{
-      'saldo': saldo.toString(),
-    }),
-  );
+class Pasien {
+  late String uuid;
+  late String nama;
+  late String email;
+  late String username;
+  late int saldo;
 
-  if (response.statusCode == 200) {
-    return Pasien.fromJson(jsonDecode(response.body));
-  } else {
-    throw Exception('Failed Top Up Saldo');
+  Pasien(
+      {required this.uuid,
+      required this.nama,
+      required this.email,
+      required this.username,
+      required this.saldo});
+
+  factory Pasien.fromJson(Map<String, dynamic> json) {
+    return Pasien(
+        uuid: json['uuid'],
+        nama: json['nama'],
+        email: json['email'],
+        username: json['username'],
+        saldo: json['saldo']);
   }
 }
 
 class ProfilePage extends State<ProfilePageState> {
-  final TextEditingController saldoController = TextEditingController();
   late Future<Pasien> futurePasien;
+  late String jwtToken;
+  late String nama;
+  late String username;
+  late String email;
+  late int saldo;
 
   @override
   void initState() {
     super.initState();
-    futurePasien = fetchPasien();
+    jwtToken = widget.jwtToken;
+    nama = widget.nama;
+    username = widget.username;
+    email = widget.email;
+    saldo = widget.saldo;
+    futurePasien = fetchPasien(jwtToken);
+  }
+
+  Widget fieldMaker(String label, String data) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 27.0),
+      child: TextField(
+        enabled: false,
+        decoration: InputDecoration(
+            contentPadding: EdgeInsets.only(bottom: 4),
+            labelText: "$label",
+            floatingLabelBehavior: FloatingLabelBehavior.always,
+            hintText: data,
+            hintStyle: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+            )),
+      ),
+    );
   }
 
   @override
@@ -119,108 +163,128 @@ class ProfilePage extends State<ProfilePageState> {
             ),
             FutureBuilder<Pasien>(
               future: futurePasien,
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  return Padding(
-                    padding: const EdgeInsets.only(bottom: 27.0),
-                    child: TextField(
-                      enabled: false,
-                      decoration: InputDecoration(
-                          contentPadding: EdgeInsets.only(bottom: 4),
-                          labelText: "Nama",
-                          floatingLabelBehavior: FloatingLabelBehavior.always,
-                          hintText: snapshot.data!.nama,
-                          hintStyle: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                          )),
-                    ),
-                  );
-                } else if (snapshot.hasError) {
-                  return Text('${snapshot.error}');
+              builder: (context, AsyncSnapshot<Pasien> snapshot) {
+                switch (snapshot.connectionState) {
+                  case ConnectionState.waiting:
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  default:
+                    if (snapshot.hasData) {
+                      return ListView(
+                        children: [
+                          // Container(alignment: Alignment.center),
+                          fieldMaker("Nama", nama),
+                          fieldMaker("Username", username),
+                          fieldMaker("Email", email),
+                          fieldMaker("Saldo", saldo.toString()),
+                        ],
+                      );
+                    } else {
+                      return Text('Error: ${snapshot.error}');
+                    }
                 }
-                return const CircularProgressIndicator();
+                // if (snapshot.hasData) {
+                //   return Padding(
+                //     padding: const EdgeInsets.only(bottom: 27.0),
+                //     child: TextField(
+                //       enabled: false,
+                //       decoration: InputDecoration(
+                //           contentPadding: EdgeInsets.only(bottom: 4),
+                //           labelText: "Nama",
+                //           floatingLabelBehavior: FloatingLabelBehavior.always,
+                //           hintText: snapshot.data!.nama,
+                //           hintStyle: TextStyle(
+                //             fontSize: 16,
+                //             fontWeight: FontWeight.bold,
+                //             color: Colors.black,
+                //           )),
+                //     ),
+                //   );
+                // } else if (snapshot.hasError) {
+                //   return Text('${snapshot.error}');
+                // }
+                // return const CircularProgressIndicator();
               },
             ),
-            FutureBuilder<Pasien>(
-              future: futurePasien,
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  return Padding(
-                    padding: const EdgeInsets.only(bottom: 27.0),
-                    child: TextField(
-                      enabled: false,
-                      decoration: InputDecoration(
-                          contentPadding: EdgeInsets.only(bottom: 3),
-                          labelText: "Username",
-                          floatingLabelBehavior: FloatingLabelBehavior.always,
-                          hintText: snapshot.data!.username,
-                          hintStyle: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                          )),
-                    ),
-                  );
-                } else if (snapshot.hasError) {
-                  return Text('${snapshot.error}');
-                }
-                return const CircularProgressIndicator();
-              },
-            ),
-            FutureBuilder<Pasien>(
-              future: futurePasien,
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  return Padding(
-                    padding: const EdgeInsets.only(bottom: 27.0),
-                    child: TextField(
-                      enabled: false,
-                      decoration: InputDecoration(
-                          contentPadding: EdgeInsets.only(bottom: 3),
-                          labelText: "Email",
-                          floatingLabelBehavior: FloatingLabelBehavior.always,
-                          hintText: snapshot.data!.email,
-                          hintStyle: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                          )),
-                    ),
-                  );
-                } else if (snapshot.hasError) {
-                  return Text('${snapshot.error}');
-                }
-                return const CircularProgressIndicator();
-              },
-            ),
-            FutureBuilder<Pasien>(
-              future: futurePasien,
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  return Padding(
-                    padding: const EdgeInsets.only(bottom: 27.0),
-                    child: TextField(
-                      enabled: false,
-                      decoration: InputDecoration(
-                          contentPadding: EdgeInsets.only(bottom: 3),
-                          labelText: "Saldo",
-                          floatingLabelBehavior: FloatingLabelBehavior.always,
-                          hintText: (snapshot.data!.saldo).toString(),
-                          hintStyle: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                          )),
-                    ),
-                  );
-                } else if (snapshot.hasError) {
-                  return Text('${snapshot.error}');
-                }
-                return const CircularProgressIndicator();
-              },
-            ),
+            // FutureBuilder<Pasien>(
+            //   future: futurePasien,
+            //   builder: (context, snapshot) {
+            //     if (snapshot.hasData) {
+            //       return Padding(
+            //         padding: const EdgeInsets.only(bottom: 27.0),
+            //         child: TextField(
+            //           enabled: false,
+            //           decoration: InputDecoration(
+            //               contentPadding: EdgeInsets.only(bottom: 3),
+            //               labelText: "Username",
+            //               floatingLabelBehavior: FloatingLabelBehavior.always,
+            //               hintText: snapshot.data!.username,
+            //               hintStyle: TextStyle(
+            //                 fontSize: 16,
+            //                 fontWeight: FontWeight.bold,
+            //                 color: Colors.black,
+            //               )),
+            //         ),
+            //       );
+            //     } else if (snapshot.hasError) {
+            //       return Text('${snapshot.error}');
+            //     }
+            //     return const CircularProgressIndicator();
+            //   },
+            // ),
+            // FutureBuilder<Pasien>(
+            //   future: futurePasien,
+            //   builder: (context, snapshot) {
+            //     if (snapshot.hasData) {
+            //       return Padding(
+            //         padding: const EdgeInsets.only(bottom: 27.0),
+            //         child: TextField(
+            //           enabled: false,
+            //           decoration: InputDecoration(
+            //               contentPadding: EdgeInsets.only(bottom: 3),
+            //               labelText: "Email",
+            //               floatingLabelBehavior: FloatingLabelBehavior.always,
+            //               hintText: snapshot.data!.email,
+            //               hintStyle: TextStyle(
+            //                 fontSize: 16,
+            //                 fontWeight: FontWeight.bold,
+            //                 color: Colors.black,
+            //               )),
+            //         ),
+            //       );
+            //     } else if (snapshot.hasError) {
+            //       return Text('${snapshot.error}');
+            //     }
+            //     return const CircularProgressIndicator();
+            //   },
+            // ),
+            // FutureBuilder<Pasien>(
+            //   future: futurePasien,
+            //   builder: (context, snapshot) {
+            //     if (snapshot.hasData) {
+            //       return Padding(
+            //         padding: const EdgeInsets.only(bottom: 27.0),
+            //         child: TextField(
+            //           enabled: false,
+            //           decoration: InputDecoration(
+            //               contentPadding: EdgeInsets.only(bottom: 3),
+            //               labelText: "Saldo",
+            //               floatingLabelBehavior: FloatingLabelBehavior.always,
+            //               hintText: (snapshot.data!.saldo).toString(),
+            //               hintStyle: TextStyle(
+            //                 fontSize: 16,
+            //                 fontWeight: FontWeight.bold,
+            //                 color: Colors.black,
+            //               )),
+            //         ),
+            //       );
+            //     } else if (snapshot.hasError) {
+            //       return Text('${snapshot.error}');
+            //     }
+            //     return const CircularProgressIndicator();
+            //   },
+            // ),
             Padding(
               padding: EdgeInsets.all(12.0),
               child: ElevatedButton(
@@ -229,7 +293,7 @@ class ProfilePage extends State<ProfilePageState> {
                   style: TextStyle(fontSize: 12),
                 ),
                 onPressed: () => setState(() {
-                  futurePasien = fetchPasien();
+                  futurePasien = fetchPasien(jwtToken);
                 }),
               ),
             ),
@@ -245,7 +309,7 @@ class ProfilePage extends State<ProfilePageState> {
                       .push(
                         new MaterialPageRoute(builder: (_) => new FormSaldo()),
                       )
-                      .then((val) => {fetchPasien()});
+                      .then((val) => {fetchPasien(jwtToken)});
                 },
               ),
             )

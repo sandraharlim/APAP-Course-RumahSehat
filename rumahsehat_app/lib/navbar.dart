@@ -60,7 +60,9 @@ class NavigationDrawer extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const ProfilePageState()));
+                          builder: (context) => const ProfilePageState(
+                                jwtToken: 'token',
+                              )));
                 },
               )
             ],
