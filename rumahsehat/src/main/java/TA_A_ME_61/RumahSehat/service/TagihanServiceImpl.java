@@ -1,11 +1,15 @@
 package TA_A_ME_61.RumahSehat.service;
 
+import TA_A_ME_61.RumahSehat.model.AppointmentModel;
+import TA_A_ME_61.RumahSehat.model.DokterModel;
 import TA_A_ME_61.RumahSehat.model.TagihanModel;
 import TA_A_ME_61.RumahSehat.repository.TagihanDb;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +23,22 @@ public class TagihanServiceImpl implements TagihanService{
     @Override
     public List<TagihanModel> getListTagihan() {
         return tagihanDb.findAll();
+    }
+
+    @Override
+    public TagihanModel addTagihanByDokter(AppointmentModel appointment) {
+        // TODO Auto-generated method stub
+        DokterModel dokter = appointment.getDokter();
+        Long tarif = dokter.getTarif();
+        TagihanModel tagihan = new TagihanModel();
+        tagihan.setJumlahTagihan(tarif);
+        tagihan.setAppointment(appointment);
+        tagihan.setTanggalTerbuat(LocalDateTime.now());
+        tagihan.setIsPaid(false);
+        tagihanDb.save(tagihan);
+        tagihan.setKode("BILL-" + tagihan.getId());
+        tagihanDb.save(tagihan);
+        return tagihan;
     }
 
 //    @Override
