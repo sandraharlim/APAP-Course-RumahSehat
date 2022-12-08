@@ -63,8 +63,9 @@ public class AppointmentController {
         return "appointment/detail-appointment";
     }
 
-    @PostMapping("/finish")
-    private String finishAppointment(@RequestParam("kode") String kode, Model model){
+    @PostMapping("/finish/{kode}")
+    private String finishAppointment(@PathVariable String kode, Model model){
+        System.out.println(kode);
         AppointmentModel appointment = appointmentService.getAppointmentByKode(kode);
         ResepModel resep = appointment.getResep();
         if (resep == null || // harus di konfirmasi dulu oleh dokter (ada pop up)
@@ -72,8 +73,8 @@ public class AppointmentController {
 
             model.addAttribute("appointment", appointment);
 
-            // Create tagihan di mana total tagihan = tarif dokter
-            TagihanModel tagihan = tagihanService.addTagihan(appointment);
+            // Create tagihan di mana total tagihan = tarif dokter (di service)
+            TagihanModel tagihan = tagihanService.addTagihanByDokter(appointment);
             appointment.setTagihan(tagihan);
             appointmentService.finishAppointment(appointment);
             
