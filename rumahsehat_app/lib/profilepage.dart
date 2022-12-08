@@ -25,15 +25,15 @@ class ProfilePage extends State<ProfilePageState> {
 
   Future<void> loginPasien() async {
     const urlPost = "http://localhost:8080/login";
-    String username = "pasien3";
-    String password = "Pasienpasien3";
+    String username = "pasien2";
+    String password = "Pasienpasien2";
     try {
       final response = await http.post(Uri.parse(urlPost),
           body: jsonEncode({"username": username, "password": password}),
-          headers: {"Authorization": token});
+          headers: {"Authorization": "Bearer $token"});
       Map<String, String> headers = response.headers;
       String? jwtToken = headers["authorization"];
-
+      print(jwtToken);
       if (jwtToken != null) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text("berhasil login dengan username " + username)),
@@ -57,7 +57,7 @@ class ProfilePage extends State<ProfilePageState> {
     String url = 'http://localhost:8080/api/pasien/profile';
 
     final response = await http.get(Uri.parse(url), headers: <String, String>{
-      "Authorization": token,
+      "Authorization": "Bearer $token",
       "Content-Type": "application/json;charset=UTF-8"
     });
     if (response.statusCode == 200) {
@@ -263,33 +263,94 @@ class ProfilePage extends State<ProfilePageState> {
                 }
               },
             ),
-            Padding(
-              padding: EdgeInsets.all(12.0),
-              child: ElevatedButton(
-                child: const Text(
-                  "Refresh Saldo",
-                  style: TextStyle(fontSize: 12),
+            // Padding(
+            //   padding: EdgeInsets.all(12.0),
+            //   child: ElevatedButton(
+            //     child: const Text(
+            //       "Refresh Saldo",
+            //       style: TextStyle(fontSize: 12),
+            //     ),
+            //     onPressed: () => setState(() {
+            //       futurePasien = fetchPasien();
+            //     }),
+            //   ),
+            // ),
+            // Padding(
+            //   padding: EdgeInsets.all(12.0),
+            //   child: ElevatedButton(
+            //     child: const Text(
+            //       "Top up saldo",
+            //       style: TextStyle(fontSize: 12),
+            //     ),
+            //     onPressed: () {
+            //       Navigator.of(context).push(
+            //         new MaterialPageRoute(
+            //             builder: (_) => new FormSaldo(
+            //                   token: token,
+            //                 )),
+            //       );
+            //     },
+            //   ),
+            // ),
+            GestureDetector(
+              onTap: () => setState(() {
+                futurePasien = fetchPasien();
+              }),
+              child: Container(
+                alignment: Alignment.center,
+                margin: EdgeInsets.only(left: 20, right: 20, top: 70),
+                padding: EdgeInsets.only(left: 20, right: 20),
+                height: 40,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(colors: [
+                    (Color.fromARGB(255, 138, 198, 224)),
+                    Color.fromARGB(255, 75, 183, 210)
+                  ], begin: Alignment.centerLeft, end: Alignment.centerRight),
+                  borderRadius: BorderRadius.circular(50),
+                  color: Colors.grey[200],
+                  boxShadow: [
+                    BoxShadow(
+                        offset: Offset(0, 10),
+                        blurRadius: 50,
+                        color: Color(0xffEEEEEE)),
+                  ],
                 ),
-                onPressed: () => setState(() {
-                  futurePasien = fetchPasien();
-                }),
+                child: Text(
+                  "Refresh Saldo",
+                  style: TextStyle(color: Colors.white),
+                ),
               ),
             ),
-            Padding(
-              padding: EdgeInsets.all(12.0),
-              child: ElevatedButton(
-                child: const Text(
-                  "Top up saldo",
-                  style: TextStyle(fontSize: 12),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => new FormSaldo(token: token)));
+              },
+              child: Container(
+                alignment: Alignment.center,
+                margin: EdgeInsets.only(left: 20, right: 20, top: 10),
+                padding: EdgeInsets.only(left: 20, right: 20),
+                height: 40,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(colors: [
+                    (Color.fromARGB(255, 138, 198, 224)),
+                    Color.fromARGB(255, 75, 183, 210)
+                  ], begin: Alignment.centerLeft, end: Alignment.centerRight),
+                  borderRadius: BorderRadius.circular(50),
+                  color: Colors.grey[200],
+                  boxShadow: [
+                    BoxShadow(
+                        offset: Offset(0, 10),
+                        blurRadius: 50,
+                        color: Color(0xffEEEEEE)),
+                  ],
                 ),
-                onPressed: () {
-                  Navigator.of(context).push(
-                    new MaterialPageRoute(
-                        builder: (_) => new FormSaldo(
-                              token: token,
-                            )),
-                  );
-                },
+                child: Text(
+                  "Top up saldo",
+                  style: TextStyle(color: Colors.white),
+                ),
               ),
             )
           ],
