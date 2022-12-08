@@ -174,4 +174,3 @@ public class BaseController {
 //        return new ModelAndView("redirect:" + Setting.SERVER_LOGOUT + Setting.CLIENT_LOGOUT);
 //    }
 }
-
