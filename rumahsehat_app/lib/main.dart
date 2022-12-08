@@ -29,6 +29,7 @@ class MyHomePage extends StatelessWidget {
       appBar: AppBar(
         title: Text("Rumah Sehat"),
       ),
+      drawer: const NavigationDrawer(),
       body: Container(
         child: Padding(
           padding: const EdgeInsets.all(10.0),

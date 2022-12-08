@@ -14,4 +14,6 @@ public interface PasienService {
 
     void deletePasien(PasienModel pasien);
 
+    void addPasien(PasienModel pasien);
+
 }

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://thymeleaf.org">
+<html lang="en" xmlns:th="http://thymeleaf.org"
+                xmlns:sec="http://www.thymeleaf.org/extras/spring_security">
 <head>
     <meta charset="UTF-8">
     <title>Rumah Sehat</title>
@@ -37,21 +38,16 @@
             <li class="nav-item" th:classappend="${onevar == 'home'} ? active">
                 <a class="nav-link" th:href="@{/}">Beranda</a>
             </li>
-            <div class="dropdown show">
-                <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink1"
-                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" th:classappend="${onevar == 'appointment'} ? active">
-                    Appointment
-                </a>
-                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink1">
-                    <a class="dropdown-item" th:href="@{/appointment/admin}">Melihat jadwal appointment (Admin)</a>
-                    <a class="dropdown-item" th:href="@{/appointment/pasien}">Melihat jadwal appointment (Pasien)</a>
-                    <a class="dropdown-item" th:href="@{/appointment/dokter}">Melihat jadwal appointment (Dokter)</a>
-                </div>
-            </div>
-            <li class="nav-item" th:classappend="${onevar == 'resep'} ? active">
+            <li class="nav-item" th:classappend="${onevar == 'appointment'} ? active"
+                sec:authorize="hasAnyAuthority('Admin', 'Dokter')">
+                <a class="nav-link" th:href="@{/appointment/viewall}">Appointment</a>
+            </li>
+            <li class="nav-item" th:classappend="${onevar == 'resep'} ? active"
+                sec:authorize="hasAnyAuthority('Admin', 'Apoteker')">
                 <a class="nav-link" th:href="@{/resep/}">Resep</a>
             </li>
-            <li class="nav-item" th:classappend="${onevar == 'obat'} ? active">
+            <li class="nav-item" th:classappend="${onevar == 'obat'} ? active"
+                sec:authorize="hasAnyAuthority('Admin', 'Apoteker')">
                 <a class="nav-link" th:href="@{/obat/}">Obat</a>
             </li>
             <li class="nav-item" th:classappend="${onevar == 'logout'} ? active">
