@@ -14,4 +14,7 @@ public class ResponseNewAppointment {
 
     @JsonProperty("error")
     private String error;
+
+    @JsonProperty("username")
+    private String username;
 }

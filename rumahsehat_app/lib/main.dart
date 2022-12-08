@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'navbar.dart';
 import 'appointment_form.dart';
+import 'package:rumahsehat_app/splash_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(),
+      home: SplashScreen(),
     );
   }
 }
@@ -28,6 +29,7 @@ class MyHomePage extends StatelessWidget {
       appBar: AppBar(
         title: Text("Rumah Sehat"),
       ),
+      drawer: const NavigationDrawer(),
       body: Container(
         child: Padding(
           padding: const EdgeInsets.all(10.0),
@@ -41,163 +43,7 @@ class MyHomePage extends StatelessWidget {
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
-                    color: Colors.blue,
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.medical_information_rounded,
-                        size: 50,
-                        color: Colors.white,
-                      ),
-                      Text(
-                        "Tambah Dokter",
-                        style: TextStyle(color: Colors.white, fontSize: 30),
-                      )
-                    ],
-                  ),
-                ),
-              ),
-              InkWell(
-                onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => MyHomePage()));
-                },
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.blue,
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.medical_information_rounded,
-                        size: 50,
-                        color: Colors.white,
-                      ),
-                      Text(
-                        "Lihat Daftar Dokter",
-                        style: TextStyle(color: Colors.white, fontSize: 30),
-                      )
-                    ],
-                  ),
-                ),
-              ),
-              InkWell(
-                onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => MyHomePage()));
-                },
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.blue,
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.medical_services_rounded,
-                        size: 50,
-                        color: Colors.white,
-                      ),
-                      Text(
-                        "Tambah Apoteker",
-                        style: TextStyle(color: Colors.white, fontSize: 30),
-                      )
-                    ],
-                  ),
-                ),
-              ),
-              InkWell(
-                onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => MyHomePage()));
-                },
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.blue,
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.medical_services_rounded,
-                        size: 50,
-                        color: Colors.white,
-                      ),
-                      Text(
-                        "Lihat Daftar Apoteker",
-                        style: TextStyle(color: Colors.white, fontSize: 30),
-                      )
-                    ],
-                  ),
-                ),
-              ),
-              InkWell(
-                onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => MyHomePage()));
-                },
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.blue,
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.menu_book,
-                        size: 50,
-                        color: Colors.white,
-                      ),
-                      Text(
-                        "Buat Resep Obat",
-                        style: TextStyle(color: Colors.white, fontSize: 30),
-                      )
-                    ],
-                  ),
-                ),
-              ),
-              InkWell(
-                onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => MyHomePage()));
-                },
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.blue,
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.menu_book,
-                        size: 50,
-                        color: Colors.white,
-                      ),
-                      Text(
-                        "Lihat Resep Obat",
-                        style: TextStyle(color: Colors.white, fontSize: 30),
-                      )
-                    ],
-                  ),
-                ),
-              ),
-              InkWell(
-                onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => MyHomePage()));
-                },
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.blue,
+                    color: Colors.blueAccent,
                   ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -209,7 +55,33 @@ class MyHomePage extends StatelessWidget {
                       ),
                       Text(
                         "Lihat Jadwal Appointment",
-                        style: TextStyle(color: Colors.white, fontSize: 30),
+                        style: TextStyle(color: Colors.white, fontSize: 20),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              InkWell(
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => MyHomePage()));
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: Colors.blueAccent,
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.book,
+                        size: 50,
+                        color: Colors.white,
+                      ),
+                      Text(
+                        "Buat Jadwal Appointment",
+                        style: TextStyle(color: Colors.white, fontSize: 20),
                       )
                     ],
                   ),

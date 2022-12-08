@@ -186,8 +186,6 @@ public class ResepController {
         resepnow.setIsDone(true);
         resepnow.setApoteker(apoteker);
         resepService.addResep(resepnow);
-
-        System.out.println(resepnow.getAppointment().getId());
         Long idAppointment = resepnow.getAppointment().getId();
 
         AppointmentModel appointment = appointmentService.getAppointmentById(idAppointment);
@@ -196,11 +194,20 @@ public class ResepController {
         appointmentService.addAppointment(appointment);
 
         //Ngeset tagihannya
-//        TagihanModel tagihan = appointment.getTagihan();
-//        tagihan = tagihanService.getTagihanById(tagihan.getId());
-//        tagihan.setJumlahTagihan(Long.valueOf(bayarTagihan));
-//        tagihanService.addTagihan(tagihan);
+        TagihanModel tagihan = new TagihanModel();
+        tagihan.setAppointment(resepnow.getAppointment());
+        tagihan.setIsPaid(false);
+        LocalDateTime now = LocalDateTime.now();
+        tagihan.setTanggalTerbuat(now);
+        tagihan.setJumlahTagihan(Long.valueOf(bayarTagihan));
+        tagihanService.addTagihan(tagihan);
 
+        TagihanModel tagihannow = tagihanService.getTagihanById(tagihan.getId());
+        tagihannow.setKode("BILL-"+String.valueOf(tagihannow.getId()));
+        tagihanService.addTagihan(tagihannow);
+
+        appointment.setTagihan(tagihanService.getTagihanById(tagihannow.getId()));
+        appointmentService.addAppointment(appointment);
 
         model.addAttribute("resep", resepnow);
         return "konfirmasi-resep";

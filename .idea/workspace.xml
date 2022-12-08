@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="619279da-afad-48ae-820a-b8813db62b39" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/rumahsehat/src/main/java/TA_A_ME_61/RumahSehat/model/ResepModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/rumahsehat/src/main/java/TA_A_ME_61/RumahSehat/model/ResepModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rumahsehat/src/main/java/TA_A_ME_61/RumahSehat/repository/UserDb.java" beforeDir="false" afterPath="$PROJECT_DIR$/rumahsehat/src/main/java/TA_A_ME_61/RumahSehat/repository/UserDb.java" afterDir="false" />
-    </list>
+    <list default="true" id="619279da-afad-48ae-820a-b8813db62b39" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -51,7 +48,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/ASUS/Desktop/SEMESTER 5/APAP A/ta_a_me_61/rumahsehat",
+    "last_opened_file_path": "C:/Sandra/kuliah/Semester5/APAP - A/Final/ta_a_me_61",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -79,6 +76,7 @@
       <updated>1668431225606</updated>
       <workItem from="1668431229460" duration="8714000" />
       <workItem from="1668564704037" duration="1279000" />
+      <workItem from="1670298320820" duration="176000" />
     </task>
     <servers />
   </component>
