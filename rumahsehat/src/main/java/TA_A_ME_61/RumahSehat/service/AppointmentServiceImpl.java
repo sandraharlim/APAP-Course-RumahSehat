@@ -49,4 +49,15 @@ public class AppointmentServiceImpl implements AppointmentService{
         }
         return null;
     }
+
+    @Override
+    public AppointmentModel getAppointmentByKode(String kode){
+        return appointmentDb.getAppointmentModelByKode(kode).orElse(null);
+    }
+
+    @Override
+    public void finishAppointment(AppointmentModel appointment) {
+        appointment.setIsDone(true);
+        appointmentDb.save(appointment);
+    }
 }

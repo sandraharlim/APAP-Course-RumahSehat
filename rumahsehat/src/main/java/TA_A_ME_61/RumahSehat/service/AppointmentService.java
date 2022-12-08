@@ -15,4 +15,8 @@ public interface AppointmentService {
     List<AppointmentModel> getAllApptByDokter(DokterModel dokter);
     List<AppointmentModel> getAllApptByPasien(PasienModel pasien);
     AppointmentModel getAppointmentById(Long id);
+
+    //    ========= method untuk fitur 8: detail appt ============
+    AppointmentModel getAppointmentByKode(String kode);
+    void finishAppointment(AppointmentModel appointment);
 }

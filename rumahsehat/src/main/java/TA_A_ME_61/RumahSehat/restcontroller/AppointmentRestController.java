@@ -66,10 +66,6 @@ public class AppointmentRestController {
         AppointmentModel newAppointment = new AppointmentModel();
         ResponseNewAppointment response = new ResponseNewAppointment();
 
-        // pasiennya masih statis, nanti bisa ambil dari token login
-//        PasienModel pasien = pasienService.getPasienByUuid("a9ad1618-6597-11ed-85c8-803253019798");
-//        newAppointment.setPasien(pasien);
-
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
         response.setUsername(username);
@@ -88,7 +84,7 @@ public class AppointmentRestController {
 
         newAppointment.setDokter(selectedDokter);
 
-        // ganti format date dan time dari flutter (dari String) 
+        // ganti format date dan time dari flutter (dari String)
         // jadi LocalDateTime
         LocalDateTime waktuAwal = appointmentRestService.convertWaktuAwalFromFlutter(date, time);
         if (waktuAwal == null) {
@@ -109,7 +105,6 @@ public class AppointmentRestController {
             String successMessage = "Berhasil menambahkan Appointment " +
                 newAppointment.getKode() + " di jam " +
                 appointmentRestService.getWaktuAwalWaktuAkhir(newAppointment);
-            
             response.setSuccess(successMessage);
             return response;
         }

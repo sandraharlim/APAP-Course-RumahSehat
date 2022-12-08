@@ -1,16 +1,7 @@
 package TA_A_ME_61.RumahSehat.controller;
 
-import TA_A_ME_61.RumahSehat.model.AdminModel;
-import TA_A_ME_61.RumahSehat.model.AppointmentModel;
-import TA_A_ME_61.RumahSehat.model.DokterModel;
-import TA_A_ME_61.RumahSehat.model.PasienModel;
-import TA_A_ME_61.RumahSehat.model.UserModel;
-import TA_A_ME_61.RumahSehat.service.AdminService;
-import TA_A_ME_61.RumahSehat.service.ApotekerService;
-import TA_A_ME_61.RumahSehat.service.AppointmentService;
-import TA_A_ME_61.RumahSehat.service.DokterService;
-import TA_A_ME_61.RumahSehat.service.PasienService;
-import TA_A_ME_61.RumahSehat.service.UserService;
+import TA_A_ME_61.RumahSehat.model.*;
+import TA_A_ME_61.RumahSehat.service.*;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,13 +9,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.validation.constraints.Positive;
-import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,11 +24,10 @@ public class AppointmentController {
     private DokterService dokterService;
 
     @Autowired
-    private PasienService pasienService;
-
-    @Autowired
     private AdminService adminService;
 
+    @Autowired
+    private TagihanService tagihanService;
 
     @GetMapping("/viewall")
     public String viewAllAppointment(Model model) { // admin dan dokter only
@@ -69,5 +54,35 @@ public class AppointmentController {
             model.addAttribute("errorMessage", "Anda (" + username + ") tidak memiliki akses untuk membuka halaman ini (role salah).");
             return "error/400";
         }
+    }
+
+    @GetMapping("/view/{kode}")
+    private String getDetailAppointment(@PathVariable String kode, Model model){
+        AppointmentModel appointment = appointmentService.getAppointmentByKode(kode);
+        model.addAttribute("appointment", appointment);
+        return "appointment/detail-appointment";
+    }
+
+    @PostMapping("/finish")
+    private String finishAppointment(@RequestParam("kode") String kode, Model model){
+        AppointmentModel appointment = appointmentService.getAppointmentByKode(kode);
+        ResepModel resep = appointment.getResep();
+        if (resep == null || // harus di konfirmasi dulu oleh dokter (ada pop up)
+            resep.getIsDone() ) { // resep udh dikonfirmasi by apoteker
+
+            model.addAttribute("appointment", appointment);
+
+            // Create tagihan di mana total tagihan = tarif dokter
+            TagihanModel tagihan = tagihanService.addTagihan(appointment);
+            appointment.setTagihan(tagihan);
+            appointmentService.finishAppointment(appointment);
+            
+        } else {
+            // Jika terdapat resep dari sebuah appointment dan resep tersebut belum dikonfirmasi oleh Apoteker,
+            // maka Dokter tidak dapat menyelesaikan appointment.
+
+        }
+        String kembalian = "redirect:/appointment/view/" + kode;
+        return kembalian;
     }
 }
