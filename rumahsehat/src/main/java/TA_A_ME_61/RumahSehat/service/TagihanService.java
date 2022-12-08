@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface TagihanService {
     List<TagihanModel> getListTagihan();
-    TagihanModel addTagihan(AppointmentModel appointment);
+    TagihanModel addTagihanByDokter(AppointmentModel appointment);
 
 //    List<TagihanModel> getListTagihanByUuid(String uuid);
 
