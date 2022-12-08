@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rumahsehat_app/profilepage.dart';
 import 'appointment_form.dart';
+import 'appointment_index.dart';
 import 'main.dart';
 
 class NavigationDrawer extends StatelessWidget {
@@ -49,7 +50,7 @@ class NavigationDrawer extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                         builder: (context) =>
-                            AppointmentForm()), // harusnya class index aja
+                            AppointmentViewAll()), // harusnya class index aja
                   );
                 },
               ),
