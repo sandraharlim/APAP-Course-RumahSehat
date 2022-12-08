@@ -199,6 +199,7 @@ public class ResepController {
         tagihan.setIsPaid(false);
         LocalDateTime now = LocalDateTime.now();
         tagihan.setTanggalTerbuat(now);
+        bayarTagihan = bayarTagihan + (appointment.getDokter().getTarif()).intValue();
         tagihan.setJumlahTagihan(Long.valueOf(bayarTagihan));
         tagihanService.addTagihan(tagihan);
 
