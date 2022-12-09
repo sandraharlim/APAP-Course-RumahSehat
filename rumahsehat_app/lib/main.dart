@@ -15,9 +15,9 @@ class MyApp extends StatelessWidget {
       title: 'Rumah Sehat',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.lightBlue,
       ),
-      home: SplashScreen(),
+      home: MyHomePage(),
     );
   }
 }
@@ -43,7 +43,7 @@ class MyHomePage extends StatelessWidget {
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
-                    color: Colors.blueAccent,
+                    color: Color.fromARGB(255, 119, 176, 233),
                   ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -69,7 +69,7 @@ class MyHomePage extends StatelessWidget {
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
-                    color: Colors.blueAccent,
+                    color: Color.fromARGB(255, 119, 176, 233),
                   ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
