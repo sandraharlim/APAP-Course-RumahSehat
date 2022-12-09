@@ -15,19 +15,24 @@ class AppointmentViewAll extends StatefulWidget {
 
 class _AppointmentViewAllState extends State<AppointmentViewAll> {
   List<Appointment> listAppointment = [];
+  String token_prefix = "Bearer ";
   String token = "";
-  // "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwYXNpZW4yIiwiZXhwIjoxNjcxMjQ0MTc3fQ.4vuSC4zLB67MMvnNSN-s36ELL2iVRO5aUl3DNRlXKWrNWCErEjFRJZQO1zzXSSBYuoAXtgsCx0XhpIjvYLbLRA";
+  // "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwYXNpZW4yIiwiZXhwIjoxNjcxMjQ0MTc3fQ.4vuSC4zLB67MMvnNSN-s36ELL2iVRO5aUl3DNRlXKWrNWCErEjFRJZQO1zzXSSBYuoAXtgsCx0XhpIjvYLbLRA";
 
   Future<void> loginPasien() async {
-    const urlPost = "http://10.0.2.2:8080/login";
+    // const urlPost = "https://apap-061.cs.ui.ac.id/authenticate";
+    const urlPost = "http://10.0.2.2:8080/authenticate";
     String username = "pasien1";
     String password = "Qwerty123";
     try {
       final response = await http.post(Uri.parse(urlPost),
           body: jsonEncode({"username": username, "password": password}),
-          headers: {"Authorization": token});
-      Map<String, String> headers = response.headers;
-      String? jwtToken = headers["authorization"];
+          headers: {
+            "content-type": "application/json",
+            "accept": "application/json"
+          });
+      Map<String, dynamic> extractedData = jsonDecode(response.body);
+      String? jwtToken = extractedData["jwttoken"];
 
       if (jwtToken != null) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -48,15 +53,18 @@ class _AppointmentViewAllState extends State<AppointmentViewAll> {
   }
 
   Future<void> loginOther() async {
-    const urlPost = "http://10.0.2.2:8080/login";
+    const urlPost = "http://10.0.2.2:8080/authenticate";
     String username = "apoteker1";
     String password = "Qwerty123";
     try {
       final response = await http.post(Uri.parse(urlPost),
           body: jsonEncode({"username": username, "password": password}),
-          headers: {"Authorization": token});
-      Map<String, String> headers = response.headers;
-      String? jwtToken = headers["authorization"];
+          headers: {
+            "content-type": "application/json",
+            "accept": "application/json"
+          });
+      Map<String, dynamic> extractedData = jsonDecode(response.body);
+      String? jwtToken = extractedData["jwttoken"];
 
       if (jwtToken != null) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -77,14 +85,12 @@ class _AppointmentViewAllState extends State<AppointmentViewAll> {
   }
 
   Future<void> getData() async {
-    // login();
+    // String url = "https://apap-061.cs.ui.ac.id/api/appointment/viewall";
     String url = "http://10.0.2.2:8080/api/appointment/viewall";
-    // String token =
-    //     "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwYXNpZW4yIiwiZXhwIjoxNjcxMjQ0MTc3fQ.4vuSC4zLB67MMvnNSN-s36ELL2iVRO5aUl3DNRlXKWrNWCErEjFRJZQO1zzXSSBYuoAXtgsCx0XhpIjvYLbLRA";
 
     try {
       final response = await http.get(Uri.parse(url), headers: {
-        "Authorization": token
+        "Authorization": (token_prefix + token)
         // "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwYXNpZW4yIiwiZXhwIjoxNjcxMjQ4MDYzfQ.98CbaphAN-6a9bskzMe6oiLBTG3wTuCXg3vA8vfcI6r0n7vle3UT4M5iu7VkGvyl0DfDcNUwrTtecijSYvM-Fg"
       });
 

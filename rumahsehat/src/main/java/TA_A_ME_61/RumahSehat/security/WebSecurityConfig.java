@@ -34,6 +34,7 @@ public class WebSecurityConfig {
                     .antMatchers("/login-sso", "/validate-ticket").permitAll()
                     .antMatchers("/obat/").hasAnyAuthority("Admin","Apoteker")
                     .antMatchers("/obat/ubah-stok/{idObat}").hasAuthority("Apoteker")
+                    .antMatchers("/appointment/viewall").hasAnyAuthority("Admin","Dokter", "admin", "dokter")
                     .antMatchers("/appointment/view/{kode}").hasAnyAuthority("Admin","Dokter", "admin", "dokter")
                     .antMatchers("/appointment/finish").hasAnyAuthority("Dokter", "dokter")
                     .antMatchers("/resep/create/{idAppointment}").hasAnyAuthority("Dokter", "dokter")
@@ -113,6 +114,9 @@ public class WebSecurityConfig {
                     .requestMatchers(matchers -> matchers
                             .antMatchers("/authenticate")
                             .antMatchers("/sign-up")
+                            .antMatchers("/api/appointment/doctors")
+                            .antMatchers("/api/appointment/create")
+                            .antMatchers("/api/appointment/viewall")
                     )
                     // dont authenticate this particular request
                     .authorizeRequests().antMatchers("/authenticate").permitAll()
