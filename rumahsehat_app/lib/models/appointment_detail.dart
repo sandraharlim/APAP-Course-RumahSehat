@@ -19,7 +19,6 @@ class _AppointmentDetailState extends State<AppointmentDetail> {
         appBar: AppBar(
           title: const Text('Detail Appointment'),
         ),
-        // drawer: const NavigationDrawer(),
         body: SingleChildScrollView(
             child: Padding(
           padding: const EdgeInsets.fromLTRB(0, 30, 0, 15),
@@ -71,6 +70,12 @@ class _AppointmentDetailState extends State<AppointmentDetail> {
             ElevatedButton(
               onPressed: () {
                 // masuk ke resep detail
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(
+                //       builder: (context) =>
+                //           DetailResep()), // ini lo ganti aja ya ror nama class nya
+                // );
               },
               child: const Text('Detail Resep'),
               style: ElevatedButton.styleFrom(

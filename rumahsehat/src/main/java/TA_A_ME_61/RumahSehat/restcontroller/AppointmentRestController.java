@@ -6,7 +6,6 @@ import TA_A_ME_61.RumahSehat.restmodel.ResponseNewAppointment;
 import TA_A_ME_61.RumahSehat.restmodel.SubmittedAppointment;
 import TA_A_ME_61.RumahSehat.restservice.AppointmentRestService;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,19 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 import TA_A_ME_61.RumahSehat.model.*;
 import TA_A_ME_61.RumahSehat.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.validation.constraints.Positive;
-import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/appointment")
@@ -47,7 +38,7 @@ public class AppointmentRestController {
     // @Autowired
     // private AdminService adminService;
 
-    @GetMapping("/doctors-flutter")
+    @GetMapping("/doctors")
     public List<DokterDropdownItem> createAppointmentFlutter() {
         System.out.println("masuk get dokter");
         List<DokterModel> listDokter = dokterService.getListDokter();
@@ -70,10 +61,12 @@ public class AppointmentRestController {
         String username = auth.getName();
         response.setUsername(username);
         PasienModel loggedInPasien = pasienService.getPasienByUsername(username);
-        if (loggedInPasien == null) {
+
+        if (loggedInPasien == null) { // harusnya udh di handle sama websecurityconfig
             response.setError("Anda bukan pasien.");
             return response;
         }
+
         newAppointment.setPasien(loggedInPasien);
 
         DokterModel selectedDokter = dokterService.getDokterByUuid(uuidDokter);
@@ -84,14 +77,12 @@ public class AppointmentRestController {
 
         newAppointment.setDokter(selectedDokter);
 
-        // ganti format date dan time dari flutter (dari String)
-        // jadi LocalDateTime
+        // ganti format date dan time dari flutter (dari String) jadi LocalDateTime
         LocalDateTime waktuAwal = appointmentRestService.convertWaktuAwalFromFlutter(date, time);
         if (waktuAwal == null) {
             response.setError("Waktu yg dipilih tidak sesuai (jam > 23 atau menit > 59)");
             return response;
         }
-
 
         newAppointment.setWaktuAwal(waktuAwal);
 
