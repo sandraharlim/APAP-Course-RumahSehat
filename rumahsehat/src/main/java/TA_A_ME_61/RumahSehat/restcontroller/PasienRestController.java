@@ -1,4 +1,4 @@
-package TA_A_ME_61.RumahSehat.pasienrestcontroller;
+package TA_A_ME_61.RumahSehat.restcontroller;
 
 import TA_A_ME_61.RumahSehat.model.PasienModel;
 import TA_A_ME_61.RumahSehat.service.PasienRestService;
