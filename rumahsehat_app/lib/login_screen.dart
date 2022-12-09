@@ -42,16 +42,16 @@ class StartState extends State<LoginScreen> {
               Container(
                 margin: EdgeInsets.only(top: 50),
                 child: Image.asset(
-                  "images/TaeAugust11.jpg",
-                  height: 150,
-                  width: 150,
+                  "images/19836-removebg-preview.png",
+                              height: 200,
+                              width: 250
                 ),
               ),
               Container(
                 margin: EdgeInsets.only(right: 20, top: 20),
-                alignment: Alignment.bottomRight,
+                alignment: Alignment.topCenter,
                 child: Text(
-                  "Login",
+                  "Rumah Sehat",
                   style: TextStyle(fontSize: 20, color: Colors.white),
                 ),
               )
