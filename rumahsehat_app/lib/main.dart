@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:rumahsehat_app/appointment_index.dart';
+import 'package:rumahsehat_app/models/appointment_pasien_card.dart';
+import 'package:rumahsehat_app/models/pasienmodel.dart';
 import 'navbar.dart';
 import 'appointment_form.dart';
 import 'package:rumahsehat_app/splash_screen.dart';
@@ -18,7 +21,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.lightBlue,
       ),
       // home: SplashScreen(),
-      home: MyHomePage(),
+      home: SplashScreen(),
     );
   }
 }
@@ -39,7 +42,33 @@ class MyHomePage extends StatelessWidget {
               InkWell(
                 onTap: () {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => MyHomePage()));
+                      MaterialPageRoute(builder: (context) => AppointmentForm()));
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: Color.fromARGB(255, 119, 176, 233),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.book,
+                        size: 50,
+                        color: Colors.white,
+                      ),
+                      Text(
+                        "Buat Jadwal Appointment",
+                        style: TextStyle(color: Colors.white, fontSize: 20),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              InkWell(
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => AppointmentViewAll()));
                 },
                 child: Container(
                   decoration: BoxDecoration(
@@ -62,6 +91,7 @@ class MyHomePage extends StatelessWidget {
                   ),
                 ),
               ),
+
               InkWell(
                 onTap: () {
                   Navigator.push(context,
@@ -76,12 +106,12 @@ class MyHomePage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Icon(
-                        Icons.book,
+                        Icons.add_card,
                         size: 50,
                         color: Colors.white,
                       ),
                       Text(
-                        "Buat Jadwal Appointment",
+                        "Lihat Daftar Tagihan",
                         style: TextStyle(color: Colors.white, fontSize: 20),
                       )
                     ],
