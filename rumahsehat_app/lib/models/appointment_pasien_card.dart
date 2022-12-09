@@ -33,16 +33,6 @@ class _AppointmentPasienCardState extends State<AppointmentPasienCard> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            // Text(
-            //   widget.appointment.kode,
-            //   style: const TextStyle(
-            //     fontSize: 17,
-            //     letterSpacing: 1,
-            //   ),
-            // ),
-            // const SizedBox(
-            //   height: 6,
-            // ),
             Text(
               'Dokter: ${widget.appointment.dokter}',
               style: TextStyle(

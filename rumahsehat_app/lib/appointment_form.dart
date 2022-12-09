@@ -33,18 +33,23 @@ class _AppointmentFormState extends State<AppointmentForm> {
   };
 
   String selectedNamaTarif = ""; // Tirta-1000
+  String token_prefix = "Bearer ";
   String token = "";
-  // "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwYXNpZW4yIiwiZXhwIjoxNjcxMjQ0MTc3fQ.4vuSC4zLB67MMvnNSN-s36ELL2iVRO5aUl3DNRlXKWrNWCErEjFRJZQO1zzXSSBYuoAXtgsCx0XhpIjvYLbLRA";
+  // "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwYXNpZW4yIiwiZXhwIjoxNjcxMjQ0MTc3fQ.4vuSC4zLB67MMvnNSN-s36ELL2iVRO5aUl3DNRlXKWrNWCErEjFRJZQO1zzXSSBYuoAXtgsCx0XhpIjvYLbLRA";
 
   Future<void> getListOfDokter() async {
+    // web server beneran
+    // const url = 'https://apap-061.cs.ui.ac.id/api/appointment/doctors';
+
     // localhost yg bisa diakses dr emulator
-    const url = 'http://10.0.2.2:8080/api/appointment/doctors-flutter';
+    const url = 'http://10.0.2.2:8080/api/appointment/doctors';
+
     // mock server
     // const url =
     //     'https://22202f32-174d-4a73-abb7-98e3816b7709.mock.pstmn.io/api/appointment/doctors-flutter';
     try {
-      final response =
-          await http.get(Uri.parse(url), headers: {"Authorization": token});
+      final response = await http.get(Uri.parse(url),
+          headers: {"Authorization": (token_prefix + token)});
 
       List<dynamic> data = jsonDecode(response.body);
 
@@ -78,18 +83,12 @@ class _AppointmentFormState extends State<AppointmentForm> {
 
   late double _height;
   late double _width;
-
   String _setDate = "";
   String _setTime = "";
-
   late String _hour, _minute, _time;
-
   late String dateTime;
-
   DateTime selectedDate = DateTime.now();
-
   TimeOfDay selectedTime = const TimeOfDay(hour: 00, minute: 00);
-
   TextEditingController _dateController = TextEditingController();
   TextEditingController _timeController = TextEditingController();
 
@@ -127,7 +126,8 @@ class _AppointmentFormState extends State<AppointmentForm> {
 
   @override
   void initState() {
-    getListOfDokter();
+    login();
+    // getListOfDokter();
 
     _dateController.text = DateFormat.yMd().format(DateTime.now());
 
@@ -354,16 +354,20 @@ class _AppointmentFormState extends State<AppointmentForm> {
   }
 
   Future<void> login() async {
-    const urlPost = "http://10.0.2.2:8080/login";
+    // const urlPost = "https://apap-061.cs.ui.ac.id/authenticate";
+    const urlPost = "http://10.0.2.2:8080/authenticate";
     String username = "pasien1";
     String password = "Qwerty123";
     try {
       final response = await http.post(Uri.parse(urlPost),
           body: jsonEncode({"username": username, "password": password}),
-          // body: jsonEncode({"username": "apoteker1", "password": "Qwerty123"}), // ngetes kalo salah user
-          headers: {"Authorization": token});
-      Map<String, String> headers = response.headers;
-      String? jwtToken = headers["authorization"];
+          headers: {
+            "content-type": "application/json",
+            "accept": "application/json"
+          });
+
+      Map<String, dynamic> extractedData = jsonDecode(response.body);
+      String? jwtToken = extractedData["jwttoken"];
 
       if (jwtToken != null) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -372,6 +376,7 @@ class _AppointmentFormState extends State<AppointmentForm> {
         setState(() {
           token = jwtToken;
         });
+        getListOfDokter();
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text("Username atau password salah")),
@@ -383,6 +388,7 @@ class _AppointmentFormState extends State<AppointmentForm> {
   }
 
   Future<void> submitForm() async {
+    // const urlPost = "https://apap-061.cs.ui.ac.id/api/appointment/create";
     const urlPost = "http://10.0.2.2:8080/api/appointment/create";
     try {
       final response = await http.post(Uri.parse(urlPost),
@@ -395,7 +401,7 @@ class _AppointmentFormState extends State<AppointmentForm> {
             // https://stackoverflow.com/questions/53388426/flutter-send-json-over-http-post
             "content-type": "application/json",
             "accept": "application/json",
-            "Authorization": token
+            "Authorization": (token_prefix + token)
           });
 
       Map<String, dynamic> extractedData = jsonDecode(response.body);
