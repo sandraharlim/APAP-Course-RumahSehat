@@ -58,25 +58,25 @@ public class WebSecurityConfig {
                     .logoutSuccessUrl("/login").permitAll();
         }
 
-        @Autowired
-        private UserDetailsService userDetailsService;
+        // @Autowired
+        // private UserDetailsService userDetailsService;
 
         @Autowired
         private PasswordEncoder passwordEncoder;
 
-        @Autowired
-        public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
-            auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
-        }
+        // @Autowired
+        // public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
+        //     auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
+        // }
 
-//        @Autowired
-//        public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-//            auth.inMemoryAuthentication()
-//                    .passwordEncoder(passwordEncoder)
-//                    .withUser("rakha")
-//                    .password(passwordEncoder.encode("apapA"))
-//                    .roles("USER");
-//        }
+       @Autowired
+       public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+           auth.inMemoryAuthentication()
+                   .passwordEncoder(passwordEncoder)
+                   .withUser("rakha")
+                   .password(passwordEncoder.encode("apapA"))
+                   .roles("USER");
+       }
     }
 
     @Configuration
@@ -90,6 +90,11 @@ public class WebSecurityConfig {
 
         @Autowired
         private JwtRequestFilter jwtRequestFilter;
+
+    // @Autowired
+    // public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
+    //     auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
+    // }
 
         @Autowired
         public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
