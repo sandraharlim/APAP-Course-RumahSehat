@@ -122,6 +122,7 @@ public class WebSecurityConfig {
                             .antMatchers("/api/appointment/doctors")
                             .antMatchers("/api/appointment/create")
                             .antMatchers("/api/appointment/viewall")
+                            .antMatchers("/api/resep/detail/{id}")
                     )
                     // dont authenticate this particular request
                     .authorizeRequests().antMatchers("/authenticate").permitAll()
