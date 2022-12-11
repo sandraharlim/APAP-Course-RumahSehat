@@ -20,18 +20,23 @@ class ProfilePageState extends StatefulWidget {
 class ProfilePage extends State<ProfilePageState> {
   // late String jwtToken;
   late Future<Pasien> futurePasien;
+  String token_prefix = "Bearer ";
   String token = "";
 
   Future<void> loginPasien() async {
-    const urlPost = "http://localhost:8080/login";
-    String username = "pasien2";
-    String password = "Pasienpasien2";
+    // const urlPost = "https://apap-061.cs.ui.ac.id/authenticate";
+    const urlPost = "http://localhost:8080/authenticate";
+    String username = "pasien20";
+    String password = "Pasienpasien20";
     try {
       final response = await http.post(Uri.parse(urlPost),
           body: jsonEncode({"username": username, "password": password}),
-          headers: {"Authorization": "Bearer $token"});
-      Map<String, String> headers = response.headers;
-      String? jwtToken = headers["authorization"];
+          headers: {
+            "content-type": "application/json",
+            "accept": "application/json"
+          });
+      Map<String, dynamic> extractedData = jsonDecode(response.body);
+      String? jwtToken = extractedData["jwttoken"];
       print(jwtToken);
       if (jwtToken != null) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -39,8 +44,6 @@ class ProfilePage extends State<ProfilePageState> {
         );
         setState(() {
           token = jwtToken;
-          print(token);
-          // token = Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJkb2t0ZXIxIiwiZXhwIjoxNjcxMjcwNjU4fQ.RlSo0uZnTibReemyzony7An7Na9_ajiqxJPid9l4BlZdAg30q5ODxQaYZsRE3sMjNOhBo_Ai7LhP2SSbPoJQew
         });
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -53,11 +56,11 @@ class ProfilePage extends State<ProfilePageState> {
   }
 
   Future<Pasien> fetchPasien() async {
+    // String url = 'https://apap-061.cs.ui.ac.id/api/pasien/profile';
     String url = 'http://localhost:8080/api/pasien/profile';
 
     final response = await http.get(Uri.parse(url), headers: <String, String>{
-      "Authorization": "Bearer $token",
-      "Content-Type": "application/json;charset=UTF-8"
+      "Authorization": (token_prefix + token),
     });
     if (response.statusCode == 200) {
       var data = json.decode(response.body);
@@ -240,7 +243,7 @@ class ProfilePage extends State<ProfilePageState> {
                   default:
                     if (snapshot.hasData) {
                       return Padding(
-                        padding: const EdgeInsets.only(bottom: 27.0),
+                        padding: const EdgeInsets.only(bottom: 5.0),
                         child: TextField(
                           enabled: false,
                           decoration: InputDecoration(
@@ -262,42 +265,13 @@ class ProfilePage extends State<ProfilePageState> {
                 }
               },
             ),
-            // Padding(
-            //   padding: EdgeInsets.all(12.0),
-            //   child: ElevatedButton(
-            //     child: const Text(
-            //       "Refresh Saldo",
-            //       style: TextStyle(fontSize: 12),
-            //     ),
-            //     onPressed: () => setState(() {
-            //       futurePasien = fetchPasien();
-            //     }),
-            //   ),
-            // ),
-            // Padding(
-            //   padding: EdgeInsets.all(12.0),
-            //   child: ElevatedButton(
-            //     child: const Text(
-            //       "Top up saldo",
-            //       style: TextStyle(fontSize: 12),
-            //     ),
-            //     onPressed: () {
-            //       Navigator.of(context).push(
-            //         new MaterialPageRoute(
-            //             builder: (_) => new FormSaldo(
-            //                   token: token,
-            //                 )),
-            //       );
-            //     },
-            //   ),
-            // ),
             GestureDetector(
               onTap: () => setState(() {
                 futurePasien = fetchPasien();
               }),
               child: Container(
                 alignment: Alignment.center,
-                margin: EdgeInsets.only(left: 20, right: 20, top: 70),
+                margin: EdgeInsets.only(left: 20, right: 20, top: 40),
                 padding: EdgeInsets.only(left: 20, right: 20),
                 height: 40,
                 decoration: BoxDecoration(
@@ -329,7 +303,8 @@ class ProfilePage extends State<ProfilePageState> {
               },
               child: Container(
                 alignment: Alignment.center,
-                margin: EdgeInsets.only(left: 20, right: 20, top: 10),
+                margin:
+                    EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 20),
                 padding: EdgeInsets.only(left: 20, right: 20),
                 height: 40,
                 decoration: BoxDecoration(

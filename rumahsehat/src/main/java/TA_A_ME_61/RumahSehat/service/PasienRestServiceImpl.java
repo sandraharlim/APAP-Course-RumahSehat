@@ -26,6 +26,7 @@ public class PasienRestServiceImpl implements PasienRestService{
         pasienDb.save(pasien);
     }
 
+    @Override
     public String encrypt(String password) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String hashedPassword = passwordEncoder.encode(password);
@@ -61,13 +62,7 @@ public class PasienRestServiceImpl implements PasienRestService{
     @Override
     public PasienModel getPasienByUsername(String username){
         PasienModel pasien = pasienDb.findByUsername(username);
-//        if (pasien.isPresent()) {
-//            return pasien.get();
-//        } else {
-//            throw new NoSuchElementException();
-//        }
         return pasien;
-//        return pasienDb.findByUsername(username);
     }
 
 }

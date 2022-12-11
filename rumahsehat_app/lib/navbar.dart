@@ -38,18 +38,19 @@ class NavigationDrawer extends StatelessWidget {
                       builder: (context) => const ProfilePageState()));
             },
           ),
-          ListTile(
-            leading: Icon(Icons.attach_money_outlined),
-            title: Text('Saldo'),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) =>
-                        FormSaldo()), // harusnya classnya Home()
-              );
-            },
-          ),
+          // ListTile(
+          //   leading: Icon(Icons.attach_money_outlined),
+          //   title: Text('Saldo'),
+          //   onTap: () {
+          //     Navigator.push(
+          //       context,
+          //       MaterialPageRoute(
+          //           builder: (context) => FormSaldo(
+          //                 token: "token",
+          //               )), // harusnya classnya Home()
+          //     );
+          //   },
+          // ),
           ExpansionTile(
             title: Text("Appointment"),
             // leading: FaIcon(FontAwesomeIcons.syringe),

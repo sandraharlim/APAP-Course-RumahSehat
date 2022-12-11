@@ -16,13 +16,16 @@ class FormSaldoState extends State<FormSaldo> {
   final TextEditingController saldoController = TextEditingController();
   late Future<Pasien>? _futurePasien;
   late String jwtToken;
+  String token_prefix = "Bearer ";
 
   Future<Pasien> fetchPasien() async {
+    // String url = "https://apap-061.cs.ui.ac.id/api/pasien/profile";
+
     String url = 'http://localhost:8080/api/pasien/profile';
 
     final response = await http.get(Uri.parse(url), headers: <String, String>{
-      "Authorization": jwtToken,
-      "Content-Type": "application/json;charset=UTF-8"
+      "Authorization": (token_prefix + jwtToken),
+      // "Content-Type": "application/json;charset=UTF-8"
     });
     if (response.statusCode == 200) {
       var data = json.decode(response.body);
@@ -34,11 +37,12 @@ class FormSaldoState extends State<FormSaldo> {
   }
 
   Future<Pasien> updateSaldo(int saldo) async {
-    String url = 'http://127.0.0.1:8080/api/pasien/profile/update-saldo';
+    // String url = "https://apap-061.cs.ui.ac.id/api/pasien/profile/update-saldo";
+    String url = 'http://localhost:8080/api/pasien/profile/update-saldo';
     final response = await http.put(
       Uri.parse(url),
       headers: {
-        "Authorization": jwtToken,
+        "Authorization": (token_prefix + jwtToken),
         'Content-Type': 'application/json; charset=UTF-8',
         "Access-Control_Allow_Origin": "*",
       },
@@ -112,16 +116,39 @@ class FormSaldoState extends State<FormSaldo> {
                         ],
                       ),
                       Padding(padding: EdgeInsets.only(bottom: 15)),
-                      ElevatedButton(
-                        onPressed: () {
-                          setState(() {
-                            _futurePasien =
-                                updateSaldo(int.parse(saldoController.text));
-                            // _futurePasien = fetchPasien();
-                          });
-                        },
-                        child: const Text("Update Saldo"),
-                      )
+                      GestureDetector(
+                        onTap: () => setState(() {
+                          _futurePasien =
+                              updateSaldo(int.parse(saldoController.text));
+                        }),
+                        child: Container(
+                          alignment: Alignment.center,
+                          margin: EdgeInsets.only(left: 20, right: 20, top: 40),
+                          padding: EdgeInsets.only(left: 20, right: 20),
+                          height: 40,
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                                colors: [
+                                  (Color.fromARGB(255, 138, 198, 224)),
+                                  Color.fromARGB(255, 75, 183, 210)
+                                ],
+                                begin: Alignment.centerLeft,
+                                end: Alignment.centerRight),
+                            borderRadius: BorderRadius.circular(50),
+                            color: Colors.grey[200],
+                            boxShadow: [
+                              BoxShadow(
+                                  offset: Offset(0, 10),
+                                  blurRadius: 50,
+                                  color: Color(0xffEEEEEE)),
+                            ],
+                          ),
+                          child: Text(
+                            "Top up saldo",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      ),
                     ],
                   );
                 } else if (snapshot.hasError) {

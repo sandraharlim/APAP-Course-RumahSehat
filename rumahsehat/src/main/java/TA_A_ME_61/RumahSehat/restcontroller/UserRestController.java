@@ -47,10 +47,23 @@ public class UserRestController {
 
     // gada regis admin, adanya login dr sso.
 
-    @PostMapping("/sign-up/pasien")
-    public void signUpPasien(@RequestBody PasienModel pasien) {
-        pasien.setPassword(passwordEncoder.encode(pasien.getPassword()));
-        pasienService.addPasien(pasien);
-    }
+//    @PostMapping("/sign-up/pasien")
+//    public void signUpPasien(@RequestBody PasienModel pasien) {
+//        pasien.setSaldo(0L);
+//        pasien.setRole("Pasien");
+//        List<AppointmentModel> ls = new ArrayList<>();
+//        pasien.setListAppointment(ls);
+//        pasien.setPassword(passwordEncoder.encode(pasien.getPassword()));
+//        pasienService.addPasien(pasien);
+//        System.out.println(pasien.getUuid());
+//        System.out.println(pasien.getNama());
+//        System.out.println(pasien.getRole());
+//        System.out.println(pasien.getUsername());
+//        System.out.println(pasien.getPassword());
+//        System.out.println(pasien.getEmail());
+//        System.out.println(pasien.getSaldo());
+//        System.out.println(pasien.getUmur());
+//        System.out.println(pasien.getListAppointment());
+//    }
 
 }
