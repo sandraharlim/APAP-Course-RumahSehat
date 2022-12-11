@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:rumahsehat_app/models/pasienmodel.dart';
+import 'package:rumahsehat_app/profilepage.dart';
 
 class FormSaldo extends StatefulWidget {
   final String token;
@@ -21,7 +22,7 @@ class FormSaldoState extends State<FormSaldo> {
   Future<Pasien> fetchPasien() async {
     // String url = "https://apap-061.cs.ui.ac.id/api/pasien/profile";
 
-    String url = 'http://localhost:8080/api/pasien/profile';
+    String url = 'http://10.0.2.2:8080/api/pasien/profile';
 
     final response = await http.get(Uri.parse(url), headers: <String, String>{
       "Authorization": (token_prefix + jwtToken),
@@ -36,9 +37,9 @@ class FormSaldoState extends State<FormSaldo> {
     }
   }
 
-  Future<Pasien> updateSaldo(int saldo) async {
+  void updateSaldo(int saldo) async {
     // String url = "https://apap-061.cs.ui.ac.id/api/pasien/profile/update-saldo";
-    String url = 'http://localhost:8080/api/pasien/profile/update-saldo';
+    String url = 'http://10.0.2.2:8080/api/pasien/profile/update-saldo';
     final response = await http.put(
       Uri.parse(url),
       headers: {
@@ -51,7 +52,8 @@ class FormSaldoState extends State<FormSaldo> {
       }),
     );
     if (response.statusCode == 200) {
-      return Pasien.fromJson(jsonDecode(response.body));
+      print("Success!");
+      // return Pasien.fromJson(jsonDecode(response.body));
     } else {
       throw Exception('Failed Top Up Saldo');
     }
@@ -70,6 +72,7 @@ class FormSaldoState extends State<FormSaldo> {
       title: "Top Up Saldo",
       home: Scaffold(
         appBar: AppBar(
+          title: Text("Top Up"),
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           elevation: 1,
           leading: IconButton(
@@ -118,8 +121,22 @@ class FormSaldoState extends State<FormSaldo> {
                       Padding(padding: EdgeInsets.only(bottom: 15)),
                       GestureDetector(
                         onTap: () => setState(() {
-                          _futurePasien =
-                              updateSaldo(int.parse(saldoController.text));
+                          updateSaldo(int.parse(saldoController.text));
+                          showDialog<String>(
+                              context: context,
+                              builder: (BuildContext context) => AlertDialog(
+                                    title: const Text("Saldo Update"),
+                                    content: const Text('Success!!'),
+                                    actions: <Widget>[
+                                      TextButton(
+                                          onPressed: (() => Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      new ProfilePageState()))),
+                                          child: const Text("Confirm")),
+                                    ],
+                                  ));
                         }),
                         child: Container(
                           alignment: Alignment.center,
@@ -152,7 +169,7 @@ class FormSaldoState extends State<FormSaldo> {
                     ],
                   );
                 } else if (snapshot.hasError) {
-                  return Text('Saldo telah berhasil di update!');
+                  return Text('Error!');
                 }
               }
               return const CircularProgressIndicator();

@@ -11,8 +11,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
@@ -46,15 +44,4 @@ public class PasienRestController {
             );
         }
     }
-
-    @PostMapping("/sign-up")
-    public void signUpPasien(@RequestBody PasienModel pasien) {
-        pasien.setSaldo(0L);
-        pasien.setRole("Pasien");
-        List<AppointmentModel> ls = new ArrayList<>();
-        pasien.setListAppointment(ls);
-        System.out.println(pasien.getEmail());
-        pasienRestService.addPasien(pasien);
-    }
-
 }
