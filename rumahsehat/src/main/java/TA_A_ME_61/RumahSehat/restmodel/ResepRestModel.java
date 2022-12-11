@@ -30,6 +30,6 @@ public class ResepRestModel {
     private String apoteker;
 
     @JsonProperty("jumlah")
-    private List<JumlahRestModel> jumlah;
+    private List<String> jumlah;
 
 }

@@ -10,8 +10,8 @@ import lombok.Setter;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class JumlahRestModel {
     @JsonProperty("namaObat")
-    private String namaObat; // APT-id
+    private String namaObat;
 
     @JsonProperty("kuantitas")
-    private String kuantitas; // nama dokter
+    private String kuantitas;
 }

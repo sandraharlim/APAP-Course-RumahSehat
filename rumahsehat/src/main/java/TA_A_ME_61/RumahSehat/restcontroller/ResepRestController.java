@@ -34,7 +34,7 @@ public class ResepRestController {
             ResepRestModel resepGet = new ResepRestModel();
             String status = "Belum Selesai";
             String apoteker = "-";
-            List<JumlahRestModel> jumlah = new ArrayList<>();
+            List<String> jumlah = new ArrayList<>();
 
             if (resep.getIsDone()) {
                 status = "Selesai";
@@ -44,11 +44,8 @@ public class ResepRestController {
 
             if(resep.getListJumlah().size() != 0){
                 for (JumlahModel jumlahx : resep.getListJumlah()){
-                    JumlahRestModel jumlahNya = new JumlahRestModel();
-                    jumlahNya.setNamaObat(jumlahx.getObat().getNamaObat());
-                    jumlahNya.setKuantitas(String.valueOf(jumlahx.getKuantitas()));
+                    String jumlahNya = ""+ jumlahx.getObat().getNamaObat()+ ", kuantitas: " + jumlahx.getKuantitas().toString();
                     jumlah.add(jumlahNya);
-
                 }
             }
 
