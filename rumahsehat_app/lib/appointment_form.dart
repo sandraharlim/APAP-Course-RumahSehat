@@ -7,10 +7,20 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 import 'dart:convert';
 import 'dart:collection';
 
 import 'navbar.dart';
+
+class Appointment with ChangeNotifier{
+  String? token;
+
+  void updateData(tokenData){
+    token = tokenData;
+    notifyListeners();
+  }
+}
 
 class AppointmentForm extends StatefulWidget {
   @override
@@ -38,6 +48,8 @@ class _AppointmentFormState extends State<AppointmentForm> {
   // "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwYXNpZW4yIiwiZXhwIjoxNjcxMjQ0MTc3fQ.4vuSC4zLB67MMvnNSN-s36ELL2iVRO5aUl3DNRlXKWrNWCErEjFRJZQO1zzXSSBYuoAXtgsCx0XhpIjvYLbLRA";
 
   Future<void> getListOfDokter() async {
+    String? token = Provider.of<Appointment>(context).token;
+
     // web server beneran
     // const url = 'https://apap-061.cs.ui.ac.id/api/appointment/doctors';
 
@@ -49,7 +61,7 @@ class _AppointmentFormState extends State<AppointmentForm> {
     //     'https://22202f32-174d-4a73-abb7-98e3816b7709.mock.pstmn.io/api/appointment/doctors-flutter';
     try {
       final response = await http.get(Uri.parse(url),
-          headers: {"Authorization": (token_prefix + token)});
+          headers: {"Authorization": (token_prefix + token!)});
 
       List<dynamic> data = jsonDecode(response.body);
 
@@ -89,29 +101,30 @@ class _AppointmentFormState extends State<AppointmentForm> {
   late String dateTime;
   DateTime selectedDate = DateTime.now();
   TimeOfDay selectedTime = const TimeOfDay(hour: 00, minute: 00);
-  TextEditingController _dateController = TextEditingController();
-  TextEditingController _timeController = TextEditingController();
+  final TextEditingController _dateController = TextEditingController();
+  final TextEditingController _timeController = TextEditingController();
 
-  Future<Null> _selectDate(BuildContext context) async {
+  Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
         context: context,
         initialDate: selectedDate,
         initialDatePickerMode: DatePickerMode.day,
         firstDate: DateTime(2021),
         lastDate: DateTime(2101));
-    if (picked != null)
+    if (picked != null) {
       setState(() {
         selectedDate = picked;
         _dateController.text = DateFormat.yMd().format(selectedDate);
       });
+    }
   }
 
-  Future<Null> _selectTime(BuildContext context) async {
+  Future<void> _selectTime(BuildContext context) async {
     final TimeOfDay? picked = await showTimePicker(
       context: context,
       initialTime: selectedTime,
     );
-    if (picked != null)
+    if (picked != null) {
       setState(() {
         selectedTime = picked;
         _hour = selectedTime.hour.toString();
@@ -122,6 +135,7 @@ class _AppointmentFormState extends State<AppointmentForm> {
             DateTime(2019, 08, 1, selectedTime.hour, selectedTime.minute),
             [hh, ':', nn, " ", am]).toString();
       });
+    }
   }
 
   @override
@@ -151,7 +165,7 @@ class _AppointmentFormState extends State<AppointmentForm> {
       body: Form(
         key: _formKey,
         child: SingleChildScrollView(
-          child: Container(
+          child: SizedBox(
             width: _width,
             height: _height,
             child: Column(

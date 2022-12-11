@@ -7,7 +7,7 @@ import '../models/appointment_pasien_card.dart';
 import 'navbar.dart';
 
 class AppointmentViewAll extends StatefulWidget {
-  AppointmentViewAll({Key? key}) : super(key: key);
+  const AppointmentViewAll({Key? key}) : super(key: key);
 
   @override
   _AppointmentViewAllState createState() => _AppointmentViewAllState();
