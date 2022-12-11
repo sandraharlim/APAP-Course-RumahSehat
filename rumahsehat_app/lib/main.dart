@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:rumahsehat_app/appointment_index.dart';
 import 'package:rumahsehat_app/login_screen.dart';
 import 'package:rumahsehat_app/models/appointment_pasien_card.dart';
 import 'package:rumahsehat_app/models/pasienmodel.dart';
 import 'package:rumahsehat_app/profilepage.dart';
 import 'package:rumahsehat_app/providers/auth.dart';
+import 'appointment_index.dart';
 import 'navbar.dart';
 import 'appointment_form.dart';
 import 'package:rumahsehat_app/splash_screen.dart';
@@ -25,7 +25,8 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProxyProvider<Authentication, Appointment>(
             create: (context) => Appointment(),
-            update: (context, auth, appointment) => appointment!..updateData(auth.token))
+            update: (context, auth, appointment) =>
+                appointment!..updateData(auth.token))
       ],
       builder: (context, child) => Consumer<Authentication>(
         builder: (context, auth, child) => MaterialApp(
