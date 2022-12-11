@@ -230,6 +230,12 @@ public class AppointmentRestServiceImpl implements AppointmentRestService{
             apptRest.setWaktuAwal(waktuAwalStr);
             String status = (appt.getIsDone()) ? "Sudah Selesai" : "Belum Dimulai";
             apptRest.setStatus(status);
+            if (appt.getResep() != null){
+                apptRest.setResepId(appt.getResep().getId().toString());
+            }
+            else {
+                apptRest.setResepId("0");
+            }
 
             response.add(apptRest);
         }
