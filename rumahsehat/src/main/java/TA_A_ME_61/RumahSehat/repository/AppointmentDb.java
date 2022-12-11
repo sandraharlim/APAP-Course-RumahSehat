@@ -33,3 +33,4 @@ public interface AppointmentDb  extends JpaRepository<AppointmentModel, Long> {
 
     Optional<AppointmentModel> getAppointmentModelByKode(String kode);
 }
+

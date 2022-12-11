@@ -12,4 +12,6 @@ public interface PasienRestService {
     void updateSaldo(String uuid, Long saldo);
 
     PasienModel getPasienByUsername(String username);
+
+    String encrypt(String password);
 }
