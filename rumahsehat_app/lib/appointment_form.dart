@@ -7,10 +7,20 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 import 'dart:convert';
 import 'dart:collection';
 
 import 'navbar.dart';
+
+class Appointment with ChangeNotifier {
+  String? token;
+
+  void updateData(tokenData) {
+    token = tokenData;
+    notifyListeners();
+  }
+}
 
 class AppointmentForm extends StatefulWidget {
   @override
@@ -20,24 +30,15 @@ class AppointmentForm extends StatefulWidget {
 class _AppointmentFormState extends State<AppointmentForm> {
   final _formKey = GlobalKey<FormState>();
 
-  List<String> listNamaTarif = [
-    // "Tirta-1000",
-    // "Rakha-2000",
-    // "Tata-3000",
-  ];
-  Map<String, String> correspondingUuid = {
-    // {"nama-tarif" : "uuid"}
-    // "Tirta-1000": "qwerty1",
-    // "Rakha-2000": "qwerty2",
-    // "Tata-3000": "qwerty3"
-  };
+  List<String> listNamaTarif = []; // "nama-tarif"
+  Map<String, String> correspondingUuid = {}; // {"nama-tarif" : "uuid"}
 
   String selectedNamaTarif = ""; // Tirta-1000
   String token_prefix = "Bearer ";
-  String token = "";
-  // "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwYXNpZW4yIiwiZXhwIjoxNjcxMjQ0MTc3fQ.4vuSC4zLB67MMvnNSN-s36ELL2iVRO5aUl3DNRlXKWrNWCErEjFRJZQO1zzXSSBYuoAXtgsCx0XhpIjvYLbLRA";
 
   Future<void> getListOfDokter() async {
+    String? token = Provider.of<Appointment>(context, listen: false).token;
+
     // web server beneran
     // const url = 'https://apap-061.cs.ui.ac.id/api/appointment/doctors';
 
@@ -49,7 +50,7 @@ class _AppointmentFormState extends State<AppointmentForm> {
     //     'https://22202f32-174d-4a73-abb7-98e3816b7709.mock.pstmn.io/api/appointment/doctors-flutter';
     try {
       final response = await http.get(Uri.parse(url),
-          headers: {"Authorization": (token_prefix + token)});
+          headers: {"Authorization": (token_prefix + token!)});
 
       List<dynamic> data = jsonDecode(response.body);
 
@@ -89,29 +90,30 @@ class _AppointmentFormState extends State<AppointmentForm> {
   late String dateTime;
   DateTime selectedDate = DateTime.now();
   TimeOfDay selectedTime = const TimeOfDay(hour: 00, minute: 00);
-  TextEditingController _dateController = TextEditingController();
-  TextEditingController _timeController = TextEditingController();
+  final TextEditingController _dateController = TextEditingController();
+  final TextEditingController _timeController = TextEditingController();
 
-  Future<Null> _selectDate(BuildContext context) async {
+  Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
         context: context,
         initialDate: selectedDate,
         initialDatePickerMode: DatePickerMode.day,
         firstDate: DateTime(2021),
         lastDate: DateTime(2101));
-    if (picked != null)
+    if (picked != null) {
       setState(() {
         selectedDate = picked;
         _dateController.text = DateFormat.yMd().format(selectedDate);
       });
+    }
   }
 
-  Future<Null> _selectTime(BuildContext context) async {
+  Future<void> _selectTime(BuildContext context) async {
     final TimeOfDay? picked = await showTimePicker(
       context: context,
       initialTime: selectedTime,
     );
-    if (picked != null)
+    if (picked != null) {
       setState(() {
         selectedTime = picked;
         _hour = selectedTime.hour.toString();
@@ -122,12 +124,12 @@ class _AppointmentFormState extends State<AppointmentForm> {
             DateTime(2019, 08, 1, selectedTime.hour, selectedTime.minute),
             [hh, ':', nn, " ", am]).toString();
       });
+    }
   }
 
   @override
   void initState() {
-    login();
-    // getListOfDokter();
+    getListOfDokter();
 
     _dateController.text = DateFormat.yMd().format(DateTime.now());
 
@@ -151,7 +153,7 @@ class _AppointmentFormState extends State<AppointmentForm> {
       body: Form(
         key: _formKey,
         child: SingleChildScrollView(
-          child: Container(
+          child: SizedBox(
             width: _width,
             height: _height,
             child: Column(
@@ -284,17 +286,6 @@ class _AppointmentFormState extends State<AppointmentForm> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Padding(
-                        padding: EdgeInsets.only(right: 20.0),
-                        child: ElevatedButton(
-                          child: const Text(
-                            "login",
-                          ),
-                          onPressed: () {
-                            login();
-                          },
-                        ),
-                      ),
                       ElevatedButton(
                         onPressed: () {
                           getListOfDokter();
@@ -316,9 +307,6 @@ class _AppointmentFormState extends State<AppointmentForm> {
                           ),
                           onPressed: () {
                             if (_formKey.currentState!.validate()) {}
-
-                            // printAllVar();
-
                             if (selectedNamaTarif == "") {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
@@ -346,48 +334,9 @@ class _AppointmentFormState extends State<AppointmentForm> {
     );
   }
 
-  void printAllVar() {
-    print(_dateController.text);
-    print(_timeController.text);
-    print(selectedNamaTarif);
-    print(correspondingUuid[selectedNamaTarif]);
-  }
-
-  Future<void> login() async {
-    // const urlPost = "https://apap-061.cs.ui.ac.id/authenticate";
-    const urlPost = "http://10.0.2.2:8080/authenticate";
-    String username = "pasien1";
-    String password = "Qwerty123";
-    try {
-      final response = await http.post(Uri.parse(urlPost),
-          body: jsonEncode({"username": username, "password": password}),
-          headers: {
-            "content-type": "application/json",
-            "accept": "application/json"
-          });
-
-      Map<String, dynamic> extractedData = jsonDecode(response.body);
-      String? jwtToken = extractedData["jwttoken"];
-
-      if (jwtToken != null) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("berhasil login dengan username " + username)),
-        );
-        setState(() {
-          token = jwtToken;
-        });
-        getListOfDokter();
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Username atau password salah")),
-        );
-      }
-    } catch (p) {
-      print(p);
-    }
-  }
-
   Future<void> submitForm() async {
+    String? token = Provider.of<Appointment>(context, listen: false).token;
+
     // const urlPost = "https://apap-061.cs.ui.ac.id/api/appointment/create";
     const urlPost = "http://10.0.2.2:8080/api/appointment/create";
     try {
@@ -401,7 +350,7 @@ class _AppointmentFormState extends State<AppointmentForm> {
             // https://stackoverflow.com/questions/53388426/flutter-send-json-over-http-post
             "content-type": "application/json",
             "accept": "application/json",
-            "Authorization": (token_prefix + token)
+            "Authorization": (token_prefix + token!)
           });
 
       Map<String, dynamic> extractedData = jsonDecode(response.body);

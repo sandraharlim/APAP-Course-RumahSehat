@@ -23,7 +23,7 @@ class StartState extends State<SplashScreen> {
 
   startTime() async {
     var duration = Duration(seconds: 4);
-    return new Timer(duration, route);
+    return Timer(duration, route);
   }
 
   route() {
@@ -44,7 +44,7 @@ class StartState extends State<SplashScreen> {
             decoration: BoxDecoration(
                 color: Color.fromARGB(255, 138, 198, 224),
                 gradient: LinearGradient(
-                    colors: [
+                    colors: const [
                 (Color.fromARGB(255, 138, 198, 224)),
                 Color.fromARGB(255, 75, 183, 210)],
                     begin: Alignment.topCenter,
