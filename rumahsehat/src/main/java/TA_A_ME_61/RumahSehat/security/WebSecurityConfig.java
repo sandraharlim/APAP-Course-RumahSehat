@@ -120,14 +120,10 @@ public class WebSecurityConfig {
                             .antMatchers("/api/appointment/viewall")
                             .antMatchers("/api/pasien/profile")
                             .antMatchers("/api/pasien/profile/update-saldo")
-                            .antMatchers("/sign-up/pasien")
-                            .antMatchers("/api/pasien/sign-up")
                     )
                     // dont authenticate this particular request
                     .authorizeRequests().antMatchers("/authenticate").permitAll()
                     .antMatchers("/sign-up").permitAll()
-                    .antMatchers("/sign-up/pasien").permitAll()
-                    .antMatchers("/api/pasien/sign-up").permitAll()
 
                     // all other requests need to be authenticated
                     .anyRequest().authenticated().and()

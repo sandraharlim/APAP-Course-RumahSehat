@@ -26,7 +26,10 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProxyProvider<Authentication, Appointment>(
             create: (context) => Appointment(),
             update: (context, auth, appointment) =>
-                appointment!..updateData(auth.token))
+                appointment!..updateData(auth.token)),
+        ChangeNotifierProxyProvider<Authentication, PasienNotifier>(
+            create: (context) => PasienNotifier(),
+            update: (context, auth, pasien) => pasien!..updateData(auth.token)),
       ],
       builder: (context, child) => Consumer<Authentication>(
         builder: (context, auth, child) => MaterialApp(
