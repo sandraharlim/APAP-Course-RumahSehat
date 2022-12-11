@@ -5,12 +5,20 @@ import 'package:http/http.dart' as http;
 import 'package:rumahsehat_app/main.dart';
 import 'package:rumahsehat_app/models/pasienmodel.dart';
 import 'package:rumahsehat_app/saldoform.dart';
+import 'package:provider/provider.dart';
+
+class PasienNotifier with ChangeNotifier {
+  String? token;
+
+  void updateData(tokenData) {
+    token = tokenData;
+    notifyListeners();
+  }
+}
 
 class ProfilePageState extends StatefulWidget {
-  // final String jwtToken;
   const ProfilePageState({
     Key? key,
-    // required this.jwtToken,
   }) : super(key: key);
 
   @override
@@ -18,49 +26,18 @@ class ProfilePageState extends StatefulWidget {
 }
 
 class ProfilePage extends State<ProfilePageState> {
-  // late String jwtToken;
   late Future<Pasien> futurePasien;
   String token_prefix = "Bearer ";
-  String token = "";
-
-  Future<void> loginPasien() async {
-    // const urlPost = "https://apap-061.cs.ui.ac.id/authenticate";
-    const urlPost = "http://localhost:8080/authenticate";
-    String username = "pasien20";
-    String password = "Pasienpasien20";
-    try {
-      final response = await http.post(Uri.parse(urlPost),
-          body: jsonEncode({"username": username, "password": password}),
-          headers: {
-            "content-type": "application/json",
-            "accept": "application/json"
-          });
-      Map<String, dynamic> extractedData = jsonDecode(response.body);
-      String? jwtToken = extractedData["jwttoken"];
-      print(jwtToken);
-      if (jwtToken != null) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("berhasil login dengan username " + username)),
-        );
-        setState(() {
-          token = jwtToken;
-        });
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Username atau password salah")),
-        );
-      }
-    } catch (p) {
-      print(p);
-    }
-  }
+  String token_pass = "";
 
   Future<Pasien> fetchPasien() async {
+    String? token = Provider.of<PasienNotifier>(context, listen: false).token;
+    token_pass = token!;
     // String url = 'https://apap-061.cs.ui.ac.id/api/pasien/profile';
-    String url = 'http://localhost:8080/api/pasien/profile';
+    String url = 'http://10.0.2.2:8080/api/pasien/profile';
 
     final response = await http.get(Uri.parse(url), headers: <String, String>{
-      "Authorization": (token_prefix + token),
+      "Authorization": (token_prefix + token_pass),
     });
     if (response.statusCode == 200) {
       var data = json.decode(response.body);
@@ -73,7 +50,6 @@ class ProfilePage extends State<ProfilePageState> {
 
   @override
   void initState() {
-    loginPasien();
     futurePasien = fetchPasien();
   }
 
@@ -81,6 +57,7 @@ class ProfilePage extends State<ProfilePageState> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        title: Text("Profile"),
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         elevation: 1,
         leading: IconButton(
@@ -89,7 +66,8 @@ class ProfilePage extends State<ProfilePageState> {
             color: Colors.black,
           ),
           onPressed: () {
-            Navigator.pop(context);
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => new MyHomePage()));
           },
         ),
       ),
@@ -299,7 +277,8 @@ class ProfilePage extends State<ProfilePageState> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => new FormSaldo(token: token)));
+                        builder: (context) =>
+                            new FormSaldo(token: token_pass)));
               },
               child: Container(
                 alignment: Alignment.center,

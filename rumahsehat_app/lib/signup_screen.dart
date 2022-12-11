@@ -246,35 +246,6 @@ class InitState extends State<SignUpScreen> {
             ),
           ),
         ),
-        Container(
-          alignment: Alignment.center,
-          margin: EdgeInsets.only(left: 20, right: 20, top: 20),
-          padding: EdgeInsets.only(left: 20, right: 20),
-          height: 54,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(50),
-            color: Colors.grey[200],
-            boxShadow: const [
-              BoxShadow(
-                  offset: Offset(0, 10),
-                  blurRadius: 50,
-                  color: Color(0xffEEEEEE)),
-            ],
-          ),
-          child: TextField(
-            controller: ageController,
-            cursorColor: Color.fromARGB(255, 9, 3, 0),
-            decoration: InputDecoration(
-              icon: Icon(
-                Icons.person,
-                color: Color.fromARGB(255, 8, 2, 0),
-              ),
-              hintText: "Umur",
-              enabledBorder: InputBorder.none,
-              focusedBorder: InputBorder.none,
-            ),
-          ),
-        ),
         GestureDetector(
           onTap: () => Provider.of<Authentication>(context, listen: false)
               .signUp(
