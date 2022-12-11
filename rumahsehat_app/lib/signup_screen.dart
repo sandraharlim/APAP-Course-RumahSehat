@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:rumahsehat_app/login_screen.dart';
+import 'package:rumahsehat_app/providers/auth.dart';
 
 class SignUpScreen extends StatefulWidget {
   @override
@@ -6,10 +9,17 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class InitState extends State<SignUpScreen> {
+  TextEditingController usernameController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController nameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController ageController = TextEditingController();
+
   @override
   Widget build(BuildContext context) => initWidget();
 
   Widget initWidget() {
+
     return Scaffold(
         body: SingleChildScrollView(
             child: Column(
@@ -20,7 +30,7 @@ class InitState extends State<SignUpScreen> {
             borderRadius: BorderRadius.only(bottomLeft: Radius.circular(90)),
             color: Color.fromARGB(255, 119, 176, 233),
             gradient: LinearGradient(
-              colors: [
+              colors: const [
                 (Color.fromARGB(255, 138, 198, 224)),
                 Color.fromARGB(255, 75, 183, 210)
               ],
@@ -35,11 +45,8 @@ class InitState extends State<SignUpScreen> {
             children: [
               Container(
                 margin: EdgeInsets.only(top: 50),
-                child: Image.asset(
-                  "images/19836-removebg-preview.png",
-                              height: 150,
-                              width: 220
-                ),
+                child: Image.asset("images/19836-removebg-preview.png",
+                    height: 150, width: 220),
               ),
               Container(
                 margin: EdgeInsets.only(right: 20, top: 20),
@@ -60,7 +67,7 @@ class InitState extends State<SignUpScreen> {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(50),
             color: Colors.grey[200],
-            boxShadow: [
+            boxShadow: const [
               BoxShadow(
                   offset: Offset(0, 10),
                   blurRadius: 50,
@@ -68,6 +75,7 @@ class InitState extends State<SignUpScreen> {
             ],
           ),
           child: TextField(
+            controller: nameController,
             cursorColor: Color.fromARGB(255, 15, 4, 1),
             decoration: InputDecoration(
               icon: Icon(
@@ -88,7 +96,7 @@ class InitState extends State<SignUpScreen> {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(50),
             color: Colors.grey[200],
-            boxShadow: [
+            boxShadow: const [
               BoxShadow(
                   offset: Offset(0, 10),
                   blurRadius: 50,
@@ -96,6 +104,7 @@ class InitState extends State<SignUpScreen> {
             ],
           ),
           child: TextField(
+            controller: emailController,
             cursorColor: Color.fromARGB(255, 9, 3, 0),
             decoration: InputDecoration(
               icon: Icon(
@@ -115,23 +124,23 @@ class InitState extends State<SignUpScreen> {
           height: 54,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(50),
-            color: Color(0xffEEEEEE),
-            boxShadow: [
+            color: Colors.grey[200],
+            boxShadow: const [
               BoxShadow(
-                  offset: Offset(0, 20),
-                  blurRadius: 100,
+                  offset: Offset(0, 10),
+                  blurRadius: 50,
                   color: Color(0xffEEEEEE)),
             ],
           ),
           child: TextField(
-            cursorColor: Color.fromARGB(255, 12, 4, 0),
+            controller: usernameController,
+            cursorColor: Color.fromARGB(255, 9, 3, 0),
             decoration: InputDecoration(
-              focusColor: Color.fromARGB(255, 6, 2, 0),
               icon: Icon(
-                Icons.phone,
-                color: Color.fromARGB(255, 5, 1, 0),
+                Icons.person,
+                color: Color.fromARGB(255, 8, 2, 0),
               ),
-              hintText: "Phone Number",
+              hintText: "Username",
               enabledBorder: InputBorder.none,
               focusedBorder: InputBorder.none,
             ),
@@ -145,7 +154,7 @@ class InitState extends State<SignUpScreen> {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(50),
             color: Color(0xffEEEEEE),
-            boxShadow: [
+            boxShadow: const [
               BoxShadow(
                   offset: Offset(0, 20),
                   blurRadius: 100,
@@ -153,6 +162,8 @@ class InitState extends State<SignUpScreen> {
             ],
           ),
           child: TextField(
+            controller: passwordController,
+            obscureText: true,
             cursorColor: Color.fromARGB(255, 16, 5, 0),
             decoration: InputDecoration(
               focusColor: Color.fromARGB(255, 5, 2, 0),
@@ -166,23 +177,53 @@ class InitState extends State<SignUpScreen> {
             ),
           ),
         ),
+        Container(
+          alignment: Alignment.center,
+          margin: EdgeInsets.only(left: 20, right: 20, top: 20),
+          padding: EdgeInsets.only(left: 20, right: 20),
+          height: 54,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(50),
+            color: Colors.grey[200],
+            boxShadow: const [
+              BoxShadow(
+                  offset: Offset(0, 10),
+                  blurRadius: 50,
+                  color: Color(0xffEEEEEE)),
+            ],
+          ),
+          child: TextField(
+            controller: ageController,
+            cursorColor: Color.fromARGB(255, 9, 3, 0),
+            decoration: InputDecoration(
+              icon: Icon(
+                Icons.person,
+                color: Color.fromARGB(255, 8, 2, 0),
+              ),
+              hintText: "Umur",
+              enabledBorder: InputBorder.none,
+              focusedBorder: InputBorder.none,
+            ),
+          ),
+        ),
         GestureDetector(
-          onTap: () {
-            // Write Click Listener Code Here.
-          },
+          onTap: () => Provider.of<Authentication>(context, listen: false)
+                  .signUp(emailController.text.toString(), usernameController.text.toString(),
+                          nameController.text.toString(), passwordController.text.toString(),
+                          ageController.text.toString()).then((value) => Navigator.pop(context)),
           child: Container(
             alignment: Alignment.center,
             margin: EdgeInsets.only(left: 20, right: 20, top: 70),
             padding: EdgeInsets.only(left: 20, right: 20),
             height: 54,
             decoration: BoxDecoration(
-              gradient: LinearGradient(colors: [
+              gradient: LinearGradient(colors: const [
                 (Color.fromARGB(255, 138, 198, 224)),
                 Color.fromARGB(255, 75, 183, 210)
               ], begin: Alignment.centerLeft, end: Alignment.centerRight),
               borderRadius: BorderRadius.circular(50),
               color: Colors.grey[200],
-              boxShadow: [
+              boxShadow: const [
                 BoxShadow(
                     offset: Offset(0, 10),
                     blurRadius: 50,

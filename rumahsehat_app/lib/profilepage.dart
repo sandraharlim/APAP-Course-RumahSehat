@@ -242,7 +242,7 @@ class ProfilePage extends State<ProfilePageState> {
                 onPressed: () {
                   Navigator.of(context)
                       .push(
-                        new MaterialPageRoute(builder: (_) => new FormSaldo()),
+                        MaterialPageRoute(builder: (_) => FormSaldo()),
                       )
                       .then((val) => {fetchPasien()});
                 },
