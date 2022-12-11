@@ -15,7 +15,7 @@
       <div class="justify-content-center">
         <div class="row">
           <div class="col">
-            <a class="btn" style="background-color: #e7e6ff" href="/appointment/">Back</a>
+            <a class="btn" style="background-color: #e7e6ff" href="/appointment/viewall">Back</a>
           </div>
         </div>
         <br>
@@ -77,11 +77,11 @@
         </div>
         <br>
         <div class="row justify-content-center">
-          <div class="col justify-content-center" sec:authorize="hasAuthority('Dokter')">
+          <div class="col justify-content-center" sec:authorize="hasAnyAuthority('Dokter','dokter')">
             <a class="btn float-sm-right" style="background-color: #e7e6ff"
                href="#" th:if="${appointment.isDone} == false">Create Resep</a>
           </div>
-          <div class="col justify-content-center" sec:authorize="hasAuthority('Dokter')">
+          <div class="col justify-content-center" sec:authorize="hasAnyAuthority('Dokter','dokter')">
             <a class="btn justify-content-center" style="background-color: #e7e6ff"
                href="#" th:if="${appointment.isDone} == false" data-toggle="modal"
                data-target="#exampleModal">Appointment Selesai</a>
@@ -102,7 +102,7 @@
       </div>
       <div class="modal-body">
         <div th:if="${appointment.resep == null}">
-          <form action="/appointment/finish" method="post">
+          <form th:action="@{/appointment/finish/} + ${appointment.kode}" method="post">
             <h7>Apakah Anda ingin menyelesaikan appointment tanpa resep?</h7>
             <div class="form-group">
               <input type="text" th:value="${appointment.kode}" class="form-control" name="kode" hidden>

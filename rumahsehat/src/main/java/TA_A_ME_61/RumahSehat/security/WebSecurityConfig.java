@@ -34,8 +34,9 @@ public class WebSecurityConfig {
                     .antMatchers("/login-sso", "/validate-ticket").permitAll()
                     .antMatchers("/obat/").hasAnyAuthority("Admin","Apoteker")
                     .antMatchers("/obat/ubah-stok/{idObat}").hasAuthority("Apoteker")
-                    .antMatchers("/appointment/view/{kode}").hasAnyAuthority("Admin","Dokter")
-                    .antMatchers("/finish").hasAuthority("Apoteker")
+                    .antMatchers("/appointment/viewall").hasAnyAuthority("Admin","Dokter", "admin", "dokter")
+                    .antMatchers("/appointment/view/{kode}").hasAnyAuthority("Admin","Dokter", "admin", "dokter")
+                    .antMatchers("/appointment/finish").hasAnyAuthority("Dokter", "dokter")
 //                .antMatchers("/penyelenggara/add").hasAuthority("Manajer")
 //                .antMatchers("/user/viewall").hasAuthority("Admin")
 //                .antMatchers("/user/add").hasAuthority("Admin")
@@ -53,25 +54,25 @@ public class WebSecurityConfig {
                     .logoutSuccessUrl("/login").permitAll();
         }
 
-        @Autowired
-        private UserDetailsService userDetailsService;
+        // @Autowired
+        // private UserDetailsService userDetailsService;
 
         @Autowired
         private PasswordEncoder passwordEncoder;
 
-        @Autowired
-        public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
-            auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
-        }
+        // @Autowired
+        // public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
+        //     auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
+        // }
 
-//        @Autowired
-//        public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-//            auth.inMemoryAuthentication()
-//                    .passwordEncoder(passwordEncoder)
-//                    .withUser("rakha")
-//                    .password(passwordEncoder.encode("apapA"))
-//                    .roles("USER");
-//        }
+       @Autowired
+       public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+           auth.inMemoryAuthentication()
+                   .passwordEncoder(passwordEncoder)
+                   .withUser("rakha")
+                   .password(passwordEncoder.encode("apapA"))
+                   .roles("USER");
+       }
     }
 
     @Configuration
@@ -85,6 +86,11 @@ public class WebSecurityConfig {
 
         @Autowired
         private JwtRequestFilter jwtRequestFilter;
+
+    // @Autowired
+    // public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
+    //     auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
+    // }
 
         @Autowired
         public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
@@ -109,6 +115,9 @@ public class WebSecurityConfig {
                     .requestMatchers(matchers -> matchers
                             .antMatchers("/authenticate")
                             .antMatchers("/sign-up")
+                            .antMatchers("/api/appointment/doctors")
+                            .antMatchers("/api/appointment/create")
+                            .antMatchers("/api/appointment/viewall")
                     )
                     // dont authenticate this particular request
                     .authorizeRequests().antMatchers("/authenticate").permitAll()

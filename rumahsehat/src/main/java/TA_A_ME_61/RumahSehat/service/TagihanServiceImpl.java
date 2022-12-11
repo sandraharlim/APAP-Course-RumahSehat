@@ -26,7 +26,7 @@ public class TagihanServiceImpl implements TagihanService{
     }
 
     @Override
-    public TagihanModel addTagihan(AppointmentModel appointment) {
+    public TagihanModel addTagihanByDokter(AppointmentModel appointment) {
         // TODO Auto-generated method stub
         DokterModel dokter = appointment.getDokter();
         Long tarif = dokter.getTarif();
@@ -34,7 +34,11 @@ public class TagihanServiceImpl implements TagihanService{
         tagihan.setJumlahTagihan(tarif);
         tagihan.setAppointment(appointment);
         tagihan.setTanggalTerbuat(LocalDateTime.now());
-        return null;
+        tagihan.setIsPaid(false);
+        tagihanDb.save(tagihan);
+        tagihan.setKode("BILL-" + tagihan.getId());
+        tagihanDb.save(tagihan);
+        return tagihan;
     }
 
 //    @Override

@@ -4,13 +4,9 @@ import TA_A_ME_61.RumahSehat.model.PasienModel;
 import TA_A_ME_61.RumahSehat.service.PasienRestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import javax.validation.Valid;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
@@ -22,45 +18,39 @@ public class PasienRestController {
     private PasienRestService pasienRestService;
 
     @GetMapping("/profile")
-    private PasienModel getPasien() {
+    private PasienModel getPasien(@RequestHeader("Authorization") String token) {
+        System.out.println(token);
         try {
-            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-            String username = auth.getName();
-            System.out.println(username);
-            PasienModel ps = pasienRestService.getPasienByUsername(username);
-            return ps;
+            return pasienRestService.getPasienById(token);
         } catch (NoSuchElementException e) {
-            System.out.println("CATCH");
             throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, "Failed"
+                    HttpStatus.NOT_FOUND, " User Id " + token + " Tidak ada"
+            );
+        }
+    }
+    @GetMapping("/profile/{uuid}")
+    private PasienModel cekPostman(@PathVariable("uuid") String uuid) {
+        try {
+            return pasienRestService.getPasienById(uuid);
+        } catch (NoSuchElementException e) {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, " User Id " + uuid + " Tidak ada"
             );
         }
     }
 
     @PutMapping("/profile/update-saldo")
-    private void topUpSaldo(@RequestBody Map<String, Long> saldo) {
+    private void topUpSaldo(@RequestHeader("Authorization") String token, @RequestBody Map<String, Long> saldo) {
+        System.out.println("Token top up saldo uuid: " + token);
         System.out.println(saldo);
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String username = auth.getName();
         try {
-            pasienRestService.updateSaldo(username, saldo.get("saldo"));
+            pasienRestService.updateSaldo(token, saldo.get("saldo"));
 
         } catch (NoSuchElementException e) {
             throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, "User Id Tidak ada"
+                    HttpStatus.NOT_FOUND, "User Id " + token + " Tidak ada"
             );
         }
     }
 
-    @PostMapping("/register")
-    private void registerPasien(@Valid @RequestBody PasienModel pasien, BindingResult bindingResult) {
-        System.out.println("ADDED");
-        if (bindingResult.hasFieldErrors()) {
-            throw new ResponseStatusException(
-                    HttpStatus.BAD_REQUEST, "Request body has invalid type or missing field."
-            );
-        } else {
-            pasienRestService.addPasien(pasien);
-        }
-    }
 }
