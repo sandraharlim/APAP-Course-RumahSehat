@@ -54,25 +54,25 @@ public class WebSecurityConfig {
                     .logoutSuccessUrl("/login").permitAll();
         }
 
-        @Autowired
-        private UserDetailsService userDetailsService;
+        // @Autowired
+        // private UserDetailsService userDetailsService;
 
         @Autowired
         private PasswordEncoder passwordEncoder;
 
-        @Autowired
-        public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
-            auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
-        }
+        // @Autowired
+        // public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
+        //     auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
+        // }
 
-//        @Autowired
-//        public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-//            auth.inMemoryAuthentication()
-//                    .passwordEncoder(passwordEncoder)
-//                    .withUser("rakha")
-//                    .password(passwordEncoder.encode("apapA"))
-//                    .roles("USER");
-//        }
+       @Autowired
+       public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+           auth.inMemoryAuthentication()
+                   .passwordEncoder(passwordEncoder)
+                   .withUser("rakha")
+                   .password(passwordEncoder.encode("apapA"))
+                   .roles("USER");
+       }
     }
 
     @Configuration
@@ -86,6 +86,11 @@ public class WebSecurityConfig {
 
         @Autowired
         private JwtRequestFilter jwtRequestFilter;
+
+    // @Autowired
+    // public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
+    //     auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
+    // }
 
         @Autowired
         public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
@@ -113,10 +118,16 @@ public class WebSecurityConfig {
                             .antMatchers("/api/appointment/doctors")
                             .antMatchers("/api/appointment/create")
                             .antMatchers("/api/appointment/viewall")
+                            .antMatchers("/api/pasien/profile")
+                            .antMatchers("/api/pasien/profile/update-saldo")
+                            .antMatchers("/sign-up/pasien")
+                            .antMatchers("/api/pasien/sign-up")
                     )
                     // dont authenticate this particular request
                     .authorizeRequests().antMatchers("/authenticate").permitAll()
                     .antMatchers("/sign-up").permitAll()
+                    .antMatchers("/sign-up/pasien").permitAll()
+                    .antMatchers("/api/pasien/sign-up").permitAll()
 
                     // all other requests need to be authenticated
                     .anyRequest().authenticated().and()
@@ -131,9 +142,3 @@ public class WebSecurityConfig {
         }
     }
 }
-
-
-
-
-
-

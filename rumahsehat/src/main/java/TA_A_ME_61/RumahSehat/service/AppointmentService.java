@@ -20,3 +20,4 @@ public interface AppointmentService {
     AppointmentModel getAppointmentByKode(String kode);
     void finishAppointment(AppointmentModel appointment);
 }
+

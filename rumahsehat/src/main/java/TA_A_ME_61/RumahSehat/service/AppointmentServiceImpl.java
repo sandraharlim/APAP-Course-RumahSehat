@@ -61,3 +61,4 @@ public class AppointmentServiceImpl implements AppointmentService{
         appointmentDb.save(appointment);
     }
 }
+

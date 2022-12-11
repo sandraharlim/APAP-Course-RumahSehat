@@ -23,7 +23,7 @@ class StartState extends State<SplashScreen> {
 
   startTime() async {
     var duration = Duration(seconds: 4);
-    return new Timer(duration, route);
+    return Timer(duration, route);
   }
 
   route() {
@@ -42,15 +42,19 @@ class StartState extends State<SplashScreen> {
         children: [
           Container(
             decoration: BoxDecoration(
-                color: new Color(0xffF5591F),
+                color: Color.fromARGB(255, 138, 198, 224),
                 gradient: LinearGradient(
-                    colors: [(new Color(0xffF5591F)), new Color(0xffF2861E)],
+                    colors: const [
+                (Color.fromARGB(255, 138, 198, 224)),
+                Color.fromARGB(255, 75, 183, 210)],
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter)),
           ),
           Center(
             child: Container(
-              child: Image.asset("images/TaeAugust11-removebg-preview.png"),
+              child: Image.asset("images/19836-removebg-preview.png",
+                              height: 200,
+                              width: 250,),
             
             ),
           )

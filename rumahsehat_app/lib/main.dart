@@ -1,4 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:rumahsehat_app/login_screen.dart';
+import 'package:rumahsehat_app/models/appointment_pasien_card.dart';
+import 'package:rumahsehat_app/models/pasienmodel.dart';
+import 'package:rumahsehat_app/profilepage.dart';
+import 'package:rumahsehat_app/providers/auth.dart';
+import 'appointment_index.dart';
 import 'navbar.dart';
 import 'appointment_form.dart';
 import 'package:rumahsehat_app/splash_screen.dart';
@@ -11,14 +18,30 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Rumah Sehat',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (ctx) => Authentication(),
+        ),
+        ChangeNotifierProxyProvider<Authentication, Appointment>(
+            create: (context) => Appointment(),
+            update: (context, auth, appointment) =>
+                appointment!..updateData(auth.token))
+      ],
+      builder: (context, child) => Consumer<Authentication>(
+        builder: (context, auth, child) => MaterialApp(
+          title: 'Rumah Sehat',
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            primarySwatch: Colors.lightBlue,
+          ),
+          // home: SplashScreen(),
+          home: auth.isAuth ? MyHomePage() : LoginScreen(),
+          // routes: {
+          //   AddProductPage.route (ctx) => AddProductPage(),
+          // },
+        ),
       ),
-      // home: SplashScreen(),
-      home: MyHomePage(),
     );
   }
 }
@@ -38,17 +61,47 @@ class MyHomePage extends StatelessWidget {
             children: [
               InkWell(
                 onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => MyHomePage()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => AppointmentForm()));
                 },
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
-                    color: Colors.blueAccent,
+                    color: Color.fromARGB(255, 119, 176, 233),
                   ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
+                    children: const [
+                      Icon(
+                        Icons.book,
+                        size: 50,
+                        color: Colors.white,
+                      ),
+                      Text(
+                        "Buat Jadwal Appointment",
+                        style: TextStyle(color: Colors.white, fontSize: 20),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              InkWell(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => AppointmentViewAll()));
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: Color.fromARGB(255, 119, 176, 233),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
                       Icon(
                         Icons.book,
                         size: 50,
@@ -70,18 +123,18 @@ class MyHomePage extends StatelessWidget {
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
-                    color: Colors.blueAccent,
+                    color: Color.fromARGB(255, 119, 176, 233),
                   ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.book,
-                        size: 50,
-                        color: Colors.white,
-                      ),
+                    children: const [
+                      // Icon(
+                      //   Icons.add_card,
+                      //   size: 50,
+                      //   color: Colors.white,
+                      // ),
                       Text(
-                        "Buat Jadwal Appointment",
+                        "Lihat Daftar Tagihan",
                         style: TextStyle(color: Colors.white, fontSize: 20),
                       )
                     ],

@@ -101,3 +101,4 @@ public class JwtAuthenticationController {
         return new ResponseEntity<>("Username sudah ada.", HttpStatus.BAD_REQUEST);
     }
 }
+

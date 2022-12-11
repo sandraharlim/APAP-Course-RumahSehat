@@ -5,7 +5,7 @@ import '../navbar.dart';
 import 'appointment_model.dart';
 
 class AppointmentDetail extends StatefulWidget {
-  final Appointment appointment;
+  final AppointmentModel appointment;
   const AppointmentDetail(this.appointment);
 
   @override

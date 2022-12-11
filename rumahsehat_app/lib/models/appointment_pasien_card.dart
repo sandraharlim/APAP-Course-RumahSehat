@@ -5,7 +5,7 @@ import 'package:rumahsehat_app/models/appointment_detail.dart';
 import 'appointment_model.dart';
 
 class AppointmentPasienCard extends StatefulWidget {
-  final Appointment appointment;
+  final AppointmentModel appointment;
   const AppointmentPasienCard(this.appointment);
 
   @override
