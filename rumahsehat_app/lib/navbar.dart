@@ -45,13 +45,24 @@ class NavigationDrawer extends StatelessWidget {
             title: Text('Saldo'),
             onTap: () {
               Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) =>
-                        FormSaldo()), // harusnya classnya Home()
-              );
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const ProfilePageState()));
             },
           ),
+          // ListTile(
+          //   leading: Icon(Icons.attach_money_outlined),
+          //   title: Text('Saldo'),
+          //   onTap: () {
+          //     Navigator.push(
+          //       context,
+          //       MaterialPageRoute(
+          //           builder: (context) => FormSaldo(
+          //                 token: "token",
+          //               )), // harusnya classnya Home()
+          //     );
+          //   },
+          // ),
           ExpansionTile(
             title: Text("Appointment"),
             // leading: FaIcon(FontAwesomeIcons.syringe),

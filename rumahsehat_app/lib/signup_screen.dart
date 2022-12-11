@@ -1,7 +1,12 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+
 import 'package:provider/provider.dart';
 import 'package:rumahsehat_app/login_screen.dart';
 import 'package:rumahsehat_app/providers/auth.dart';
+
+import 'package:flutter/services.dart';
+import 'package:http/http.dart' as http;
 
 class SignUpScreen extends StatefulWidget {
   @override
@@ -79,39 +84,10 @@ class InitState extends State<SignUpScreen> {
             cursorColor: Color.fromARGB(255, 15, 4, 1),
             decoration: InputDecoration(
               icon: Icon(
-                Icons.person,
+                Icons.people_alt_outlined,
                 color: Color.fromARGB(255, 7, 2, 0),
               ),
               hintText: "Full Name",
-              enabledBorder: InputBorder.none,
-              focusedBorder: InputBorder.none,
-            ),
-          ),
-        ),
-        Container(
-          alignment: Alignment.center,
-          margin: EdgeInsets.only(left: 20, right: 20, top: 20),
-          padding: EdgeInsets.only(left: 20, right: 20),
-          height: 54,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(50),
-            color: Colors.grey[200],
-            boxShadow: const [
-              BoxShadow(
-                  offset: Offset(0, 10),
-                  blurRadius: 50,
-                  color: Color(0xffEEEEEE)),
-            ],
-          ),
-          child: TextField(
-            controller: emailController,
-            cursorColor: Color.fromARGB(255, 9, 3, 0),
-            decoration: InputDecoration(
-              icon: Icon(
-                Icons.email,
-                color: Color.fromARGB(255, 8, 2, 0),
-              ),
-              hintText: "Email",
               enabledBorder: InputBorder.none,
               focusedBorder: InputBorder.none,
             ),
@@ -153,6 +129,36 @@ class InitState extends State<SignUpScreen> {
           height: 54,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(50),
+            color: Colors.grey[200],
+            boxShadow: const [
+              BoxShadow(
+                  offset: Offset(0, 10),
+                  blurRadius: 50,
+                  color: Color(0xffEEEEEE)),
+            ],
+          ),
+          child: TextField(
+            obscureText: true,
+            controller: passwordController,
+            cursorColor: Color.fromARGB(255, 12, 4, 0),
+            decoration: InputDecoration(
+              icon: Icon(
+                Icons.vpn_key,
+                color: Color.fromARGB(255, 5, 1, 0),
+              ),
+              hintText: "Password",
+              enabledBorder: InputBorder.none,
+              focusedBorder: InputBorder.none,
+            ),
+          ),
+        ),
+        Container(
+          alignment: Alignment.center,
+          margin: EdgeInsets.only(left: 20, right: 20, top: 20),
+          padding: EdgeInsets.only(left: 20, right: 20),
+          height: 54,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(50),
             color: Color(0xffEEEEEE),
             boxShadow: const [
               BoxShadow(
@@ -162,16 +168,49 @@ class InitState extends State<SignUpScreen> {
             ],
           ),
           child: TextField(
-            controller: passwordController,
-            obscureText: true,
+            controller: emailController,
             cursorColor: Color.fromARGB(255, 16, 5, 0),
             decoration: InputDecoration(
               focusColor: Color.fromARGB(255, 5, 2, 0),
               icon: Icon(
-                Icons.vpn_key,
+                Icons.email,
                 color: Color.fromARGB(255, 6, 2, 0),
               ),
-              hintText: "Enter Password",
+              hintText: "Email",
+              enabledBorder: InputBorder.none,
+              focusedBorder: InputBorder.none,
+            ),
+          ),
+        ),
+        Container(
+          alignment: Alignment.center,
+          margin: EdgeInsets.only(left: 20, right: 20, top: 20),
+          padding: EdgeInsets.only(left: 20, right: 20),
+          height: 54,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(50),
+            color: Color(0xffEEEEEE),
+            boxShadow: [
+              BoxShadow(
+                  offset: Offset(0, 20),
+                  blurRadius: 100,
+                  color: Color(0xffEEEEEE)),
+            ],
+          ),
+          child: TextField(
+            controller: ageController,
+            cursorColor: Color.fromARGB(255, 16, 5, 0),
+            keyboardType: TextInputType.number,
+            inputFormatters: <TextInputFormatter>[
+              FilteringTextInputFormatter.digitsOnly
+            ],
+            decoration: InputDecoration(
+              focusColor: Color.fromARGB(255, 5, 2, 0),
+              icon: Icon(
+                Icons.cake,
+                color: Color.fromARGB(255, 6, 2, 0),
+              ),
+              hintText: "Umur",
               enabledBorder: InputBorder.none,
               focusedBorder: InputBorder.none,
             ),
