@@ -29,27 +29,28 @@ class NavigationDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-                leading: Icon(Icons.person),
-                title: Text("Profile"),
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const ProfilePageState()));
-                },
-              ),
-          ListTile(
-            leading: Icon(Icons.attach_money_outlined),
-            title: Text('Saldo'),
+            leading: Icon(Icons.person),
+            title: Text("Profile"),
             onTap: () {
               Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) =>
-                        FormSaldo()), // harusnya classnya Home()
-              );
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const ProfilePageState()));
             },
           ),
+          // ListTile(
+          //   leading: Icon(Icons.attach_money_outlined),
+          //   title: Text('Saldo'),
+          //   onTap: () {
+          //     Navigator.push(
+          //       context,
+          //       MaterialPageRoute(
+          //           builder: (context) => FormSaldo(
+          //                 token: "token",
+          //               )), // harusnya classnya Home()
+          //     );
+          //   },
+          // ),
           ExpansionTile(
             title: Text("Appointment"),
             // leading: FaIcon(FontAwesomeIcons.syringe),
@@ -78,21 +79,20 @@ class NavigationDrawer extends StatelessWidget {
                   );
                 },
               ),
-                
             ],
           ),
           Container(
-                          padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
-                          child: ElevatedButton(
-                            child: const Text(
-                              "Logout",
-                            ),
-                            onPressed: () {
-                              Navigator.push(context,
-                              MaterialPageRoute(builder: (context) => SplashScreen()));
-                            },
-                          ),
-                        ),
+            padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
+            child: ElevatedButton(
+              child: const Text(
+                "Logout",
+              ),
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => SplashScreen()));
+              },
+            ),
+          ),
         ],
       ),
     );

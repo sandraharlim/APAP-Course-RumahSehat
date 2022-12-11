@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://thymeleaf.org"
-                xmlns:sec="http://www.thymeleaf.org/extras/spring_security">
+      xmlns:sec="http://www.thymeleaf.org/extras/spring_security">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE-edge">
@@ -14,69 +14,69 @@
 </head>
 
 <body>
-    <nav th:replace="fragments/fragment :: navbar('home')"></nav>
+<nav th:replace="fragments/fragment :: navbar('home')"></nav>
 
-    <div class="welcome">
-        <h2 class="text-center text-black" th:text="'Hello '+${#httpServletRequest.remoteUser}+'!'"></h2>
+<div class="welcome">
+    <h2 class="text-center text-black" th:text="'Hello '+${#httpServletRequest.remoteUser}+'!'"></h2>
+</div>
+<section class="services" id="services">
+
+    <div class="box-container">
+        <div class="box" sec:authorize="hasAuthority('Admin')">
+            <img src="https://i.ibb.co/xsWY6st/doctor-1-removebg-preview.png">
+            <h3>Tambah Dokter</h3>
+        </div>
+
+        <div class="box" sec:authorize="hasAuthority('Admin')">
+            <img src="https://i.ibb.co/xsWY6st/doctor-1-removebg-preview.png">
+            <h3>Lihat Daftar Dokter</h3>
+        </div>
+
+        <div class="box" sec:authorize="hasAuthority('Admin')">
+            <img src="https://i.ibb.co/Ss9xCXg/pharmacy-2-removebg-preview.png">
+            <h3>Tambah Apoteker</h3>
+        </div>
+
+        <div class="box" sec:authorize="hasAuthority('Admin')">
+            <img src="https://i.ibb.co/Ss9xCXg/pharmacy-2-removebg-preview.png">
+            <h3>Lihat Daftar Apoteker</h3>
+        </div>
+
+        <div class="box" sec:authorize="hasAnyAuthority('Dokter', 'Admin')">
+            <img src="https://i.ibb.co/5L3K8MS/appointment-removebg-preview.png">
+            <h3>Lihat Jadwal Appointment</h3>
+        </div>
+
+        <div class="box" sec:authorize="hasAnyAuthority('Admin', 'Apoteker')">
+            <img src="https://i.ibb.co/qNz3rqM/drug-removebg-preview-1.png">
+            <h3>Lihat Resep Obat</h3>
+        </div>
+
+        <div class="box" sec:authorize="hasAuthority('Dokter')">
+            <img src="https://i.ibb.co/qNz3rqM/drug-removebg-preview-1.png">
+            <h3>Buat Resep Obat</h3>
+        </div>
+
+        <div class="box" sec:authorize="hasAnyAuthority('Admin', 'Apoteker')"
+             onclick="location.href='/obat/'">
+            <img src="https://i.ibb.co/gd8WXrc/drugs-removebg-preview.png">
+            <h3>Lihat Daftar Obat</h3>
+        </div>
+
     </div>
-    <section class="services" id="services">
+</section>
 
-        <div class="box-container">
-            <div class="box" sec:authorize="hasAuthority('Admin')">
-                <img src="https://i.ibb.co/xsWY6st/doctor-1-removebg-preview.png">
-                <h3>Tambah Dokter</h3>
-            </div>
+<!-- untuk home -->
+<section class="home" id="home">
+    <div class="image">
+        <img src="https://img.freepik.com/free-vector/hospital-service-concept-flat-illustration_1150-50287.jpg?w=740&t=st=1669052966~exp=1669053566~hmac=66c36cb1dfafabefa8780a4840f2b88fcc5ca57797abff673009874061d172e4" width="400" height="300" />
+    </div>
+    <div class="content">
+        <h2>Stay Safe, Stay Healthy</h2>
+        <p>Kesehatan Anda, Prioritas Kami.</p>
 
-            <div class="box" sec:authorize="hasAuthority('Admin')">
-                <img src="https://i.ibb.co/xsWY6st/doctor-1-removebg-preview.png">
-                <h3>Lihat Daftar Dokter</h3>
-            </div>
-
-            <div class="box" sec:authorize="hasAuthority('Admin')">
-                <img src="https://i.ibb.co/Ss9xCXg/pharmacy-2-removebg-preview.png">
-                <h3>Tambah Apoteker</h3>
-            </div>
-
-            <div class="box" sec:authorize="hasAuthority('Admin')">
-                <img src="https://i.ibb.co/Ss9xCXg/pharmacy-2-removebg-preview.png">
-                <h3>Lihat Daftar Apoteker</h3>
-            </div>
-
-            <div class="box" sec:authorize="hasAnyAuthority('Dokter', 'Admin')">
-                <img src="https://i.ibb.co/5L3K8MS/appointment-removebg-preview.png">
-                <h3>Lihat Jadwal Appointment</h3>
-            </div>
-
-            <div class="box" sec:authorize="hasAnyAuthority('Admin', 'Apoteker')">
-                <img src="https://i.ibb.co/qNz3rqM/drug-removebg-preview-1.png">
-                <h3>Lihat Resep Obat</h3>
-            </div>
-
-            <div class="box" sec:authorize="hasAuthority('Dokter')">
-                <img src="https://i.ibb.co/qNz3rqM/drug-removebg-preview-1.png">
-                <h3>Buat Resep Obat</h3>
-            </div>
-            
-            <div class="box" sec:authorize="hasAnyAuthority('Admin', 'Apoteker')"
-                 onclick="location.href='/obat/'">
-                <img src="https://i.ibb.co/gd8WXrc/drugs-removebg-preview.png">
-                <h3>Lihat Daftar Obat</h3>
-            </div>
-
-        </div>
-    </section>
-
-     <!-- untuk home -->
-     <section class="home" id="home">
-        <div class="image">
-            <img src="https://img.freepik.com/free-vector/hospital-service-concept-flat-illustration_1150-50287.jpg?w=740&t=st=1669052966~exp=1669053566~hmac=66c36cb1dfafabefa8780a4840f2b88fcc5ca57797abff673009874061d172e4" width="400" height="300" />
-        </div>
-        <div class="content">
-            <h2>Stay Safe, Stay Healthy</h2>
-            <p>Kesehatan Anda, Prioritas Kami.</p>
-
-        </div>
-    </section>
+    </div>
+</section>
 <footer th:replace="fragments/fragment :: footer"></footer>
 </body>
 </html>

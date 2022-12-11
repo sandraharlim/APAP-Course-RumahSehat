@@ -26,6 +26,7 @@ public class PasienRestServiceImpl implements PasienRestService{
         pasienDb.save(pasien);
     }
 
+    @Override
     public String encrypt(String password) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String hashedPassword = passwordEncoder.encode(password);
@@ -51,8 +52,8 @@ public class PasienRestServiceImpl implements PasienRestService{
     }
 
     @Override
-    public void updateSaldo(String uuid, Long saldo) {
-        PasienModel pasienLama = getPasienById(uuid);
+    public void updateSaldo(String username, Long saldo) {
+        PasienModel pasienLama = getPasienByUsername(username);
         Long saldoTerbaru = pasienLama.getSaldo() + saldo;
         pasienLama.setSaldo(saldoTerbaru);
         pasienDb.save(pasienLama);
@@ -60,8 +61,8 @@ public class PasienRestServiceImpl implements PasienRestService{
 
     @Override
     public PasienModel getPasienByUsername(String username){
-        return pasienDb.findByUsername(username);
+        PasienModel pasien = pasienDb.findByUsername(username);
+        return pasien;
     }
-
 
 }

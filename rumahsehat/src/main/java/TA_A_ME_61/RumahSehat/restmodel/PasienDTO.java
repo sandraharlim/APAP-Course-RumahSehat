@@ -12,3 +12,4 @@ public class PasienDTO {
     String email;
     Long umur;
 }
+
