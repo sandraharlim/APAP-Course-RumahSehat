@@ -151,7 +151,7 @@ class ProfilePage extends State<ProfilePageState> {
                               contentPadding: EdgeInsets.only(bottom: 4),
                               labelText: "Nama",
                               floatingLabelBehavior:
-                                  FloatingLabelBehavior.always,
+                              FloatingLabelBehavior.always,
                               hintText: snapshot.data!.nama,
                               hintStyle: TextStyle(
                                 fontSize: 16,
@@ -184,7 +184,7 @@ class ProfilePage extends State<ProfilePageState> {
                               contentPadding: EdgeInsets.only(bottom: 4),
                               labelText: "Username",
                               floatingLabelBehavior:
-                                  FloatingLabelBehavior.always,
+                              FloatingLabelBehavior.always,
                               hintText: snapshot.data!.username,
                               hintStyle: TextStyle(
                                 fontSize: 16,
@@ -217,7 +217,7 @@ class ProfilePage extends State<ProfilePageState> {
                               contentPadding: EdgeInsets.only(bottom: 4),
                               labelText: "Email",
                               floatingLabelBehavior:
-                                  FloatingLabelBehavior.always,
+                              FloatingLabelBehavior.always,
                               hintText: snapshot.data!.email,
                               hintStyle: TextStyle(
                                 fontSize: 16,
@@ -250,7 +250,7 @@ class ProfilePage extends State<ProfilePageState> {
                               contentPadding: EdgeInsets.only(bottom: 4),
                               labelText: "Saldo",
                               floatingLabelBehavior:
-                                  FloatingLabelBehavior.always,
+                              FloatingLabelBehavior.always,
                               hintText: (snapshot.data!.saldo).toString(),
                               hintStyle: TextStyle(
                                 fontSize: 16,
@@ -304,7 +304,7 @@ class ProfilePage extends State<ProfilePageState> {
               child: Container(
                 alignment: Alignment.center,
                 margin:
-                    EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 20),
+                EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 20),
                 padding: EdgeInsets.only(left: 20, right: 20),
                 height: 40,
                 decoration: BoxDecoration(

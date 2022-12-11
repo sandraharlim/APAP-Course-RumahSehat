@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:rumahsehat_app/profilepage.dart';
+import 'package:rumahsehat_app/providers/auth.dart';
 import 'package:rumahsehat_app/saldoform.dart';
 import 'package:rumahsehat_app/splash_screen.dart';
 import 'appointment_form.dart';
@@ -31,6 +33,16 @@ class NavigationDrawer extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.person),
             title: Text("Profile"),
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const ProfilePageState()));
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.attach_money_outlined),
+            title: Text('Saldo'),
             onTap: () {
               Navigator.push(
                   context,
@@ -87,10 +99,8 @@ class NavigationDrawer extends StatelessWidget {
               child: const Text(
                 "Logout",
               ),
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => SplashScreen()));
-              },
+              onPressed: () =>
+                  Provider.of<Authentication>(context, listen: false).logout(),
             ),
           ),
         ],
