@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -21,8 +20,6 @@ public class PasienRestController {
 
     @Autowired
     private PasienRestService pasienRestService;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
 
     @GetMapping("/profile")
     private PasienModel getPasien() {
