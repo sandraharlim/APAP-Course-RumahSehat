@@ -10,4 +10,6 @@ import java.util.Optional;
 public interface DokterDb extends JpaRepository<DokterModel,String> {
     //JPA
     Optional<DokterModel> findByUuid(String uuid);
+
+    DokterModel findByUsername(String username);
 }

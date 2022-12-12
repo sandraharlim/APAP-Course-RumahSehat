@@ -4,9 +4,12 @@
   <title>Rumah Sehat</title>
   <object th:include="fragments/fragment :: css" th:remove="tag"></object>
   <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" type="text/css" />
+  <link rel="stylesheet" th:href="@{/css/style.css}"/>
 </head>
 <body>
-<nav th:replace="fragments/fragment :: navbar (${'/resep'})"></nav>
+<nav th:replace="fragments/fragment :: navbar (${'resep'})"></nav>
 <div class="container">
   <div class="card m-4 p-4">
     <div class="card-body">
@@ -18,6 +21,7 @@
     </div>
   </div>
 </div>
+<footer th:replace="fragments/fragment :: footer"></footer>
 
 </body>
 </html>

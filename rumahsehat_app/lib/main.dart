@@ -1,4 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:rumahsehat_app/login_screen.dart';
+import 'package:rumahsehat_app/models/resep_detail.dart';
+import 'package:rumahsehat_app/profilepage.dart';
+import 'package:rumahsehat_app/providers/auth.dart';
+import 'appointment_index.dart';
 import 'navbar.dart';
 import 'appointment_form.dart';
 
@@ -7,16 +13,34 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Rumah Sehat',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (ctx) => Authentication(),
+        ),
+        ChangeNotifierProxyProvider<Authentication, Appointment>(
+            create: (context) => Appointment(),
+            update: (context, auth, appointment) =>
+                appointment!..updateData(auth.token)),
+        ChangeNotifierProxyProvider<Authentication, PasienNotifier>(
+            create: (context) => PasienNotifier(),
+            update: (context, auth, pasien) => pasien!..updateData(auth.token)),
+        ChangeNotifierProxyProvider<Authentication, ResepT>(
+            create: (context) => ResepT(),
+            update: (context, auth, resep) => resep!..updateData(auth.token)),
+      ],
+      builder: (context, child) => Consumer<Authentication>(
+        builder: (context, auth, child) => MaterialApp(
+          title: 'Rumah Sehat',
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            primarySwatch: Colors.lightBlue,
+          ),
+          home: auth.isAuth ? MyHomePage() : LoginScreen()
+        ),
       ),
-      home: MyHomePage(),
     );
   }
 }
@@ -28,6 +52,7 @@ class MyHomePage extends StatelessWidget {
       appBar: AppBar(
         title: Text("Rumah Sehat"),
       ),
+      drawer: const NavigationDrawer(),
       body: Container(
         child: Padding(
           padding: const EdgeInsets.all(10.0),
@@ -35,25 +60,27 @@ class MyHomePage extends StatelessWidget {
             children: [
               InkWell(
                 onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => MyHomePage()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => AppointmentForm()));
                 },
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
-                    color: Colors.blue,
+                    color: Color.fromARGB(255, 119, 176, 233),
                   ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
+                    children: const [
                       Icon(
-                        Icons.medical_information_rounded,
+                        Icons.book,
                         size: 50,
                         color: Colors.white,
                       ),
                       Text(
-                        "Tambah Dokter",
-                        style: TextStyle(color: Colors.white, fontSize: 30),
+                        "Buat Jadwal Appointment",
+                        style: TextStyle(color: Colors.white, fontSize: 20),
                       )
                     ],
                   ),
@@ -61,147 +88,19 @@ class MyHomePage extends StatelessWidget {
               ),
               InkWell(
                 onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => MyHomePage()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => AppointmentViewAll()));
                 },
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
-                    color: Colors.blue,
+                    color: Color.fromARGB(255, 119, 176, 233),
                   ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.medical_information_rounded,
-                        size: 50,
-                        color: Colors.white,
-                      ),
-                      Text(
-                        "Lihat Daftar Dokter",
-                        style: TextStyle(color: Colors.white, fontSize: 30),
-                      )
-                    ],
-                  ),
-                ),
-              ),
-              InkWell(
-                onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => MyHomePage()));
-                },
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.blue,
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.medical_services_rounded,
-                        size: 50,
-                        color: Colors.white,
-                      ),
-                      Text(
-                        "Tambah Apoteker",
-                        style: TextStyle(color: Colors.white, fontSize: 30),
-                      )
-                    ],
-                  ),
-                ),
-              ),
-              InkWell(
-                onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => MyHomePage()));
-                },
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.blue,
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.medical_services_rounded,
-                        size: 50,
-                        color: Colors.white,
-                      ),
-                      Text(
-                        "Lihat Daftar Apoteker",
-                        style: TextStyle(color: Colors.white, fontSize: 30),
-                      )
-                    ],
-                  ),
-                ),
-              ),
-              InkWell(
-                onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => MyHomePage()));
-                },
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.blue,
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.menu_book,
-                        size: 50,
-                        color: Colors.white,
-                      ),
-                      Text(
-                        "Buat Resep Obat",
-                        style: TextStyle(color: Colors.white, fontSize: 30),
-                      )
-                    ],
-                  ),
-                ),
-              ),
-              InkWell(
-                onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => MyHomePage()));
-                },
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.blue,
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.menu_book,
-                        size: 50,
-                        color: Colors.white,
-                      ),
-                      Text(
-                        "Lihat Resep Obat",
-                        style: TextStyle(color: Colors.white, fontSize: 30),
-                      )
-                    ],
-                  ),
-                ),
-              ),
-              InkWell(
-                onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => MyHomePage()));
-                },
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.blue,
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
+                    children: const [
                       Icon(
                         Icons.book,
                         size: 50,
@@ -209,7 +108,28 @@ class MyHomePage extends StatelessWidget {
                       ),
                       Text(
                         "Lihat Jadwal Appointment",
-                        style: TextStyle(color: Colors.white, fontSize: 30),
+                        style: TextStyle(color: Colors.white, fontSize: 20),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              InkWell(
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => MyHomePage()));
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: Color.fromARGB(255, 119, 176, 233),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      Text(
+                        "Lihat Daftar Tagihan",
+                        style: TextStyle(color: Colors.white, fontSize: 20),
                       )
                     ],
                   ),

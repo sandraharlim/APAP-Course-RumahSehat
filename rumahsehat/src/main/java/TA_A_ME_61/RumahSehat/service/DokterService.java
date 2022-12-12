@@ -8,11 +8,15 @@ public interface DokterService {
     void addDokter(DokterModel dokter);
 
     List<DokterModel> getListDokter();
+    
+    List<DokterModel> getListDokterBarchart(String id1, String id2,String id3,String id4,String id5,String id6,String id7,String id8);
 
     DokterModel getDokterByUuid(String uuid);
 
     void updateDokter(DokterModel dokter);
 
     void deleteDokter(DokterModel dokter);
+
+    DokterModel getDokterByUsername(String username);
 
 }

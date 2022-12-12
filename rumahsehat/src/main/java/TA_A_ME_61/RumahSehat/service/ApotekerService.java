@@ -13,4 +13,6 @@ public interface ApotekerService {
 
     void deleteApoteker(ApotekerModel apoteker);
 
+    ApotekerModel getApotekerByUsername(String username);
+
 }

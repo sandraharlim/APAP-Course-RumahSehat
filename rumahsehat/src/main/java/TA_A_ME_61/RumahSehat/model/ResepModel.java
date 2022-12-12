@@ -7,7 +7,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -31,9 +30,9 @@ public class ResepModel implements Serializable {
     private LocalDateTime createdAt;
 
     @OneToMany(mappedBy = "resep", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<JumlahModel> listJumlah; // harus ada (nullable = false)
+    private List<JumlahModel> listJumlah;
 
-    @OneToOne(cascade = CascadeType.ALL, optional = false) // mandatory
+    @OneToOne(cascade = CascadeType.ALL, optional = false)
     private AppointmentModel appointment;
 
     @ManyToOne(fetch = FetchType.EAGER, optional = true)
