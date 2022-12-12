@@ -19,12 +19,6 @@ public class ObatController {
     @Autowired
     private ObatService obatService;
 
-    @Autowired
-    private ResepService resepService;
-
-    @Autowired
-    private JumlahService jumlahService;
-
     @GetMapping("/")
     private String daftarObat(Model model){
         List<ObatModel> listObat = obatService.getDaftarObat();

@@ -64,8 +64,10 @@ public class WebSecurityConfig {
                     .logoutSuccessUrl("/login").permitAll();
         }
 
+
         @Autowired
         private PasswordEncoder passwordEncoder;
+
 
        @Autowired
        public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
@@ -116,9 +118,7 @@ public class WebSecurityConfig {
                             .antMatchers("/api/resep/detail/{id}")
                             .antMatchers("/api/pasien/profile")
                             .antMatchers("/api/pasien/profile/update-saldo")
-                            //Cek apakah dibutuhkan
                             .antMatchers("/sign-up/pasien")
-                            .antMatchers("/api/pasien/sign-up")
                             .antMatchers("/api/pasien/tagihan")
                             .antMatchers("/api/pasien/tagihan/{kode}/bayar")
 

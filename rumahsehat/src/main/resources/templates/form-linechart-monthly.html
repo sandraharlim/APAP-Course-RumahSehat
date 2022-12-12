@@ -21,7 +21,24 @@
         <p>Anda tidak harus pilih semua</p>
         <br>
 
-        Jenis Barchart: <br>
+        Pilih bulan: <br>
+        <select id="bulan"  class="form-control">
+          <option th:value="1" th:text="'Januari'"></option>
+          <option th:value="2" th:text="'Februari'"></option>
+          <option th:value="3" th:text="'Maret'"></option>
+          <option th:value="4" th:text="'April'"></option>
+          <option th:value="5" th:text="'Mei'"></option>
+          <option th:value="6" th:text="'Juni'"></option>
+          <option th:value="7" th:text="'Juli'"></option>
+          <option th:value="8" th:text="'Agustus'"></option>
+          <option th:value="9" th:text="'September'"></option>
+          <option th:value="10" th:text="'Oktober'"></option>
+          <option th:value="11" th:text="'November'"></option>
+          <option th:value="12" th:text="'Desember'"></option>
+        </select>
+        <br>
+
+        Pilih tahun: <br>
         <select id="tahun"  class="form-control">
           <option th:value="2020" th:text="'Tahun 2020'"></option>
           <option th:value="2021" th:text="'Tahun 2021'"></option>
@@ -70,6 +87,7 @@
         </select>
 
         <button class="btn btn-success" onclick="seeLineChart(
+            document.getElementById('bulan').value,
             document.getElementById('tahun').value,
             document.getElementById('id1').value,
             document.getElementById('id2').value,
@@ -86,8 +104,9 @@
 <footer th:replace="fragments/fragment :: footer"></footer>
 </body>
 <script>
-  function seeLineChart(tahun, id1, id2, id3, id4, id5) {
-    var url = 'https://apap-061.cs.ui.ac.id/chart/line/tahunan?';
+  function seeLineChart(bulan, tahun, id1, id2, id3, id4, id5) {
+    var url = 'https://apap-061.cs.ui.ac.id/chart/line/bulanan?';
+    url = url + "bulan=" + bulan + "&";
     url = url + "tahun=" + tahun + "&";
     url = url + "id1=" + id1 + "&";
     url = url + "id2=" + id2 + "&";

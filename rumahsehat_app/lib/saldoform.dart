@@ -26,8 +26,6 @@ class FormSaldoState extends State<FormSaldo> {
       "Authorization": (token_prefix + jwtToken),
     });
     if (response.statusCode == 200) {
-      var data = json.decode(response.body);
-      print(data);
       return Pasien.fromJson(jsonDecode(response.body));
     } else {
       throw Exception("Failed to fetch pasien data");
@@ -48,7 +46,6 @@ class FormSaldoState extends State<FormSaldo> {
       }),
     );
     if (response.statusCode == 200) {
-      print("Success!");
     } else {
       throw Exception('Failed Top Up Saldo');
     }

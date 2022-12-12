@@ -2,6 +2,7 @@ package TA_A_ME_61.RumahSehat.service;
 
 import TA_A_ME_61.RumahSehat.model.DokterModel;
 
+import java.util.HashMap;
 import java.util.List;
 
 public interface DokterService {
@@ -18,5 +19,7 @@ public interface DokterService {
     void deleteDokter(DokterModel dokter);
 
     DokterModel getDokterByUsername(String username);
+
+    HashMap<String,String> getDokterName(String uuid);
 
 }

@@ -1,8 +1,5 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:rumahsehat_app/navbar.dart';
 import 'package:rumahsehat_app/viewall_tagihan.dart';
 
 import 'models/tagihan_model.dart';
@@ -12,8 +9,8 @@ import 'package:provider/provider.dart';
 
 class KonfirmasiBayarTagihanScreen extends StatefulWidget {
   final TagihanModel tagihan;
+  // ignore: use_key_in_widget_constructors
   const KonfirmasiBayarTagihanScreen(this.tagihan);
-  // const KonfirmasiBayarTagihanScreen({Key? key}) : super(key: key);
 
   @override
   State<KonfirmasiBayarTagihanScreen> createState() =>

@@ -61,11 +61,6 @@ public class AppointmentRestServiceImpl implements AppointmentRestService{
         if (hasil != null) return hasil; // tabrakan sama jadwalnya si pasien
 
         return "Valid";
-
-//        ============ coba biar ga ngitung 2 kali, tp blom bisa query nya :) ============
-//        int year = waktuAwalNewAppt.getYear();
-//        int dayOfYear = waktuAwalNewAppt.getDayOfYear();
-//        List<AppointmentModel> listApptSameDokterAndDate = appointmentDb.findAllByDokterAndDate(uuidDokter, year, dayOfYear);
     }
     private String validasiJadwal(AppointmentModel appointment, List<AppointmentModel> listOldAppt) {
         LocalDateTime waktuAwalNewAppt = appointment.getWaktuAwal();
@@ -205,9 +200,6 @@ public class AppointmentRestServiceImpl implements AppointmentRestService{
 
         return yyyy + "-" + mm + "-" + dd;
     }
-
-
-
 
     // ========= method untuk fitur 7: view all appt ============
 

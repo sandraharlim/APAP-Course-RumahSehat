@@ -92,5 +92,4 @@ public class DokterController {
         model.addAttribute("listDokter", listDokter);
         return "line-pendapatan-bulanan";
     }
-
 }

@@ -1,6 +1,8 @@
 package TA_A_ME_61.RumahSehat.service;
 
+import TA_A_ME_61.RumahSehat.model.AppointmentModel;
 import TA_A_ME_61.RumahSehat.model.DokterModel;
+import TA_A_ME_61.RumahSehat.repository.AppointmentDb;
 import TA_A_ME_61.RumahSehat.repository.DokterDb;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -9,6 +11,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,6 +21,9 @@ import java.util.Optional;
 public class DokterServiceImpl implements DokterService{
     @Autowired
     DokterDb dokterDb;
+
+    @Autowired
+    AppointmentDb appointmentDb;
 
     @Override
     public void addDokter(DokterModel dokter) {
@@ -85,6 +91,13 @@ public class DokterServiceImpl implements DokterService{
             listDokter.add(dokter);
         }
         return listDokter;
+    }
+
+    public HashMap<String,String> getDokterName(String username){
+        Optional<DokterModel> doctor = Optional.ofNullable(dokterDb.findByUsername(username));
+        HashMap<String,String> map = new HashMap<>();
+        map.put("name",doctor.get().getNama());
+        return map;
     }
 
 }
