@@ -35,18 +35,19 @@
         </div>
 
         <div class="box" sec:authorize="hasAuthority('Admin')"
+             onclick="location.href='/pasien/'">
+            <img src="https://i.ibb.co/xsWY6st/doctor-1-removebg-preview.png">
+            <h3>Lihat Daftar Pasien</h3>
+        </div>
+
+        <div class="box" sec:authorize="hasAuthority('Admin')"
              onclick="location.href='/apoteker/add/'">
             <img src="https://i.ibb.co/Ss9xCXg/pharmacy-2-removebg-preview.png">
             <h3>Tambah Apoteker</h3>
         </div>
-
-        <div class="box" sec:authorize="hasAnyAuthority('Admin', 'Apoteker')"
-             onclick="location.href='/resep'">
-            <img src="https://i.ibb.co/qNz3rqM/drug-removebg-preview-1.png">
-            <h3>Lihat Resep Obat</h3>
-        </div>
-
-        <div class="box" sec:authorize="hasAuthority('Admin')">
+        
+        <div class="box" sec:authorize="hasAuthority('Admin')"
+             onclick="location.href='/apoteker/'">
             <img src="https://i.ibb.co/Ss9xCXg/pharmacy-2-removebg-preview.png">
             <h3>Lihat Daftar Apoteker</h3>
         </div>

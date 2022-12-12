@@ -7,10 +7,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @Data
@@ -42,13 +40,9 @@ public class AppointmentModel implements Serializable {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private PasienModel pasien;
 
-    //    @OneToOne(cascade = CascadeType.ALL, optional = false) // mandatory
-    @OneToOne(cascade = CascadeType.ALL) // mandatory
+    @OneToOne(cascade = CascadeType.ALL) 
     private TagihanModel tagihan;
 
-    @OneToOne(cascade = CascadeType.ALL) // blom atur cardinality
+    @OneToOne(cascade = CascadeType.ALL) 
     private ResepModel resep;
-
-//    @OneToMany(mappedBy = "appointment",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-//    private List<ResepModel> listResep;
 }
