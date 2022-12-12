@@ -61,4 +61,9 @@ public class DokterServiceImpl implements DokterService{
         return dokterDb.findByUsername(username);
     }
 
+    @Override
+    public List<DokterModel> findAllDokter() {
+        return dokterDb.findAll();
+    }
+
 }

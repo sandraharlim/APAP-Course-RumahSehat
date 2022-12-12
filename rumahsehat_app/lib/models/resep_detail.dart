@@ -8,7 +8,7 @@ import 'resep_model.dart';
 import 'appointment_model.dart';
 
 class ResepDetail extends StatefulWidget {
-  final Appointment appointment;
+  final AppointmentModel appointment;
   const ResepDetail(
       this.appointment,
       {Key? key}) : super(key: key
@@ -21,11 +21,11 @@ class ResepDetail extends StatefulWidget {
 class _ResepDetailState extends State<ResepDetail> {
   late Future<Resep> resep;
   String token_prefix = "Bearer ";
-  String token = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJydXIiLCJleHAiOjE2NzA3NzA5MDYsImlhdCI6MTY3MDc1MjkwNn0.U5NCWwc844WE9tdV1_TaMhnnBT4i3FWlQ37BNYPhwfU5Q-TKa7yr263FBgYcOS_jJFV-fQ8dsh1u9Wug8sQQjg"; //isi tokennya
+  String token = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwYXNpZW4xIiwiZXhwIjoxNjcwODMyODYwLCJpYXQiOjE2NzA4MTQ4NjB9.8jvhkT2GFXi6HA_Bpsl-gb1SLNL0tl44clXeJOnR0xRxd_Os0ZoVXc3nSgcaHDrGN20MDQKD45n3zd2E2za7mw"; //isi tokennya
 
   Future<Resep> getResep() async {
     // String url = "https://apap-061.cs.ui.ac.id/api/appointment/viewall";
-    String url = "http://127.0.0.1:49996/api/resep/detail/" + widget.appointment.resepId;
+    String url = "http://10.0.2.2:8080/api/resep/detail/" + widget.appointment.resepId;
 
     final response = await http.get(Uri.parse(url),
         headers: {"Authorization": (token_prefix + token)});
