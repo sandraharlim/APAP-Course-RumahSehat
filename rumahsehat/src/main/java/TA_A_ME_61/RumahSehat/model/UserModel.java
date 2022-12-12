@@ -9,7 +9,6 @@ import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.NotNull;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 
@@ -31,12 +30,6 @@ public class UserModel implements Serializable {
     @Size(max = 50)
     @Column(name = "role", nullable = false)
     private String role;
-    // diatur dari controller.
-    // khusus admin, langsung pake SSO, tp ad awhitelist nya.
-    // implementasi addAdmin blom kebayang wkwkw
-
-    // untuk add 3 role lainnya, diatur di controller pas selesai
-    // submit create user form nya oleh admin.
 
     @NotNull
     @Size(max = 50)

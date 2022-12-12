@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rumahsehat_app/profilepage.dart';
 import 'package:rumahsehat_app/providers/auth.dart';
-import 'package:rumahsehat_app/saldoform.dart';
-import 'package:rumahsehat_app/splash_screen.dart';
+import 'package:rumahsehat_app/viewall_tagihan.dart';
 import 'appointment_form.dart';
 import 'appointment_index.dart';
 import 'main.dart';
@@ -24,9 +23,7 @@ class NavigationDrawer extends StatelessWidget {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(
-                    builder: (context) =>
-                        MyHomePage()), // harusnya classnya Home()
+                MaterialPageRoute(builder: (context) => MyHomePage()),
               );
             },
           ),
@@ -40,36 +37,21 @@ class NavigationDrawer extends StatelessWidget {
                       builder: (context) => const ProfilePageState()));
             },
           ),
-          // ListTile(
-          //   leading: Icon(Icons.attach_money_outlined),
-          //   title: Text('Saldo'),
-          //   onTap: () {
-          //     Navigator.push(
-          //         context,
-          //         MaterialPageRoute(
-          //             builder: (context) => const ProfilePageState()));
-          //   },
-          // ),
-          // ListTile(
-          //   leading: Icon(Icons.attach_money_outlined),
-          //   title: Text('Saldo'),
-          //   onTap: () {
-          //     Navigator.push(
-          //       context,
-          //       MaterialPageRoute(
-          //           builder: (context) => FormSaldo(
-          //                 token: "token",
-          //               )), // harusnya classnya Home()
-          //     );
-          //   },
-          // ),
+          ListTile(
+            leading: Icon(Icons.money),
+            title: Text("View All Tagihan"),
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const ViewAllTagihanScreen()));
+            },
+          ),
           ExpansionTile(
             title: Text("Appointment"),
-            // leading: FaIcon(FontAwesomeIcons.syringe),
             leading: Icon(Icons.calendar_today_sharp),
             children: <Widget>[
               ListTile(
-                // leading: FaIcon(FontAwesomeIcons.syringe),
                 leading: Icon(Icons.add),
                 title: Text('Create'),
                 onTap: () {
@@ -86,8 +68,7 @@ class NavigationDrawer extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) =>
-                            AppointmentViewAll()), // harusnya class index aja
+                        builder: (context) => AppointmentViewAll()),
                   );
                 },
               ),

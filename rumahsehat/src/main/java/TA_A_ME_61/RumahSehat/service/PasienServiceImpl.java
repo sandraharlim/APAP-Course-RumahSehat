@@ -48,5 +48,11 @@ public class PasienServiceImpl implements PasienService{
         pasien.setPassword(pass);
         pasienDb.save(pasien);
     }
+
+    @Override
+    public void updatePasien(PasienModel pasien) {
+        // TODO Auto-generated method stub
+        pasienDb.save(pasien);
+    }
 }
 

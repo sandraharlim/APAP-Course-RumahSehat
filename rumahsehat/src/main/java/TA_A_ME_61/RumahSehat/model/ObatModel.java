@@ -23,7 +23,6 @@ public class ObatModel implements Serializable {
     private String namaObat;
 
     @NotNull
-//    @Column(name = "stok", nullable = false, columnDefinition = "Integer default '100'")
     @Column(name = "stok", nullable = false, columnDefinition = "integer default 100")
     private Integer stok;
 

@@ -1,12 +1,8 @@
 package TA_A_ME_61.RumahSehat.restservice;
-
-
 import TA_A_ME_61.RumahSehat.model.AppointmentModel;
 import TA_A_ME_61.RumahSehat.model.DokterModel;
-import TA_A_ME_61.RumahSehat.model.PasienModel;
 import TA_A_ME_61.RumahSehat.restmodel.AppointmentRestModel;
 import TA_A_ME_61.RumahSehat.restmodel.DokterDropdownItem;
-import org.springframework.util.MultiValueMap;
 
 import java.time.LocalDateTime;
 import java.util.List;
