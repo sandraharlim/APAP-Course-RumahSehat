@@ -1,7 +1,6 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:rumahsehat_app/main.dart';
+import 'package:provider/provider.dart';
+import 'package:rumahsehat_app/providers/auth.dart';
 import 'package:rumahsehat_app/signup_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -10,6 +9,9 @@ class LoginScreen extends StatefulWidget {
 }
 
 class StartState extends State<LoginScreen> {
+  TextEditingController usernameController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return initWidget();
@@ -26,7 +28,7 @@ class StartState extends State<LoginScreen> {
             borderRadius: BorderRadius.only(bottomLeft: Radius.circular(90)),
             color: Color.fromARGB(255, 119, 176, 233),
             gradient: LinearGradient(
-              colors: [
+              colors: const [
                 (Color.fromARGB(255, 138, 198, 224)),
                 Color.fromARGB(255, 75, 183, 210)
               ],
@@ -41,11 +43,16 @@ class StartState extends State<LoginScreen> {
             children: [
               Container(
                 margin: EdgeInsets.only(top: 50),
+<<<<<<< HEAD
                 child: Image.asset(
                   "images/19836-removebg-preview.png",
                               height: 200,
                               width: 250
                 ),
+=======
+                child: Image.asset("images/19836-removebg-preview.png",
+                    height: 200, width: 250),
+>>>>>>> 90a5f0c71b4d0b8026a20290c5c23812d102b88b
               ),
               Container(
                 margin: EdgeInsets.only(right: 20, top: 20),
@@ -66,21 +73,22 @@ class StartState extends State<LoginScreen> {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(50),
             color: Colors.grey[200],
-            boxShadow: [
+            boxShadow: const [
               BoxShadow(
                   offset: Offset(0, 10),
                   blurRadius: 50,
                   color: Color(0xffEEEEEE)),
             ],
           ),
-          child: TextField(
+          child: TextFormField(
+            controller: usernameController,
             cursorColor: Color.fromARGB(255, 10, 3, 0),
             decoration: InputDecoration(
               icon: Icon(
                 Icons.email,
                 color: Color.fromARGB(255, 15, 4, 0),
               ),
-              hintText: "Enter Email",
+              hintText: "Enter Username",
               enabledBorder: InputBorder.none,
               focusedBorder: InputBorder.none,
             ),
@@ -102,15 +110,17 @@ class StartState extends State<LoginScreen> {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(50),
             color: Color(0xffEEEEEE),
-            boxShadow: [
+            boxShadow: const [
               BoxShadow(
                   offset: Offset(0, 20),
                   blurRadius: 100,
                   color: Color(0xffEEEEEE)),
             ],
           ),
-          child: TextField(
+          child: TextFormField(
+            controller: passwordController,
             cursorColor: Color.fromARGB(255, 20, 5, 0),
+            obscureText: true,
             decoration: InputDecoration(
               focusColor: Color.fromARGB(255, 17, 5, 0),
               icon: Icon(
@@ -142,14 +152,9 @@ class StartState extends State<LoginScreen> {
           ),
         ),
         GestureDetector(
-          onTap: () {
-            // Write Click Listener Code Here.
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => MyHomePage(),
-                ));
-          },
+          onTap: () => Provider.of<Authentication>(context, listen: false)
+                  .login(usernameController.text.toString(),
+                      passwordController.text.toString()),
           child: Container(
             alignment: Alignment.center,
             margin: EdgeInsets.only(left: 20, right: 20, top: 70),

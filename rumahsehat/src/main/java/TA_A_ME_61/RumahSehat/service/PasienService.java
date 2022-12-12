@@ -1,6 +1,5 @@
 package TA_A_ME_61.RumahSehat.service;
 
-import TA_A_ME_61.RumahSehat.model.DokterModel;
 import TA_A_ME_61.RumahSehat.model.PasienModel;
 
 import java.util.List;
@@ -16,4 +15,7 @@ public interface PasienService {
 
     void addPasien(PasienModel pasien);
 
+    void updatePasien(PasienModel pasien);
+
 }
+

@@ -20,7 +20,7 @@ public class PasienServiceImpl implements PasienService{
     public PasienModel getPasienByUsername(String username) {
         return pasienDb.findByUsername(username);
     }
-    
+
     @Override
     public List<PasienModel> getListPasien() {
         return pasienDb.findAll();
@@ -48,4 +48,11 @@ public class PasienServiceImpl implements PasienService{
         pasien.setPassword(pass);
         pasienDb.save(pasien);
     }
+
+    @Override
+    public void updatePasien(PasienModel pasien) {
+        // TODO Auto-generated method stub
+        pasienDb.save(pasien);
+    }
 }
+

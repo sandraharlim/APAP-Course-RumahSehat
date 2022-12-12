@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://thymeleaf.org"
-                xmlns:sec="http://www.thymeleaf.org/extras/spring_security">
+      xmlns:sec="http://www.thymeleaf.org/extras/spring_security">
 <head>
     <meta charset="UTF-8">
     <title>Rumah Sehat</title>
@@ -21,7 +21,7 @@
 </head>
 <body>
 <nav th:fragment="navbar (onevar)" class="navbar navbar-expand-lg navbar-light" style="background-color: #d2daff;">
-    <a class="navbar-brand font-weight-bold" href="/static">Rumah Sehat</a>
+    <a class="navbar-brand font-weight-bold" href="/">Rumah Sehat</a>
     <button
             class="navbar-toggler"
             type="button"
@@ -49,6 +49,10 @@
             <li class="nav-item" th:classappend="${onevar == 'obat'} ? active"
                 sec:authorize="hasAnyAuthority('Admin', 'Apoteker')">
                 <a class="nav-link" th:href="@{/obat/}">Obat</a>
+            </li>
+            <li class="nav-item" th:classappend="${onevar == 'chart'} ? active"
+                sec:authorize="hasAnyAuthority('Admin', 'admin')">
+                <a class="nav-link" th:href="@{/chart/line/default}">Chart</a>
             </li>
             <li class="nav-item" th:classappend="${onevar == 'logout'} ? active">
                 <a class="nav-link" th:href="@{/logout}">Keluar</a>

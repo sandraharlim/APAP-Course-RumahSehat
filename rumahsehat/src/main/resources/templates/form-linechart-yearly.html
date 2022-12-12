@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Pilih Dokter</title>
+  <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+  <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" type="text/css" />
+  <link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+
+<body>
+<nav th:replace="fragments/fragment :: navbar('home')"></nav>
+
+<div class="container">
+  <div class="card m-4 p-4">
+    <div class="card-body">
+      <div class="justify-content-center">
+        <h1 style="text-align: center" >Pilih Dokter</h1>
+        <p>Anda tidak harus pilih semua</p>
+        <br>
+
+        Jenis Barchart: <br>
+        <select id="tahun"  class="form-control">
+          <option th:value="2020" th:text="'Tahun 2020'"></option>
+          <option th:value="2021" th:text="'Tahun 2021'"></option>
+          <option th:value="2022" th:text="'Tahun 2022'"></option>
+        </select>
+        <br>
+
+        Dokter 1 : <br>
+        <select id="id1" class="form-control">
+          <option value="null">Pilih Dokter</option>
+          <div th:each="dokter, iterationStatus : ${listDokter}">
+            <option th:value="${dokter.uuid}" th:text="${dokter.nama}"></option>
+          </div>
+        </select>
+
+        Dokter 2 : <br>
+        <select id="id2" class="form-control">
+          <option value="null">Pilih Dokter</option>
+          <div th:each="dokter, iterationStatus : ${listDokter}">
+            <option th:value="${dokter.uuid}" th:text="${dokter.nama}"></option>
+          </div>
+        </select>
+
+        Dokter 3 : <br>
+        <select id="id3" class="form-control">
+          <option value="null">Pilih Dokter</option>
+          <div th:each="dokter, iterationStatus : ${listDokter}">
+            <option th:value="${dokter.uuid}" th:text="${dokter.nama}"></option>
+          </div>
+        </select>
+
+        Dokter 4 : <br>
+        <select id="id4" class="form-control">
+          <option value="null">Pilih Dokter</option>
+          <div th:each="dokter, iterationStatus : ${listDokter}">
+            <option th:value="${dokter.uuid}" th:text="${dokter.nama}"></option>
+          </div>
+        </select>
+
+        Dokter 5 : <br>
+        <select id="id5" class="form-control">
+          <option value="null">Pilih Dokter</option>
+          <div th:each="dokter, iterationStatus : ${listDokter}">
+            <option th:value="${dokter.uuid}" th:text="${dokter.nama}"></option>
+          </div>
+        </select>
+
+        <button class="btn btn-success" onclick="seeLineChart(
+            document.getElementById('tahun').value,
+            document.getElementById('id1').value,
+            document.getElementById('id2').value,
+            document.getElementById('id3').value,
+            document.getElementById('id4').value,
+            document.getElementById('id5').value,
+        )
+
+        ">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>
+<footer th:replace="fragments/fragment :: footer"></footer>
+</body>
+<script>
+  function seeLineChart(tahun, id1, id2, id3, id4, id5) {
+    var url = 'https://apap-061.cs.ui.ac.id/chart/line/tahunan?';
+    url = url + "tahun=" + tahun + "&";
+    url = url + "id1=" + id1 + "&";
+    url = url + "id2=" + id2 + "&";
+    url = url + "id3=" + id3 + "&";
+    url = url + "id4=" + id4 + "&";
+    url = url + "id5=" + id5;
+    window.open(url, "_self");
+  }
+</script>
+</html>

@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'dart:convert';
-import 'package:http/http.dart' as http;
-import '../navbar.dart';
 import 'appointment_model.dart';
+import 'resep_detail.dart';
 
 class AppointmentDetail extends StatefulWidget {
-  final Appointment appointment;
+  final AppointmentModel appointment;
   const AppointmentDetail(this.appointment);
 
   @override
@@ -64,27 +62,27 @@ class _AppointmentDetailState extends State<AppointmentDetail> {
                 letterSpacing: 0.5,
               ),
             ),
-            const SizedBox(
-              height: 10,
-            ),
-            ElevatedButton(
-              onPressed: () {
-                // masuk ke resep detail
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(
-                //       builder: (context) =>
-                //           DetailResep()), // ini lo ganti aja ya ror nama class nya
-                // );
-              },
-              child: const Text('Detail Resep'),
-              style: ElevatedButton.styleFrom(
-                  primary: Colors.black,
-                  onPrimary: Colors.white,
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(5)),
-                  )),
-            ),
+            const SizedBox(height: 10),
+            (widget.appointment.resepId != "0")
+                ? ElevatedButton(
+                    onPressed: () {
+                      // masuk ke resep detail
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                ResepDetail(widget.appointment)),
+                      );
+                    },
+                    child: const Text('Detail Resep'),
+                    style: ElevatedButton.styleFrom(
+                        primary: Colors.black,
+                        onPrimary: Colors.white,
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(5)),
+                        )),
+                  )
+                : Text(""), // blom ada resep
           ])),
         )));
   }

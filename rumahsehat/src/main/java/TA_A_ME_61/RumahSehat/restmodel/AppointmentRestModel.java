@@ -24,4 +24,7 @@ public class AppointmentRestModel {
     @JsonProperty("status")
     private String status; // 'Sudah Selesai' or 'Belum Dimulai'
 
+    @JsonProperty("resepId")
+    private String resepId;
+
 }

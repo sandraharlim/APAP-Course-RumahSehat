@@ -21,6 +21,9 @@
         <h1 class="text-center">Daftar Obat</h1>
         <br>
         <div class="card">
+          <div class="card-header" style="background-color: #f6efff">
+            <a class="btn" style="background-color: #d4c8ff" href="/">Beranda</a>
+          </div>
           <div class="card-body">
             <table class="table" id="daftar_obat">
               <thead style="background-color: #e7e6ff">
@@ -46,7 +49,7 @@
                   <div>
                     <a class="btn" style="background-color: #b7a2ff"
                        th:href="@{/obat/ubah-stok/} + ${obat.idObat}"
-                      >Ubah stok obat</a>
+                    >Ubah stok obat</a>
                   </div>
                 </td>
               </tr>

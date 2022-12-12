@@ -20,6 +20,9 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @RestController
 @RequestMapping("/api/appointment")
 public class AppointmentRestController {
@@ -35,14 +38,10 @@ public class AppointmentRestController {
     @Autowired
     private PasienService pasienService;
 
-    // @Autowired
-    // private AdminService adminService;
-
     @GetMapping("/doctors")
     public List<DokterDropdownItem> createAppointmentFlutter() {
-        System.out.println("masuk get dokter");
+        log.info("User mengambil pilihan dokter untuk membuat appointment");
         List<DokterModel> listDokter = dokterService.getListDokter();
-
         List<DokterDropdownItem> dokterDropdownItems = appointmentRestService.getDokterDropdownItems(listDokter);
 
         return dokterDropdownItems;
@@ -50,6 +49,7 @@ public class AppointmentRestController {
 
     @PostMapping("/create")
     public ResponseNewAppointment createAppointmentSubmit(@RequestBody SubmittedAppointment appointment) {
+        log.info("User membuat appointment");
         String uuidDokter = appointment.getUuid(); // "3e9ab0a6-6597-11ed-85c8-803253019798"
         String date = appointment.getDate(); // 12/21/2022
         String time = appointment.getTime(); // 12:23 AM
@@ -63,6 +63,7 @@ public class AppointmentRestController {
         PasienModel loggedInPasien = pasienService.getPasienByUsername(username);
 
         if (loggedInPasien == null) { // harusnya udh di handle sama websecurityconfig
+            log.info("User bukan seorang pasien");
             response.setError("Anda bukan pasien.");
             return response;
         }
@@ -90,6 +91,7 @@ public class AppointmentRestController {
         String hasilValidasi = appointmentRestService.validasi(newAppointment);
 
         if (hasilValidasi.equals("Valid")) {
+            log.info("User berhasil membuat appointment dan disimpan");
             appointmentRestService.addAppointment(newAppointment);
             appointmentRestService.setKodeNewAppointment(newAppointment); // udh langsung ke update di db juga
 
@@ -100,13 +102,14 @@ public class AppointmentRestController {
             return response;
         }
 
-        // ada jadwal yg tabrakan
+        log.info("User tidak berhasil membuat appointment");
         response.setError(hasilValidasi);
         return response;
     }
 
     @GetMapping("/viewall")
     public List<AppointmentRestModel> viewAllAppointment() { // hanya boleh pasien
+        log.info("User melihat semua daftar appointment");
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
         PasienModel pasien = pasienService.getPasienByUsername(username);
@@ -120,8 +123,9 @@ public class AppointmentRestController {
             listRestAppt = appointmentRestService.convertApptToRestAppt(listAppointment);
             return listRestAppt;
 
-        } else { // role nya gabener, tp harusnya nanti udh di handle websecurityconfig sih
+        } else {
             return null;
         }
     }
 }
+

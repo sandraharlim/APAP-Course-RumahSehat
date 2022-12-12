@@ -16,14 +16,13 @@ class SplashScreen extends StatefulWidget {
 class StartState extends State<SplashScreen> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     startTime();
   }
 
   startTime() async {
     var duration = Duration(seconds: 4);
-    return new Timer(duration, route);
+    return Timer(duration, route);
   }
 
   route() {
@@ -44,7 +43,11 @@ class StartState extends State<SplashScreen> {
             decoration: BoxDecoration(
                 color: Color.fromARGB(255, 138, 198, 224),
                 gradient: LinearGradient(
+<<<<<<< HEAD
                     colors: [
+=======
+                    colors: const [
+>>>>>>> 90a5f0c71b4d0b8026a20290c5c23812d102b88b
                 (Color.fromARGB(255, 138, 198, 224)),
                 Color.fromARGB(255, 75, 183, 210)],
                     begin: Alignment.topCenter,

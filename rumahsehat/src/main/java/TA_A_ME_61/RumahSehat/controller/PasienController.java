@@ -1,7 +1,5 @@
 package TA_A_ME_61.RumahSehat.controller;
 
-import TA_A_ME_61.RumahSehat.model.ApotekerModel;
-import TA_A_ME_61.RumahSehat.model.DokterModel;
 import TA_A_ME_61.RumahSehat.model.PasienModel;
 import TA_A_ME_61.RumahSehat.service.PasienService;
 import org.springframework.beans.factory.annotation.Autowired;

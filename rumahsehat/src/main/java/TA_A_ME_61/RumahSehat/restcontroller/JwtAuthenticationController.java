@@ -22,7 +22,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Objects;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Controller
 public class JwtAuthenticationController {
     @Autowired
@@ -50,6 +52,7 @@ public class JwtAuthenticationController {
     public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest)
             throws Exception {
 
+        log.info("User mencoba membuat token jwt baru");
         authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
 
         final UserDetails userDetails = jwtInMemoryUserDetailsService
@@ -65,6 +68,7 @@ public class JwtAuthenticationController {
         Objects.requireNonNull(password);
 
         try {
+            log.info("User berhasil mendapatkan token jwt baru");
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
         } catch (DisabledException e) {
             throw new Exception("USER_DISABLED", e);
@@ -96,8 +100,12 @@ public class JwtAuthenticationController {
 
             final String token = jwtTokenUtil.generateToken(userDetails);
 
+            log.info("User berhasil membuat akun baru RumahSehat");
             return ResponseEntity.ok(new JwtResponse(token));
         }
+
+        log.info("User tidak berhasil membuat akun baru RumahSehat karena username sudah tersedia");
         return new ResponseEntity<>("Username sudah ada.", HttpStatus.BAD_REQUEST);
     }
 }
+

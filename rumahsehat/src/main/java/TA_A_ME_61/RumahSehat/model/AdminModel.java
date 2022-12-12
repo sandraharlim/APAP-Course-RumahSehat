@@ -16,3 +16,4 @@ public class AdminModel  extends UserModel implements Serializable {
     @Column(name = "is_Sso", nullable = false)
     private Boolean isSso;
 }
+
