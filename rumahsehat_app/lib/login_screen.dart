@@ -43,23 +43,16 @@ class StartState extends State<LoginScreen> {
             children: [
               Container(
                 margin: EdgeInsets.only(top: 50),
-<<<<<<< HEAD
-                child: Image.asset(
-                  "images/19836-removebg-preview.png",
-                              height: 200,
-                              width: 250
-                ),
-=======
                 child: Image.asset("images/19836-removebg-preview.png",
                     height: 200, width: 250),
->>>>>>> 90a5f0c71b4d0b8026a20290c5c23812d102b88b
               ),
               Container(
-                margin: EdgeInsets.only(right: 20, top: 20),
+                margin: const EdgeInsets.only(right: 20, top: 20),
                 alignment: Alignment.topCenter,
+                // ignore: prefer_const_constructors
                 child: Text(
                   "Rumah Sehat",
-                  style: TextStyle(fontSize: 20, color: Colors.white),
+                  style: const TextStyle(fontSize: 20, color: Colors.white),
                 ),
               )
             ],
@@ -67,8 +60,8 @@ class StartState extends State<LoginScreen> {
         ),
         Container(
           alignment: Alignment.center,
-          margin: EdgeInsets.only(left: 20, right: 20, top: 70),
-          padding: EdgeInsets.only(left: 20, right: 20),
+          margin: const EdgeInsets.only(left: 20, right: 20, top: 70),
+          padding: const EdgeInsets.only(left: 20, right: 20),
           height: 54,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(50),
@@ -81,26 +74,25 @@ class StartState extends State<LoginScreen> {
             ],
           ),
           child: TextFormField(
-            controller: usernameController,
-            cursorColor: Color.fromARGB(255, 10, 3, 0),
-            decoration: InputDecoration(
-              icon: Icon(
-                Icons.email,
-                color: Color.fromARGB(255, 15, 4, 0),
+              controller: usernameController,
+              cursorColor: const Color.fromARGB(255, 10, 3, 0),
+              decoration: const InputDecoration(
+                icon: Icon(
+                  Icons.email,
+                  color: Color.fromARGB(255, 15, 4, 0),
+                ),
+                hintText: "Enter Username",
+                enabledBorder: InputBorder.none,
+                focusedBorder: InputBorder.none,
               ),
-              hintText: "Enter Username",
-              enabledBorder: InputBorder.none,
-              focusedBorder: InputBorder.none,
-            ),
-            validator: (text) {
+              validator: (text) {
                 if (text == null || text.isEmpty) {
                   return 'username tidak boleh kosong';
                 } else if (text != usernameController.text.toString()) {
                   return 'username salah';
                 }
                 return null;
-              }
-          ),
+              }),
         ),
         Container(
           alignment: Alignment.center,
@@ -118,28 +110,27 @@ class StartState extends State<LoginScreen> {
             ],
           ),
           child: TextFormField(
-            controller: passwordController,
-            cursorColor: Color.fromARGB(255, 20, 5, 0),
-            obscureText: true,
-            decoration: InputDecoration(
-              focusColor: Color.fromARGB(255, 17, 5, 0),
-              icon: Icon(
-                Icons.vpn_key,
-                color: Color.fromARGB(255, 10, 3, 0),
+              controller: passwordController,
+              cursorColor: Color.fromARGB(255, 20, 5, 0),
+              obscureText: true,
+              decoration: InputDecoration(
+                focusColor: Color.fromARGB(255, 17, 5, 0),
+                icon: Icon(
+                  Icons.vpn_key,
+                  color: Color.fromARGB(255, 10, 3, 0),
+                ),
+                hintText: "Enter Password",
+                enabledBorder: InputBorder.none,
+                focusedBorder: InputBorder.none,
               ),
-              hintText: "Enter Password",
-              enabledBorder: InputBorder.none,
-              focusedBorder: InputBorder.none,
-            ),
-            validator: (text) {
+              validator: (text) {
                 if (text == null || text.isEmpty) {
                   return 'password tidak boleh kosong';
                 } else if (text != passwordController.text.toString()) {
                   return 'password salah';
                 }
                 return null;
-              }
-          ),
+              }),
         ),
         Container(
           margin: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
@@ -153,8 +144,8 @@ class StartState extends State<LoginScreen> {
         ),
         GestureDetector(
           onTap: () => Provider.of<Authentication>(context, listen: false)
-                  .login(usernameController.text.toString(),
-                      passwordController.text.toString()),
+              .login(usernameController.text.toString(),
+                  passwordController.text.toString()),
           child: Container(
             alignment: Alignment.center,
             margin: EdgeInsets.only(left: 20, right: 20, top: 70),

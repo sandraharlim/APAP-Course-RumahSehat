@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'dart:convert';
-import 'package:http/http.dart' as http;
 import 'package:rumahsehat_app/konfirmasi_bayar_tagihan.dart';
-import '../navbar.dart';
 import 'tagihan_model.dart';
 
 class TagihanDetail extends StatefulWidget {
   final TagihanModel tagihan;
+  // ignore: use_key_in_widget_constructors
   const TagihanDetail(this.tagihan);
 
   @override

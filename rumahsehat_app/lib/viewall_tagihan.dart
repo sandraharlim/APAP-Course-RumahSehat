@@ -30,11 +30,8 @@ class _ViewAllTagihanState extends State<ViewAllTagihanScreen> {
         headers: {"Authorization": (token_prefix + token!)});
     if (response.statusCode == 200) {
       List jsonResponse = jsonDecode(response.body);
-      // print(jsonResponse);
       List<TagihanModel> listTagihanBaru =
           jsonResponse.map((data) => TagihanModel.fromJson(data)).toList();
-
-      print(listTagihanBaru);
 
       setState(() {
         listTagihan = listTagihanBaru;
@@ -47,7 +44,6 @@ class _ViewAllTagihanState extends State<ViewAllTagihanScreen> {
   @override
   void initState() {
     // TODO: implement initState
-    // super.initState();
     getAllTagihan();
   }
 
