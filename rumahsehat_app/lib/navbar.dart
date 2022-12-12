@@ -26,7 +26,7 @@ class NavigationDrawer extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                     builder: (context) =>
-                        MyHomePage()), // harusnya classnya Home()
+                        MyHomePage()),
               );
             },
           ),
@@ -40,36 +40,12 @@ class NavigationDrawer extends StatelessWidget {
                       builder: (context) => const ProfilePageState()));
             },
           ),
-          // ListTile(
-          //   leading: Icon(Icons.attach_money_outlined),
-          //   title: Text('Saldo'),
-          //   onTap: () {
-          //     Navigator.push(
-          //         context,
-          //         MaterialPageRoute(
-          //             builder: (context) => const ProfilePageState()));
-          //   },
-          // ),
-          // ListTile(
-          //   leading: Icon(Icons.attach_money_outlined),
-          //   title: Text('Saldo'),
-          //   onTap: () {
-          //     Navigator.push(
-          //       context,
-          //       MaterialPageRoute(
-          //           builder: (context) => FormSaldo(
-          //                 token: "token",
-          //               )), // harusnya classnya Home()
-          //     );
-          //   },
-          // ),
           ExpansionTile(
             title: Text("Appointment"),
             // leading: FaIcon(FontAwesomeIcons.syringe),
             leading: Icon(Icons.calendar_today_sharp),
             children: <Widget>[
               ListTile(
-                // leading: FaIcon(FontAwesomeIcons.syringe),
                 leading: Icon(Icons.add),
                 title: Text('Create'),
                 onTap: () {
@@ -87,7 +63,7 @@ class NavigationDrawer extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                         builder: (context) =>
-                            AppointmentViewAll()), // harusnya class index aja
+                            AppointmentViewAll()),
                   );
                 },
               ),

@@ -17,14 +17,17 @@ class Resep{
     required this.jumlah});
 
 
-  factory Resep.fromJson(Map<String, dynamic> json) {
+  factory Resep.fromJson(Map<String, dynamic> parsedJson) {
+    var jumlahFromJson= parsedJson['jumlah'];
+    List<String> jumlah= jumlahFromJson.cast<String>();
+
     return Resep(
-        id: json['id'],
-        tanggalWaktu: json['tanggalWaktu'],
-        dokter: json['dokter'],
-        pasien: json['pasien'],
-        status: json['status'],
-        apoteker: json['apoteker'],
-        jumlah: json['jumlah']);
+        id: parsedJson['id'],
+        tanggalWaktu: parsedJson['tanggalWaktu'],
+        dokter: parsedJson['dokter'],
+        pasien: parsedJson['pasien'],
+        status: parsedJson['status'],
+        apoteker: parsedJson['apoteker'],
+        jumlah: jumlah);
   }
 }

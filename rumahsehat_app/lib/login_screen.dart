@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:rumahsehat_app/main.dart';
 import 'package:rumahsehat_app/providers/auth.dart';
 import 'package:rumahsehat_app/signup_screen.dart';
 
@@ -130,11 +129,6 @@ class StartState extends State<LoginScreen> {
             child: Text("Forget Password?"),
           ),
         ),
-        // ElevatedButton(
-        //     onPressed: () => Provider.of<Authentication>(context, listen: false)
-        //         .login(usernameController.text.toString(),
-        //             passwordController.text.toString()),
-        //     child: Text('Login')),
         GestureDetector(
           onTap: () => Provider.of<Authentication>(context, listen: false)
                   .login(usernameController.text.toString(),

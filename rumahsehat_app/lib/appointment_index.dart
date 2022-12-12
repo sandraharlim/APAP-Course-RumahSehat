@@ -30,7 +30,6 @@ class _AppointmentViewAllState extends State<AppointmentViewAll> {
           headers: {"Authorization": (token_prefix + token!)});
 
       List<dynamic> data = jsonDecode(response.body);
-      // print(data);
 
       List<AppointmentModel> listAppointmentFromServer = [];
       for (var i = 0; i < data.length; i++) {
@@ -42,7 +41,6 @@ class _AppointmentViewAllState extends State<AppointmentViewAll> {
         listAppointment = listAppointmentFromServer;
       });
     } catch (p) {
-      // rolenya salah
       print(p);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("Anda bukan pasien.")),
