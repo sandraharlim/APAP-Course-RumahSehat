@@ -64,11 +64,6 @@ public class ChartController {
         List<DokterModel> listDokter = chartService.getListDokterLineChart(id1, id2, id3, id4, id5);
         List<TagihanModel> listTagihan = tagihanService.getListTagihan();
 
-        // Assume first tagihan from 2020
-        // Map dari total income.
-        // {"2020":{"dokter1":[20000,200000,0]}, etc}
-//        Map<String,Map<String, int[]>> yearlyIncome = new LinkedHashMap<>();
-
         // Map dokter, pendapatan tiap bulan
         Map<String, List<Integer>> totalIncomeAllDokter = new LinkedHashMap<>();
         for (DokterModel dokter : listDokter) {
@@ -89,12 +84,28 @@ public class ChartController {
             }
             totalIncomeAllDokter.put(dokter.getNama(), incomePerMonthPerDokter);
         }
-//        System.out.println(totalIncomeAllDokter);
         List<String> lstDokter = new ArrayList<String>(totalIncomeAllDokter.keySet());
         List<List<Integer>> lstIncome = new ArrayList<List<Integer>>(totalIncomeAllDokter.values());
         System.out.println(lstIncome);
+        System.out.println(lstIncome.size() + " size income");
         System.out.println(lstDokter);
+        System.out.println(lstDokter.size() + " size dokter");
 
+        if (lstIncome.size() < 5) {
+            List<Integer> fillZero = Arrays.asList(0,0,0,0,0,0,0,0,0,0,0,0);
+            int size = lstIncome.size();
+            for (int i = 0; i < 5 - size; i++) {
+                lstIncome.add(fillZero);
+            }
+        }
+
+        if (lstDokter.size() < 5) {
+            String fillEmpty = "Not Selected";
+            int size = lstDokter.size();
+            for (int i = 0; i < 5 - size; i++) {
+                lstDokter.add(fillEmpty);
+            }
+        }
 
         model.addAttribute("lstDokter", lstDokter);
         model.addAttribute("lstIncome", lstIncome);
