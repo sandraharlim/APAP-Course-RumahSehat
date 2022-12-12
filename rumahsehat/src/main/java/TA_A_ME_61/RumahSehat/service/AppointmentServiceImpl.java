@@ -13,7 +13,9 @@ import org.springframework.util.MultiValueMap;
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -50,6 +52,8 @@ public class AppointmentServiceImpl implements AppointmentService{
         return null;
     }
 
+    //    ========= method untuk fitur 8: detail appt ============
+
     @Override
     public AppointmentModel getAppointmentByKode(String kode){
         return appointmentDb.getAppointmentModelByKode(kode).orElse(null);
@@ -64,6 +68,24 @@ public class AppointmentServiceImpl implements AppointmentService{
     @Override
     public void addAppointment(AppointmentModel appointment) {
         appointmentDb.save(appointment);
+    }
+    // ============= chart ==================
+
+    @Override
+    public Map<String, Integer> getTotalApptDokters(List<DokterModel> listDokter) {
+        // TODO Auto-generated method stub
+        Map<String, Integer> totalApptDokter = new LinkedHashMap<>();
+        
+        for (DokterModel dokter: listDokter) {
+            List<AppointmentModel> listAppt = getAllApptByDokter(dokter);
+            totalApptDokter.put(dokter.getNama(), listAppt.size());
+        }
+        return totalApptDokter;
+    }
+
+    @Override
+    public List<AppointmentModel> getAllAptAnnual(LocalDateTime first, LocalDateTime last){
+        return appointmentDb.findAllByWaktuAwalBetween(first, last);
     }
 }
 
