@@ -120,6 +120,17 @@ public class BaseController {
         return new ModelAndView("redirect:"+Setting.SERVER_LOGIN + Setting.CLIENT_LOGIN);
     }
 
+    /* 
+    @PostMapping(path="/login-sso/v1/wishlists")
+    public String HandlerBase(Principal principal, String WishListResult){
+        AdminModel admin = adminService.getAdminByUsername(principal.getName());
+        if(admin == null){
+            throw new ServerException();
+        }
+        return null;
+
+    }
+    */
 //
 //    @GetMapping("/validate-ticket")
 //    public ModelAndView adminLoginSSO(

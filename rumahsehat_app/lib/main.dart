@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
+<<<<<<< HEAD
+import 'package:rumahsehat_app/appointment_index.dart';
+import 'package:rumahsehat_app/models/appointment_pasien_card.dart';
+import 'package:rumahsehat_app/models/pasienmodel.dart';
+=======
 import 'package:provider/provider.dart';
 import 'package:rumahsehat_app/login_screen.dart';
 import 'package:rumahsehat_app/models/resep_detail.dart';
 import 'package:rumahsehat_app/profilepage.dart';
 import 'package:rumahsehat_app/providers/auth.dart';
 import 'appointment_index.dart';
+>>>>>>> 90a5f0c71b4d0b8026a20290c5c23812d102b88b
 import 'navbar.dart';
 import 'appointment_form.dart';
 
@@ -15,6 +21,16 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+<<<<<<< HEAD
+    return MaterialApp(
+      title: 'Rumah Sehat',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primarySwatch: Colors.lightBlue,
+      ),
+      // home: SplashScreen(),
+      home: SplashScreen(),
+=======
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
@@ -41,6 +57,7 @@ class MyApp extends StatelessWidget {
           home: auth.isAuth ? MyHomePage() : LoginScreen()
         ),
       ),
+>>>>>>> 90a5f0c71b4d0b8026a20290c5c23812d102b88b
     );
   }
 }
@@ -60,10 +77,46 @@ class MyHomePage extends StatelessWidget {
             children: [
               InkWell(
                 onTap: () {
+<<<<<<< HEAD
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => AppointmentForm()));
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image:
+                          AssetImage('images/TaeAugust11-removebg-preview/png'),
+                      fit: BoxFit.fill,
+                    ),
+                    borderRadius: BorderRadius.circular(20),
+                    color: Color.fromARGB(255, 119, 176, 233),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.book,
+                        size: 50,
+                        color: Colors.white,
+                      ),
+                      Text(
+                        "Buat Jadwal Appointment",
+                        style: TextStyle(color: Colors.white, fontSize: 20),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              InkWell(
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => AppointmentViewAll()));
+=======
                   Navigator.push(
                       context,
                       MaterialPageRoute(
                           builder: (context) => AppointmentForm()));
+>>>>>>> 90a5f0c71b4d0b8026a20290c5c23812d102b88b
                 },
                 child: Container(
                   decoration: BoxDecoration(
@@ -86,6 +139,7 @@ class MyHomePage extends StatelessWidget {
                   ),
                 ),
               ),
+
               InkWell(
                 onTap: () {
                   Navigator.push(
@@ -102,11 +156,13 @@ class MyHomePage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: const [
                       Icon(
-                        Icons.book,
+                        Icons.add_card,
                         size: 50,
                         color: Colors.white,
                       ),
                       Text(
+<<<<<<< HEAD
+=======
                         "Lihat Jadwal Appointment",
                         style: TextStyle(color: Colors.white, fontSize: 20),
                       )
@@ -128,6 +184,7 @@ class MyHomePage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: const [
                       Text(
+>>>>>>> 90a5f0c71b4d0b8026a20290c5c23812d102b88b
                         "Lihat Daftar Tagihan",
                         style: TextStyle(color: Colors.white, fontSize: 20),
                       )
