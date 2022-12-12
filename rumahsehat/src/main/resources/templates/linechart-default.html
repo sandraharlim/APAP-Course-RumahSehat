@@ -14,7 +14,7 @@
 </head>
 <body>
 <nav th:replace="fragments/fragment :: navbar('chart')"></nav>
-<div class="container">
+<div class="container" sec:authorize="hasAnyAuthority('Admin', 'admin')">
     <div class="card m-4 p-4">
         <div class="card-body">
             <div class="justify-content-center">
@@ -56,7 +56,13 @@
                     <div class="col">
                         <div class="row justify-content-center">
                             <a class="btn" th:href="@{/}" style="background-color: #b7a2ff">
-                                Line Chart Tahunan
+                                Line Chart Beberapa Dokter
+                            </a>
+                        </div>
+                        <br>
+                        <div class="row justify-content-center">
+                            <a class="btn" th:href="@{/dokter/barchart}" style="background-color: #cac0f3">
+                                Bar Chart
                             </a>
                         </div>
                     </div>
