@@ -50,6 +50,10 @@
                 sec:authorize="hasAnyAuthority('Admin', 'Apoteker')">
                 <a class="nav-link" th:href="@{/obat/}">Obat</a>
             </li>
+            <li class="nav-item" th:classappend="${onevar == 'chart'} ? active"
+                sec:authorize="hasAnyAuthority('Admin', 'admin')">
+                <a class="nav-link" th:href="@{/chart/line/default}">Chart</a>
+            </li>
             <li class="nav-item" th:classappend="${onevar == 'logout'} ? active">
                 <a class="nav-link" th:href="@{/logout}">Keluar</a>
             </li>
