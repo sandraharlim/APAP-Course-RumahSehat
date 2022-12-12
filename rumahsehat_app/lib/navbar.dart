@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rumahsehat_app/profilepage.dart';
 import 'package:rumahsehat_app/providers/auth.dart';
+import 'package:rumahsehat_app/viewall_tagihan.dart';
 import 'appointment_form.dart';
 import 'appointment_index.dart';
 import 'main.dart';
@@ -22,9 +23,7 @@ class NavigationDrawer extends StatelessWidget {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(
-                    builder: (context) =>
-                        MyHomePage()),
+                MaterialPageRoute(builder: (context) => MyHomePage()),
               );
             },
           ),
@@ -36,6 +35,16 @@ class NavigationDrawer extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                       builder: (context) => const ProfilePageState()));
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.money),
+            title: Text("View All Tagihan"),
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const ViewAllTagihanScreen()));
             },
           ),
           ExpansionTile(
@@ -59,8 +68,7 @@ class NavigationDrawer extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) =>
-                            AppointmentViewAll()),
+                        builder: (context) => AppointmentViewAll()),
                   );
                 },
               ),

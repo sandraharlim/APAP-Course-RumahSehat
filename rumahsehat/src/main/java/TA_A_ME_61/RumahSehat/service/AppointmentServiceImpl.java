@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -60,6 +61,8 @@ public class AppointmentServiceImpl implements AppointmentService{
         appointment.setIsDone(true);
         appointmentDb.save(appointment);
     }
+
+    //    ========= method untuk fitur 11: detail resep ============
 
     @Override
     public void addAppointment(AppointmentModel appointment) {
