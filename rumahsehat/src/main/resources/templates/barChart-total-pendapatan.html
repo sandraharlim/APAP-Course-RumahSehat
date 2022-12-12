@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring_security">
 <head>
   <meta charset="ISO-8859-1" />
   <link rel="stylesheet"
@@ -9,8 +10,16 @@
   <link rel="stylesheet"
         href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" />
 
+  <title>Rumah Sehat</title>
+  <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+  <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" type="text/css" />
+  <link rel="stylesheet" th:href="@{/css/style.css}"/>
+
 </head>
 <body>
+<nav th:replace="fragments/fragment :: navbar('chart')"></nav>
 <div class="container">
   <h2 align="center">Graph Pendapatan Setiap Dokter</h2>
 
@@ -64,5 +73,6 @@
   });
 </script>
 
+<footer th:replace="fragments/fragment :: footer"></footer>
 </body>
 </html>
