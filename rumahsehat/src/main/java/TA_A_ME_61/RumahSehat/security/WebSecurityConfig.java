@@ -118,7 +118,6 @@ public class WebSecurityConfig {
                             .antMatchers("/api/pasien/profile/update-saldo")
                             //Cek apakah dibutuhkan
                             .antMatchers("/sign-up/pasien")
-                            .antMatchers("/api/pasien/sign-up")
                             .antMatchers("/api/pasien/tagihan")
                             .antMatchers("/api/pasien/tagihan/{kode}/bayar")
 
