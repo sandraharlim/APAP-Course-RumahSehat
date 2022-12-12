@@ -133,6 +133,7 @@ public class WebSecurityConfig {
                             .antMatchers("/sign-up/pasien")
                             .antMatchers("/api/pasien/sign-up")
                             .antMatchers("/api/pasien/tagihan")
+                            .antMatchers("/api/pasien/tagihan/{kode}/bayar")
 
                     )
                     // dont authenticate this particular request

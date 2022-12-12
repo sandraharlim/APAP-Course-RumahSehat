@@ -4,6 +4,7 @@ import 'package:rumahsehat_app/profilepage.dart';
 import 'package:rumahsehat_app/providers/auth.dart';
 import 'package:rumahsehat_app/saldoform.dart';
 import 'package:rumahsehat_app/splash_screen.dart';
+import 'package:rumahsehat_app/viewall_tagihan.dart';
 import 'appointment_form.dart';
 import 'appointment_index.dart';
 import 'main.dart';
@@ -38,6 +39,16 @@ class NavigationDrawer extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                       builder: (context) => const ProfilePageState()));
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.person),
+            title: Text("View All Tagihan"),
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const ViewAllTagihanScreen()));
             },
           ),
           // ListTile(
