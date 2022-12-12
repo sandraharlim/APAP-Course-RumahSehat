@@ -1,21 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rumahsehat_app/login_screen.dart';
-import 'package:rumahsehat_app/models/appointment_pasien_card.dart';
-import 'package:rumahsehat_app/models/pasienmodel.dart';
+import 'package:rumahsehat_app/models/resep_detail.dart';
 import 'package:rumahsehat_app/profilepage.dart';
 import 'package:rumahsehat_app/providers/auth.dart';
 import 'appointment_index.dart';
 import 'navbar.dart';
 import 'appointment_form.dart';
-import 'package:rumahsehat_app/splash_screen.dart';
 
 void main() {
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -30,6 +27,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProxyProvider<Authentication, PasienNotifier>(
             create: (context) => PasienNotifier(),
             update: (context, auth, pasien) => pasien!..updateData(auth.token)),
+        ChangeNotifierProxyProvider<Authentication, ResepT>(
+            create: (context) => ResepT(),
+            update: (context, auth, resep) => resep!..updateData(auth.token)),
       ],
       builder: (context, child) => Consumer<Authentication>(
         builder: (context, auth, child) => MaterialApp(
@@ -38,11 +38,7 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
             primarySwatch: Colors.lightBlue,
           ),
-          // home: SplashScreen(),
-          home: auth.isAuth ? MyHomePage() : LoginScreen(),
-          // routes: {
-          //   AddProductPage.route (ctx) => AddProductPage(),
-          // },
+          home: auth.isAuth ? MyHomePage() : LoginScreen()
         ),
       ),
     );
@@ -131,11 +127,6 @@ class MyHomePage extends StatelessWidget {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: const [
-                      // Icon(
-                      //   Icons.add_card,
-                      //   size: 50,
-                      //   color: Colors.white,
-                      // ),
                       Text(
                         "Lihat Daftar Tagihan",
                         style: TextStyle(color: Colors.white, fontSize: 20),

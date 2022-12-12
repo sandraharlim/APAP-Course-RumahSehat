@@ -20,18 +20,14 @@ class Pasien {
   late String email;
   late String nama;
   late String password;
-  // String role = "Pasien";
   late String username;
-  // int saldo = 0;
   late int umur;
 
   Pasien(
       {required this.email,
       required this.nama,
       required this.password,
-      // required this.role,
       required this.username,
-      // required this.saldo,
       required this.umur});
 
   factory Pasien.fromJson(Map<String, dynamic> json) {

@@ -4,7 +4,6 @@ import lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.List;
 
@@ -14,7 +13,7 @@ import java.util.List;
 public class PasienModel extends UserModel implements Serializable {
     @NotNull
     @Column(name = "saldo", nullable = false, unique = false)
-    private Long saldo; // default value di set di controller / service
+    private Long saldo;
 
     @NotNull
     @Column(name = "umur", nullable = false, unique = false)

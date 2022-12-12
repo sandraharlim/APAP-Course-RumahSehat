@@ -18,6 +18,13 @@
           type="text/css"/>
     <link rel="stylesheet" th:href="@{/css/style.css}"/>
 
+<<<<<<< HEAD
+  <link rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" />
+        <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+        <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+=======
+>>>>>>> c9ea690f8ebc273608c068713c2ba4b71ce1cde2
 </head>
 <body>
 <nav th:replace="fragments/fragment :: navbar('chart')"></nav>
@@ -27,9 +34,16 @@
     <div id="container"
          style="width: 550px; height: 400px; margin: 0 auto"></div>
 </div>
+<<<<<<< HEAD
+<script
+        src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script
+        src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+=======
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+>>>>>>> c9ea690f8ebc273608c068713c2ba4b71ce1cde2
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
 <script th:inline="javascript">

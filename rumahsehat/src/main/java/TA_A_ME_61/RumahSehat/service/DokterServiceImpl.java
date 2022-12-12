@@ -1,6 +1,5 @@
 package TA_A_ME_61.RumahSehat.service;
 
-import TA_A_ME_61.RumahSehat.model.AdminModel;
 import TA_A_ME_61.RumahSehat.model.DokterModel;
 import TA_A_ME_61.RumahSehat.repository.DokterDb;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,6 +63,10 @@ public class DokterServiceImpl implements DokterService{
     }
 
     @Override
+    public List<DokterModel> findAllDokter() {
+        return dokterDb.findAll();
+    }
+
     public List<DokterModel> getListDokterBarchart(String id1, String id2, String id3, String id4, String id5,
             String id6, String id7, String id8) {
         // TODO Auto-generated method stub
