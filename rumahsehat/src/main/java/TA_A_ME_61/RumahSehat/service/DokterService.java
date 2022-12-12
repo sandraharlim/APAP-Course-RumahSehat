@@ -19,7 +19,4 @@ public interface DokterService {
 
     DokterModel getDokterByUsername(String username);
 
-    List<DokterModel> findAllDokter();
-
-
 }

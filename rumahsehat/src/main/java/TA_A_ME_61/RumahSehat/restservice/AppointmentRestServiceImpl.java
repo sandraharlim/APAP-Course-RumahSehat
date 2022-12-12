@@ -241,8 +241,6 @@ public class AppointmentRestServiceImpl implements AppointmentRestService{
 
     private String convertLocalDateTimeToString(LocalDateTime waktuAwal) {
         String waktuAwalStr = ""; // 'dd MMMM yyyy HH:mm'
-        // String date = waktuAwal.ge
-        // DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd LLLL yyyy");
         DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM, FormatStyle.SHORT);
         waktuAwalStr = waktuAwal.format(formatter);
 

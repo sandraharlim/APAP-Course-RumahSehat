@@ -40,8 +40,8 @@ public class AppointmentRestController {
 
     @GetMapping("/doctors")
     public List<DokterDropdownItem> createAppointmentFlutter() {
+        log.info("User mengambil pilihan dokter untuk membuat appointment");
         List<DokterModel> listDokter = dokterService.getListDokter();
-
         List<DokterDropdownItem> dokterDropdownItems = appointmentRestService.getDokterDropdownItems(listDokter);
 
         return dokterDropdownItems;

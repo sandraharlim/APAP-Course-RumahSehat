@@ -8,4 +8,6 @@ import java.util.Optional;
 public interface TagihanDb extends JpaRepository<TagihanModel,Long> {
     //JPA
     Optional<TagihanModel> findById(Long id);
+    
+    Optional<TagihanModel> findByKode(String kode);
 }

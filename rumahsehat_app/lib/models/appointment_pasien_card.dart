@@ -12,15 +12,6 @@ class AppointmentPasienCard extends StatefulWidget {
 }
 
 class _AppointmentPasienCardState extends State<AppointmentPasienCard> {
-  Future<void> details() async {
-    String url = "";
-    try {
-      final response = await http.get(Uri.parse(url));
-    } catch (p) {
-      print(p);
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -58,7 +49,6 @@ class _AppointmentPasienCardState extends State<AppointmentPasienCard> {
             ),
             ElevatedButton(
               onPressed: () {
-                // Navigator.pop(context);
                 Navigator.push(
                   context,
                   MaterialPageRoute(
