@@ -51,6 +51,7 @@ public class WebSecurityConfig {
                     .antMatchers("/pasien/delete/{uuid}").hasAnyAuthority("Admin")
 
                     .antMatchers("/dokter/barchart").hasAnyAuthority("Admin")
+                    .antMatchers("/chart/line/default").hasAnyAuthority("Admin", "admin")
 
 
                     .anyRequest().authenticated()

@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,5 +33,7 @@ public interface AppointmentDb  extends JpaRepository<AppointmentModel, Long> {
 //    List<AppointmentModel> findAllByDokterAndDate(@Param("uuid") String uuid, @Param("year") int year, @Param("dayOfYear") int dayOfYear);
 
     Optional<AppointmentModel> getAppointmentModelByKode(String kode);
+
+    List<AppointmentModel> findAllByWaktuAwalBetween(LocalDateTime first, LocalDateTime last);
 }
 

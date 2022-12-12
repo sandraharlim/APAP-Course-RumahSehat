@@ -60,5 +60,10 @@ public class AppointmentServiceImpl implements AppointmentService{
         appointment.setIsDone(true);
         appointmentDb.save(appointment);
     }
+
+    @Override
+    public List<AppointmentModel> getAllAptAnnual(LocalDateTime first, LocalDateTime last){
+        return appointmentDb.findAllByWaktuAwalBetween(first, last);
+    }
 }
 

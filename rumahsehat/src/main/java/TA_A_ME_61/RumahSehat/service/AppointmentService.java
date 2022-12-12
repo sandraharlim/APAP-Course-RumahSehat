@@ -19,5 +19,7 @@ public interface AppointmentService {
     //    ========= method untuk fitur 8: detail appt ============
     AppointmentModel getAppointmentByKode(String kode);
     void finishAppointment(AppointmentModel appointment);
+
+    List<AppointmentModel> getAllAptAnnual(LocalDateTime first, LocalDateTime last);
 }
 
