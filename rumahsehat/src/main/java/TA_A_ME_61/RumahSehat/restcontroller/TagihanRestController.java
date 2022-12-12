@@ -3,24 +3,16 @@ package TA_A_ME_61.RumahSehat.restcontroller;
 import TA_A_ME_61.RumahSehat.model.AppointmentModel;
 import TA_A_ME_61.RumahSehat.model.PasienModel;
 import TA_A_ME_61.RumahSehat.model.TagihanModel;
-import TA_A_ME_61.RumahSehat.restmodel.AppointmentRestModel;
 import TA_A_ME_61.RumahSehat.restmodel.TagihanRestModel;
 import TA_A_ME_61.RumahSehat.restservice.AppointmentRestService;
 import TA_A_ME_61.RumahSehat.service.AppointmentService;
 import TA_A_ME_61.RumahSehat.service.DokterService;
 import TA_A_ME_61.RumahSehat.service.PasienService;
 import TA_A_ME_61.RumahSehat.service.TagihanService;
-import TA_A_ME_61.RumahSehat.service.TagihanServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
-
-import javax.validation.Valid;
 
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
@@ -40,17 +32,11 @@ public class TagihanRestController {
     private AppointmentService appointmentService;
 
     @Autowired
-    private AppointmentRestService appointmentRestService;
-
-    @Autowired
-    private DokterService dokterService;
-
-    @Autowired
     private PasienService pasienService;
-
 
     @GetMapping(value = "/tagihan")
     public List<TagihanRestModel> listTagihan() {
+        log.info("User mencoba melihat seluruh tagihan yang dimiliki");
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
 
@@ -96,6 +82,7 @@ public class TagihanRestController {
 
     @PostMapping("/tagihan/{kode}/bayar")
     public String bayarTagihan(@PathVariable String kode) {
+        log.info("User mencoba melakukan pembayaran tagihan");
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
         PasienModel pasien = pasienService.getPasienByUsername(username);
