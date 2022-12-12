@@ -65,7 +65,7 @@ public class AppointmentServiceImpl implements AppointmentService{
         appointmentDb.save(appointment);
     }
 
-    // ============= barchart total appt per dokter ==================
+    // ============= chart ==================
 
     @Override
     public Map<String, Integer> getTotalApptDokters(List<DokterModel> listDokter) {
@@ -77,6 +77,11 @@ public class AppointmentServiceImpl implements AppointmentService{
             totalApptDokter.put(dokter.getNama(), listAppt.size());
         }
         return totalApptDokter;
+    }
+
+    @Override
+    public List<AppointmentModel> getAllAptAnnual(LocalDateTime first, LocalDateTime last){
+        return appointmentDb.findAllByWaktuAwalBetween(first, last);
     }
 }
 

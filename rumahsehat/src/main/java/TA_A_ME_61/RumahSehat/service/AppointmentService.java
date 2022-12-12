@@ -21,7 +21,8 @@ public interface AppointmentService {
     AppointmentModel getAppointmentByKode(String kode);
     void finishAppointment(AppointmentModel appointment);
 
-    // ============= barchart total appt per dokter ==================
+    // ============= chart ==================
     Map<String, Integer> getTotalApptDokters(List<DokterModel> listDokter);
+    List<AppointmentModel> getAllAptAnnual(LocalDateTime first, LocalDateTime last);
 }
 
