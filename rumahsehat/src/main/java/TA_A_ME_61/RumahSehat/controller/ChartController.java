@@ -14,10 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequestMapping("/chart")
@@ -73,10 +70,9 @@ public class ChartController {
 //        Map<String,Map<String, int[]>> yearlyIncome = new LinkedHashMap<>();
 
         // Map dokter, pendapatan tiap bulan
-        Map<String, int[]> totalIncomeAllDokter = new LinkedHashMap<>();
-
+        Map<String, List<Integer>> totalIncomeAllDokter = new LinkedHashMap<>();
         for (DokterModel dokter : listDokter) {
-            int[] incomePerMonthPerDokter = new int[12];
+            List<Integer> incomePerMonthPerDokter = Arrays.asList(0,0,0,0,0,0,0,0,0,0,0,0);
             for (int i = 0; i < 12; i++) {
                 int incomePerMonth = 0;
                 for (TagihanModel tagihan : listTagihan){
@@ -85,16 +81,23 @@ public class ChartController {
                             tagihan.getTanggalTerbuat().getYear() == tahun)
                     {
                         if (tagihan.getTanggalTerbuat().getMonthValue() == (i+1) ) {
-                            incomePerMonth += tagihan.getJumlahTagihan();
+                            incomePerMonth += tagihan.getJumlahTagihan().intValue();
                         }
                     }
                 }
-                incomePerMonthPerDokter[i] = incomePerMonth;
+                incomePerMonthPerDokter.set(i, incomePerMonth);
             }
             totalIncomeAllDokter.put(dokter.getNama(), incomePerMonthPerDokter);
         }
+//        System.out.println(totalIncomeAllDokter);
+        List<String> lstDokter = new ArrayList<String>(totalIncomeAllDokter.keySet());
+        List<List<Integer>> lstIncome = new ArrayList<List<Integer>>(totalIncomeAllDokter.values());
+        System.out.println(lstIncome);
+        System.out.println(lstDokter);
 
-        model.addAttribute("income", totalIncomeAllDokter);
+
+        model.addAttribute("lstDokter", lstDokter);
+        model.addAttribute("lstIncome", lstIncome);
         model.addAttribute("tahun", tahun);
 
         return "linechart-yearly";

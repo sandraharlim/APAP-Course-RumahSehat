@@ -24,62 +24,35 @@
                 </div>
                 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
                 <script th:inline="javascript">
-
-                    var htmldata = [[${income}]]
-                    var ctx = document.getElementById('myChart').getContext('2d');
-                    var myChart = new Chart(ctx, {
-                        type: 'line',
-                        data: {
-                            // labels = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Okt", "Nov", "Des"],
-                            // datasets: [{
-                            //     data: Object.keys(htmldata).map(function (key) {return htmldata[key];}
-                            //     borderWidth: 1)
-                            // }]
-                            labels: ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Okt", "Nov", "Des"],
-                            datasets: [{
-                                label: Object.keys()
-                                data: Object.keys(htmldata).map(function(key) {return htmldata[key];}),
-                                borderWidth: 1
-                            }]
+                    const labels = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Okt", "Nov", "Des"];
+                    const data = {
+                        labels: labels,
+                        datasets: [{
+                            label: [[${lstDokter.get(0)}]],
+                            data: [[${lstIncome.get(0)}]],
+                            fill: true,
+                            borderColor: 'rgb(75, 192, 192)',
+                            tension: 0.1
                         },
-                    });
-                    // const labels = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Okt", "Nov", "Des"];
-                    // const data = {
-                    //     labels: labels,
-                    //     datasets: [{
-                    //         label: 'Pendapatan Dokter',
-                    //         data: [[${pendapatan}]],
-                    //         fill: true,
-                    //         borderColor: 'rgb(75, 192, 192)',
-                    //         tension: 0.1
-                    //     }]
-                    // };
-                    //
-                    // const config = {
-                    //     type: 'line',
-                    //     data,
-                    //     options: {
-                    //         scales: {
-                    //             y: {
-                    //                 beginAtZero: true
-                    //             }
-                    //         }
-                    //     },
-                    // };
+                        ]
+                    };
 
-                    // const myChart = new Chart(
-                    //     document.getElementById('myChart'), config
-                    // );
+                    const config = {
+                        type: 'line',
+                        data,
+                        options: {
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            }
+                        },
+                    };
+
+                    const myChart = new Chart(
+                        document.getElementById('myChart'), config
+                    );
                 </script>
-                <div class="d-flex justify-content-center">
-                    <div class="col">
-                        <div class="row justify-content-center">
-                            <a class="btn" th:href="@{/}" style="background-color: #b7a2ff">
-                                Line Chart Tahunan
-                            </a>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
