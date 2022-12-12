@@ -50,7 +50,7 @@ public class WebSecurityConfig {
                     .antMatchers("/pasien/").hasAnyAuthority("Admin")
                     .antMatchers("/pasien/delete/{uuid}").hasAnyAuthority("Admin")
 
-                    .antMatchers("/dokter/barchart").hasAnyAuthority("Admin")
+                    .antMatchers("/dokter/barchart").hasAnyAuthority("Admin", "admin")
                     .antMatchers("/chart/line/default").hasAnyAuthority("Admin", "admin")
 
 
