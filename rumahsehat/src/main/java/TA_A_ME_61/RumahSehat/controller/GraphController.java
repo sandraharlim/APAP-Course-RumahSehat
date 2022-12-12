@@ -23,7 +23,7 @@ public class GraphController {
     @Autowired
     private TagihanService tagihanService;
 
-    @GetMapping("/dokter/barchart")
+    @GetMapping("/dokter/barchart/pendapatan")
     public String barGraph(Model model){
         List<DokterModel> listDokter = dokterService.getListDokter();
         List<TagihanModel> listTagihan= tagihanService.getListTagihan();
