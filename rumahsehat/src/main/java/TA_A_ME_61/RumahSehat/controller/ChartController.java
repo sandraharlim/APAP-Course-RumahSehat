@@ -86,10 +86,13 @@ public class ChartController {
         }
         List<String> lstDokter = new ArrayList<String>(totalIncomeAllDokter.keySet());
         List<List<Integer>> lstIncome = new ArrayList<List<Integer>>(totalIncomeAllDokter.values());
+<<<<<<< HEAD
         System.out.println(lstIncome);
         System.out.println(lstIncome.size() + " size income");
         System.out.println(lstDokter);
         System.out.println(lstDokter.size() + " size dokter");
+=======
+>>>>>>> 6782a67656301fc87744e801d4288d42bc2f8e07
 
         if (lstIncome.size() < 5) {
             List<Integer> fillZero = Arrays.asList(0,0,0,0,0,0,0,0,0,0,0,0);
