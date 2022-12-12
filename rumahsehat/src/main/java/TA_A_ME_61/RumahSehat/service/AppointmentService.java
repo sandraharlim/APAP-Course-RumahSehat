@@ -8,6 +8,7 @@ import org.springframework.util.MultiValueMap;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 public interface AppointmentService {
     //    ========= method untuk fitur 7: view all appt ============
@@ -19,5 +20,8 @@ public interface AppointmentService {
     //    ========= method untuk fitur 8: detail appt ============
     AppointmentModel getAppointmentByKode(String kode);
     void finishAppointment(AppointmentModel appointment);
+
+    // ============= barchart total appt per dokter ==================
+    Map<String, Integer> getTotalApptDokters(List<DokterModel> listDokter);
 }
 

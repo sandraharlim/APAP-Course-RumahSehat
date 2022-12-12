@@ -40,16 +40,16 @@ class NavigationDrawer extends StatelessWidget {
                       builder: (context) => const ProfilePageState()));
             },
           ),
-          ListTile(
-            leading: Icon(Icons.attach_money_outlined),
-            title: Text('Saldo'),
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const ProfilePageState()));
-            },
-          ),
+          // ListTile(
+          //   leading: Icon(Icons.attach_money_outlined),
+          //   title: Text('Saldo'),
+          //   onTap: () {
+          //     Navigator.push(
+          //         context,
+          //         MaterialPageRoute(
+          //             builder: (context) => const ProfilePageState()));
+          //   },
+          // ),
           // ListTile(
           //   leading: Icon(Icons.attach_money_outlined),
           //   title: Text('Saldo'),

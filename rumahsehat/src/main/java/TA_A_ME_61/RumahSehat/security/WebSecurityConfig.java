@@ -37,14 +37,22 @@ public class WebSecurityConfig {
                     .antMatchers("/appointment/viewall").hasAnyAuthority("Admin","Dokter", "admin", "dokter")
                     .antMatchers("/appointment/view/{kode}").hasAnyAuthority("Admin","Dokter", "admin", "dokter")
                     .antMatchers("/appointment/finish").hasAnyAuthority("Dokter", "dokter")
-//                .antMatchers("/penyelenggara/add").hasAuthority("Manajer")
-//                .antMatchers("/user/viewall").hasAuthority("Admin")
-//                .antMatchers("/user/add").hasAuthority("Admin")
-//                .antMatchers("/dokter/viewall").hasAuthority("dokter")
-//                .antMatchers("/apoteker/viewall").hasAuthority("apoteker")
 
-//                .antMatchers("/user/delete").hasAuthority("Admin")
-//                .antMatchers("/penyelenggara/add").hasAuthority("Manajer")
+                    .antMatchers("/dokter/").hasAnyAuthority("Admin")
+                    .antMatchers("/dokter/add").hasAnyAuthority("Admin")
+                    .antMatchers("/dokter/update/{uuid}").hasAnyAuthority("Admin")
+                    .antMatchers("/dokter/delete/{uuid}").hasAnyAuthority("Admin")
+
+                    .antMatchers("/apoteker/").hasAnyAuthority("Admin")
+                    .antMatchers("/apoteker/add").hasAnyAuthority("Admin")
+                    .antMatchers("/apoteker/delete/{uuid}").hasAnyAuthority("Admin")
+
+                    .antMatchers("/pasien/").hasAnyAuthority("Admin")
+                    .antMatchers("/pasien/delete/{uuid}").hasAnyAuthority("Admin")
+
+                    .antMatchers("/dokter/barchart").hasAnyAuthority("Admin", "admin")
+
+
                     .anyRequest().authenticated()
                     .and()
                     .formLogin()
@@ -120,14 +128,15 @@ public class WebSecurityConfig {
                             .antMatchers("/api/appointment/viewall")
                             .antMatchers("/api/pasien/profile")
                             .antMatchers("/api/pasien/profile/update-saldo")
+                            //Cek apakah dibutuhkan
                             .antMatchers("/sign-up/pasien")
                             .antMatchers("/api/pasien/sign-up")
+                            .antMatchers("/api/pasien/tagihan")
+
                     )
                     // dont authenticate this particular request
                     .authorizeRequests().antMatchers("/authenticate").permitAll()
                     .antMatchers("/sign-up").permitAll()
-                    .antMatchers("/sign-up/pasien").permitAll()
-                    .antMatchers("/api/pasien/sign-up").permitAll()
 
                     // all other requests need to be authenticated
                     .anyRequest().authenticated().and()

@@ -1,5 +1,8 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:http/http.dart' as http;
+import 'package:rumahsehat_app/login_screen.dart';
 
 import 'package:provider/provider.dart';
 import 'package:rumahsehat_app/login_screen.dart';
@@ -13,6 +16,34 @@ class SignUpScreen extends StatefulWidget {
   State<StatefulWidget> createState() => InitState();
 }
 
+class Pasien {
+  late String email;
+  late String nama;
+  late String password;
+  // String role = "Pasien";
+  late String username;
+  // int saldo = 0;
+  late int umur;
+
+  Pasien(
+      {required this.email,
+      required this.nama,
+      required this.password,
+      // required this.role,
+      required this.username,
+      // required this.saldo,
+      required this.umur});
+
+  factory Pasien.fromJson(Map<String, dynamic> json) {
+    return Pasien(
+        email: json['email'],
+        nama: json['nama'],
+        password: json['password'],
+        username: json['username'],
+        umur: json['umur']);
+  }
+}
+
 class InitState extends State<SignUpScreen> {
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -24,7 +55,6 @@ class InitState extends State<SignUpScreen> {
   Widget build(BuildContext context) => initWidget();
 
   Widget initWidget() {
-
     return Scaffold(
         body: SingleChildScrollView(
             child: Column(
@@ -216,40 +246,15 @@ class InitState extends State<SignUpScreen> {
             ),
           ),
         ),
-        Container(
-          alignment: Alignment.center,
-          margin: EdgeInsets.only(left: 20, right: 20, top: 20),
-          padding: EdgeInsets.only(left: 20, right: 20),
-          height: 54,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(50),
-            color: Colors.grey[200],
-            boxShadow: const [
-              BoxShadow(
-                  offset: Offset(0, 10),
-                  blurRadius: 50,
-                  color: Color(0xffEEEEEE)),
-            ],
-          ),
-          child: TextField(
-            controller: ageController,
-            cursorColor: Color.fromARGB(255, 9, 3, 0),
-            decoration: InputDecoration(
-              icon: Icon(
-                Icons.person,
-                color: Color.fromARGB(255, 8, 2, 0),
-              ),
-              hintText: "Umur",
-              enabledBorder: InputBorder.none,
-              focusedBorder: InputBorder.none,
-            ),
-          ),
-        ),
         GestureDetector(
           onTap: () => Provider.of<Authentication>(context, listen: false)
-                  .signUp(emailController.text.toString(), usernameController.text.toString(),
-                          nameController.text.toString(), passwordController.text.toString(),
-                          ageController.text.toString()).then((value) => Navigator.pop(context)),
+              .signUp(
+                  emailController.text.toString(),
+                  usernameController.text.toString(),
+                  nameController.text.toString(),
+                  passwordController.text.toString(),
+                  ageController.text.toString())
+              .then((value) => Navigator.pop(context)),
           child: Container(
             alignment: Alignment.center,
             margin: EdgeInsets.only(left: 20, right: 20, top: 70),
