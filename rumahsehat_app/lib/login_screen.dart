@@ -43,8 +43,16 @@ class StartState extends State<LoginScreen> {
             children: [
               Container(
                 margin: EdgeInsets.only(top: 50),
+<<<<<<< HEAD
+                child: Image.asset(
+                  "images/19836-removebg-preview.png",
+                              height: 200,
+                              width: 250
+                ),
+=======
                 child: Image.asset("images/19836-removebg-preview.png",
                     height: 200, width: 250),
+>>>>>>> 90a5f0c71b4d0b8026a20290c5c23812d102b88b
               ),
               Container(
                 margin: EdgeInsets.only(right: 20, top: 20),
@@ -84,6 +92,14 @@ class StartState extends State<LoginScreen> {
               enabledBorder: InputBorder.none,
               focusedBorder: InputBorder.none,
             ),
+            validator: (text) {
+                if (text == null || text.isEmpty) {
+                  return 'username tidak boleh kosong';
+                } else if (text != usernameController.text.toString()) {
+                  return 'username salah';
+                }
+                return null;
+              }
           ),
         ),
         Container(
@@ -115,6 +131,14 @@ class StartState extends State<LoginScreen> {
               enabledBorder: InputBorder.none,
               focusedBorder: InputBorder.none,
             ),
+            validator: (text) {
+                if (text == null || text.isEmpty) {
+                  return 'password tidak boleh kosong';
+                } else if (text != passwordController.text.toString()) {
+                  return 'password salah';
+                }
+                return null;
+              }
           ),
         ),
         Container(

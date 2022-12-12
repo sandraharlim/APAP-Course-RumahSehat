@@ -64,8 +64,10 @@ public class WebSecurityConfig {
                     .logoutSuccessUrl("/login").permitAll();
         }
 
+
         @Autowired
         private PasswordEncoder passwordEncoder;
+
 
        @Autowired
        public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
