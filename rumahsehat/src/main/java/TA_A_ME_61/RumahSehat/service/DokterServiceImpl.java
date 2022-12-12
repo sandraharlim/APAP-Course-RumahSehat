@@ -1,6 +1,8 @@
 package TA_A_ME_61.RumahSehat.service;
 
+import TA_A_ME_61.RumahSehat.model.AppointmentModel;
 import TA_A_ME_61.RumahSehat.model.DokterModel;
+import TA_A_ME_61.RumahSehat.repository.AppointmentDb;
 import TA_A_ME_61.RumahSehat.repository.DokterDb;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -8,7 +10,9 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 
+import java.time.YearMonth;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,6 +22,9 @@ import java.util.Optional;
 public class DokterServiceImpl implements DokterService{
     @Autowired
     DokterDb dokterDb;
+
+    @Autowired
+    AppointmentDb appointmentDb;
 
     @Override
     public void addDokter(DokterModel dokter) {
@@ -85,6 +92,42 @@ public class DokterServiceImpl implements DokterService{
             listDokter.add(dokter);
         }
         return listDokter;
+    }
+
+    public List getPendapatanBulan(int bulan,int tahun, String username){
+        List<AppointmentModel> appointmentList = appointmentDb.findAllByDokter_UsernameAndIsDoneAndTagihan_IsPaid(username, true,true);
+        List<HashMap<String, Integer>> pendapatanDataRaw = new ArrayList<HashMap<String, Integer>>();
+        for (AppointmentModel appt : appointmentList){
+            if(appt.getTagihan().getTanggalBayar() != null && appt.getTagihan().getTanggalBayar().getMonthValue() == bulan
+                    && appt.getTagihan().getTanggalBayar().getYear() == tahun){
+                HashMap<String, Integer> tagihan = new HashMap<>();
+                tagihan.put("tanggal",appt.getTagihan().getTanggalBayar().getDayOfMonth());
+                tagihan.put("pendapatan",(appt.getDokter().getTarif()).intValue());
+                pendapatanDataRaw.add(tagihan);
+            }
+        }
+        List<HashMap<String, Integer>> pendapatanDataFinal = new ArrayList<HashMap<String, Integer>>();
+        for (int i = 1; i <= YearMonth.of(tahun, 2).lengthOfMonth(); i++){
+            int sum = 0;
+            for (HashMap<String, Integer> rawData : pendapatanDataRaw){
+                if (rawData.get("tanggal") == i){
+                    sum += rawData.get("pendapatan");
+                }
+            }
+            HashMap<String, Integer> datePendapatan = new HashMap<>();
+            datePendapatan.put("tanggal",i);
+            datePendapatan.put("pendapatan",sum);
+            pendapatanDataFinal.add(datePendapatan);
+        }
+
+        return pendapatanDataFinal;
+    }
+
+    public HashMap<String,String> getDokterName(String username){
+        Optional<DokterModel> doctor = Optional.ofNullable(dokterDb.findByUsername(username));
+        HashMap<String,String> map = new HashMap<>();
+        map.put("name",doctor.get().getNama());
+        return map;
     }
 
 }

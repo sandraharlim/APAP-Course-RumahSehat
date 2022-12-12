@@ -24,5 +24,9 @@ public interface AppointmentDb  extends JpaRepository<AppointmentModel, Long> {
     Optional<AppointmentModel> getAppointmentModelByKode(String kode);
 
     List<AppointmentModel> findAllByWaktuAwalBetween(LocalDateTime first, LocalDateTime last);
+
+    List<AppointmentModel> findAllByDokter_UuidAndIsDoneAndTagihan_IsPaid(String uuid, boolean isDone, boolean isPaid);
+
+    List<AppointmentModel> findAllByDokter_UsernameAndIsDoneAndTagihan_IsPaid(String username, boolean isDone, boolean isPaid);
 }
 
