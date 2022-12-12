@@ -69,7 +69,7 @@ public class AppointmentController {
         AppointmentModel appointment = appointmentService.getAppointmentByKode(kode);
         ResepModel resep = appointment.getResep();
         if (resep == null || // harus di konfirmasi dulu oleh dokter (ada pop up)
-            resep.getIsDone() ) { // resep udh dikonfirmasi by apoteker
+                resep.getIsDone() ) { // resep udh dikonfirmasi by apoteker
 
             model.addAttribute("appointment", appointment);
 
@@ -77,7 +77,7 @@ public class AppointmentController {
             TagihanModel tagihan = tagihanService.addTagihanByDokter(appointment);
             appointment.setTagihan(tagihan);
             appointmentService.finishAppointment(appointment);
-            
+
         } else {
             // Jika terdapat resep dari sebuah appointment dan resep tersebut belum dikonfirmasi oleh Apoteker,
             // maka Dokter tidak dapat menyelesaikan appointment.

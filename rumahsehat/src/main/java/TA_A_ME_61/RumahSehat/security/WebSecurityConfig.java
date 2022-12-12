@@ -123,6 +123,8 @@ public class WebSecurityConfig {
                             .antMatchers("/api/appointment/create")
                             .antMatchers("/api/appointment/viewall")
                             .antMatchers("/api/resep/detail/{id}")
+                            .antMatchers("/api/pasien/profile")
+                            .antMatchers("/api/pasien/profile/update-saldo")
                     )
                     // dont authenticate this particular request
                     .authorizeRequests().antMatchers("/authenticate").permitAll()
@@ -141,9 +143,3 @@ public class WebSecurityConfig {
         }
     }
 }
-
-
-
-
-
-

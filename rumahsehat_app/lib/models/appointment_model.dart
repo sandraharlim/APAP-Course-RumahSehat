@@ -1,4 +1,4 @@
-class Appointment {
+class AppointmentModel {
   late String kode;
   late String dokter;
   late String pasien;
@@ -6,7 +6,7 @@ class Appointment {
   late String status; // 'Sudah Selesai' or 'Belum Dimulai'
   late String resepId;
 
-  Appointment(
+  AppointmentModel(
       {required this.kode,
       required this.dokter,
       required this.pasien,
@@ -14,8 +14,8 @@ class Appointment {
       required this.status,
       required this.resepId});
 
-  factory Appointment.fromJson(Map<String, dynamic> json) {
-    return Appointment(
+  factory AppointmentModel.fromJson(Map<String, dynamic> json) {
+    return AppointmentModel(
         kode: json['kode'],
         dokter: json['dokter'],
         pasien: json['pasien'],
