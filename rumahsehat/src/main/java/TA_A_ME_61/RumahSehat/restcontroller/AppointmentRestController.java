@@ -35,12 +35,8 @@ public class AppointmentRestController {
     @Autowired
     private PasienService pasienService;
 
-    // @Autowired
-    // private AdminService adminService;
-
     @GetMapping("/doctors")
     public List<DokterDropdownItem> createAppointmentFlutter() {
-        System.out.println("masuk get dokter");
         List<DokterModel> listDokter = dokterService.getListDokter();
 
         List<DokterDropdownItem> dokterDropdownItems = appointmentRestService.getDokterDropdownItems(listDokter);

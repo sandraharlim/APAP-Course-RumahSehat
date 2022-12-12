@@ -8,6 +8,7 @@ import org.springframework.util.MultiValueMap;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 public interface AppointmentService {
     //    ========= method untuk fitur 7: view all appt ============
@@ -20,6 +21,8 @@ public interface AppointmentService {
     AppointmentModel getAppointmentByKode(String kode);
     void finishAppointment(AppointmentModel appointment);
 
+    // ============= chart ==================
+    Map<String, Integer> getTotalApptDokters(List<DokterModel> listDokter);
     List<AppointmentModel> getAllAptAnnual(LocalDateTime first, LocalDateTime last);
 }
 
