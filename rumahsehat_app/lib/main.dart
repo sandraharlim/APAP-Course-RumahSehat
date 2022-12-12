@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rumahsehat_app/login_screen.dart';
-import 'package:rumahsehat_app/models/appointment_pasien_card.dart';
-import 'package:rumahsehat_app/models/pasienmodel.dart';
 import 'package:rumahsehat_app/models/resep_detail.dart';
 import 'package:rumahsehat_app/profilepage.dart';
 import 'package:rumahsehat_app/providers/auth.dart';
 import 'appointment_index.dart';
 import 'navbar.dart';
 import 'appointment_form.dart';
-import 'package:rumahsehat_app/splash_screen.dart';
 
 void main() {
   runApp(MyApp());

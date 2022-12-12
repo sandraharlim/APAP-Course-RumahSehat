@@ -22,8 +22,7 @@ class _AppointmentViewAllState extends State<AppointmentViewAll> {
   Future<void> getData() async {
     String? token = Provider.of<Appointment>(context, listen: false).token;
 
-    // String url = "https://apap-061.cs.ui.ac.id/api/appointment/viewall";
-    String url = "http://10.0.2.2:8080/api/appointment/viewall";
+    String url = "https://apap-061.cs.ui.ac.id/api/appointment/viewall";
 
     try {
       final response = await http.get(Uri.parse(url),

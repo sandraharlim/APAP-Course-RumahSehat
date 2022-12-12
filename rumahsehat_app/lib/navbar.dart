@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rumahsehat_app/profilepage.dart';
 import 'package:rumahsehat_app/providers/auth.dart';
-import 'package:rumahsehat_app/saldoform.dart';
-import 'package:rumahsehat_app/splash_screen.dart';
 import 'appointment_form.dart';
 import 'appointment_index.dart';
 import 'main.dart';
@@ -42,7 +40,6 @@ class NavigationDrawer extends StatelessWidget {
           ),
           ExpansionTile(
             title: Text("Appointment"),
-            // leading: FaIcon(FontAwesomeIcons.syringe),
             leading: Icon(Icons.calendar_today_sharp),
             children: <Widget>[
               ListTile(

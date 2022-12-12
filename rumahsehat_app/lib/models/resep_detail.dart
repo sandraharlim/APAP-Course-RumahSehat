@@ -28,13 +28,11 @@ class ResepDetail extends StatefulWidget {
 class _ResepDetailState extends State<ResepDetail> {
   late Future<Resep> resep;
   String token_prefix = "Bearer ";
-  // String token = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwYXNpZW4xIiwiZXhwIjoxNjcwODMyODYwLCJpYXQiOjE2NzA4MTQ4NjB9.8jvhkT2GFXi6HA_Bpsl-gb1SLNL0tl44clXeJOnR0xRxd_Os0ZoVXc3nSgcaHDrGN20MDQKD45n3zd2E2za7mw"; //isi tokennya
 
   Future<Resep> getResep() async {
     String? token = Provider.of<ResepT>(context, listen: false).token;
 
-    // String url = "https://apap-061.cs.ui.ac.id/api/appointment/viewall";
-    String url = "http://10.0.2.2:8080/api/resep/detail/" + widget.appointment.resepId;
+    String url = "https://apap-061.cs.ui.ac.id/api/resep/detail/" + widget.appointment.resepId;
 
     final response = await http.get(Uri.parse(url),
         headers: {"Authorization": (token_prefix + token!)});
