@@ -33,7 +33,7 @@ public class ChartController {
         model.addAttribute("pendapatan", chartService.getIncome(listAppointment));
         model.addAttribute("tahun", date.getYear());
 
-        return "linechart_default";
+        return "linechart-default";
     }
 
 }
