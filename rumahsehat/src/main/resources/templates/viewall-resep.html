@@ -10,7 +10,7 @@
 
 </head>
 <body>
-<nav th:replace="fragments/fragment :: navbar (${'/resep'})"></nav>
+<nav th:replace="fragments/fragment :: navbar (${'resep'})"></nav>
 <div class="container">
     <div class="card m-4 p-4">
         <div class="card-body">
@@ -33,9 +33,9 @@
                             th:style="${iterationStatus.even} ? 'font-weight:bold;'">
                             <td th:text="${iterationStatus.count}"></td>
                             <td th:text="${resep.id}"></td>
-                            <td class="col-md-3" th:text="${#temporals.format(resep.createdAt, 'dd MMMM yyyy HH:mm')}"></td>
+                            <td class="col-md-3" th:text="${#temporals.format(resep.createdAt, 'dd MMMM yyyy || HH:mm')}"></td>
                             <td class="text-center">
-                                <a class="btn btn-outline-info" th:href="@{#}">See Details</a>
+                                <a class="btn btn-outline-info" th:href="@{/resep/detail/} + ${resep.id}" >See Details</a>
                             </td>
                         </tr>
                         </tbody>

@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -17,13 +16,6 @@ public class TagihanController {
     @Autowired
     private TagihanService tagihanService;
 
-//    @GetMapping("/tagihan/viewall/{uuid}")
-//    public String listTagihan(@PathVariable String uuid, Model model){
-//        List<TagihanModel> listTagihan = tagihanService.getListTagihanByUuid(uuid);
-//
-//        model.addAttribute("listTagihan",listTagihan);
-//        return "viewall-tagihan";
-//    }
 
     @GetMapping("/tagihan/viewall")
     public String listTagihan(Model model){

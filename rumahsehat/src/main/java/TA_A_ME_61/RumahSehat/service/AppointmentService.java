@@ -3,8 +3,6 @@ package TA_A_ME_61.RumahSehat.service;
 import TA_A_ME_61.RumahSehat.model.AppointmentModel;
 import TA_A_ME_61.RumahSehat.model.DokterModel;
 import TA_A_ME_61.RumahSehat.model.PasienModel;
-import TA_A_ME_61.RumahSehat.restmodel.DokterDropdownItem;
-import org.springframework.util.MultiValueMap;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -20,6 +18,10 @@ public interface AppointmentService {
     //    ========= method untuk fitur 8: detail appt ============
     AppointmentModel getAppointmentByKode(String kode);
     void finishAppointment(AppointmentModel appointment);
+
+
+    //    ========= method untuk fitur 11: detail resep ============
+    void addAppointment(AppointmentModel appointment);
 
     // ============= chart ==================
     Map<String, Integer> getTotalApptDokters(List<DokterModel> listDokter);

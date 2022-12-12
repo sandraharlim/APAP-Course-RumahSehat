@@ -10,15 +10,11 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-
-import static io.netty.util.CharsetUtil.encoder;
 
 @Configuration
 @EnableWebSecurity
@@ -37,6 +33,11 @@ public class WebSecurityConfig {
                     .antMatchers("/appointment/viewall").hasAnyAuthority("Admin","Dokter", "admin", "dokter")
                     .antMatchers("/appointment/view/{kode}").hasAnyAuthority("Admin","Dokter", "admin", "dokter")
                     .antMatchers("/appointment/finish").hasAnyAuthority("Dokter", "dokter")
+                    .antMatchers("/resep/create/{idAppointment}").hasAnyAuthority("Dokter", "dokter")
+                    .antMatchers("/resep").hasAnyAuthority("Admin","Apoteker","admin","apoteker")
+                    .antMatchers("/resep/detail/{id}").hasAnyAuthority("Admin","Apoteker","admin","apoteker", "Dokter", "dokter")
+                    .antMatchers("/resep/confirmation").hasAnyAuthority("Apoteker","apoteker")
+                    .antMatchers("/appointment/finish").hasAnyAuthority("Dokter", "dokter")
 
                     .antMatchers("/dokter/").hasAnyAuthority("Admin")
                     .antMatchers("/dokter/add").hasAnyAuthority("Admin")
@@ -53,7 +54,6 @@ public class WebSecurityConfig {
                     .antMatchers("/dokter/barchart").hasAnyAuthority("Admin", "admin")
                     .antMatchers("/chart/line/default").hasAnyAuthority("Admin", "admin")
 
-
                     .anyRequest().authenticated()
                     .and()
                     .formLogin()
@@ -63,16 +63,8 @@ public class WebSecurityConfig {
                     .logoutSuccessUrl("/login").permitAll();
         }
 
-        // @Autowired
-        // private UserDetailsService userDetailsService;
-
         @Autowired
         private PasswordEncoder passwordEncoder;
-
-        // @Autowired
-        // public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
-        //     auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
-        // }
 
        @Autowired
        public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
@@ -96,16 +88,9 @@ public class WebSecurityConfig {
         @Autowired
         private JwtRequestFilter jwtRequestFilter;
 
-    // @Autowired
-    // public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
-    //     auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
-    // }
 
         @Autowired
         public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-            // configure AuthenticationManager so that it knows from where to load
-            // user for matching credentials
-            // Use BCryptPasswordEncoder
             auth.userDetailsService(jwtUserDetailsService).passwordEncoder(encoder);
         }
 
@@ -127,6 +112,7 @@ public class WebSecurityConfig {
                             .antMatchers("/api/appointment/doctors")
                             .antMatchers("/api/appointment/create")
                             .antMatchers("/api/appointment/viewall")
+                            .antMatchers("/api/resep/detail/{id}")
                             .antMatchers("/api/pasien/profile")
                             .antMatchers("/api/pasien/profile/update-saldo")
                             //Cek apakah dibutuhkan
@@ -135,19 +121,14 @@ public class WebSecurityConfig {
                             .antMatchers("/api/pasien/tagihan")
 
                     )
-                    // dont authenticate this particular request
                     .authorizeRequests().antMatchers("/authenticate").permitAll()
                     .antMatchers("/sign-up").permitAll()
 
-                    // all other requests need to be authenticated
                     .anyRequest().authenticated().and()
 
-                    // make sure we use stateless session; session won't be used to
-                    // store user's state.
                     .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement()
                     .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-            // Add a filter to validate the tokens with every request
             httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
         }
     }

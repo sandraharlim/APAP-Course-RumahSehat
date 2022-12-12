@@ -33,8 +33,7 @@ class ProfilePage extends State<ProfilePageState> {
   Future<Pasien> fetchPasien() async {
     String? token = Provider.of<PasienNotifier>(context, listen: false).token;
     token_pass = token!;
-    // String url = 'https://apap-061.cs.ui.ac.id/api/pasien/profile';
-    String url = 'http://10.0.2.2:8080/api/pasien/profile';
+    String url = 'https://apap-061.cs.ui.ac.id/api/pasien/profile';
 
     final response = await http.get(Uri.parse(url), headers: <String, String>{
       "Authorization": (token_prefix + token_pass),
