@@ -53,6 +53,7 @@ public class WebSecurityConfig {
 
                     .antMatchers("/dokter/barchart").hasAnyAuthority("Admin", "admin")
                     .antMatchers("/chart/line/default").hasAnyAuthority("Admin", "admin")
+                    .antMatchers("/chart/line/tahunan").hasAnyAuthority("Admin", "admin")
 
                     .anyRequest().authenticated()
                     .and()
