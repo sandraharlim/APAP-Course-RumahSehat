@@ -32,3 +32,9 @@ spring:
   web:
     resources:
       static-locations: file:src/main/resources/static/
+
+jwt:
+  secret: apap
+  get:
+    token:
+      uri: /authenticate
