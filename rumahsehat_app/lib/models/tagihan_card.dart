@@ -12,15 +12,6 @@ class TagihanCard extends StatefulWidget {
 }
 
 class _TagihanCardState extends State<TagihanCard> {
-  Future<void> details() async {
-    String url = "";
-    try {
-      final response = await http.get(Uri.parse(url));
-    } catch (p) {
-      print(p);
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Card(

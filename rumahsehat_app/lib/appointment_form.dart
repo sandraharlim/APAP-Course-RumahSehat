@@ -9,7 +9,6 @@ import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'dart:convert';
-import 'dart:collection';
 
 import 'navbar.dart';
 
@@ -39,22 +38,13 @@ class _AppointmentFormState extends State<AppointmentForm> {
   Future<void> getListOfDokter() async {
     String? token = Provider.of<Appointment>(context, listen: false).token;
 
-    // web server beneran
-    // const url = 'https://apap-061.cs.ui.ac.id/api/appointment/doctors';
+    const url = 'https://apap-061.cs.ui.ac.id/api/appointment/doctors';
 
-    // localhost yg bisa diakses dr emulator
-    const url = 'http://10.0.2.2:8080/api/appointment/doctors';
-
-    // mock server
-    // const url =
-    //     'https://22202f32-174d-4a73-abb7-98e3816b7709.mock.pstmn.io/api/appointment/doctors-flutter';
     try {
       final response = await http.get(Uri.parse(url),
           headers: {"Authorization": (token_prefix + token!)});
 
       List<dynamic> data = jsonDecode(response.body);
-
-      print(data);
 
       listNamaTarif = [];
       correspondingUuid = {};

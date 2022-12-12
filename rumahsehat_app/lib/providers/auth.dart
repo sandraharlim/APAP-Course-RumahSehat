@@ -1,5 +1,4 @@
 import 'dart:convert';
-// import 'dart:ffi';
 
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
@@ -22,7 +21,7 @@ class Authentication with ChangeNotifier {
   }
 
   Future<void> login(String? username, String? password) async {
-    Uri url = Uri.parse('http://10.0.2.2:8080/authenticate');
+    Uri url = Uri.parse('https://apap-061.cs.ui.ac.id/authenticate');
     var response = await http.post(url,
         headers: {"Content-Type": "application/json"},
         body: json.encode({"username": username, "password": password}));
@@ -33,7 +32,7 @@ class Authentication with ChangeNotifier {
   }
 
   Future<void> signUp(String? email, String? username, String? nama, String? password, String? umur) async {
-    Uri url = Uri.parse('http://10.0.2.2:8080/sign-up');
+    Uri url = Uri.parse('https://apap-061.cs.ui.ac.id/sign-up');
     var response = await http.post(url,
         headers: {"Content-Type": "application/json"},
         body: json.encode({

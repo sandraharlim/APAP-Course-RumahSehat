@@ -31,6 +31,15 @@ public class TagihanServiceImpl implements TagihanService{
     }
 
     @Override
+    public void addTagihan(TagihanModel tagihan) {
+        tagihanDb.save(tagihan);
+    }
+
+    @Override
+    public TagihanModel getTagihanById(Long id) {
+        return tagihanDb.findById(id).orElse(null);
+    }
+    
     public TagihanModel addTagihanByDokter(AppointmentModel appointment) {
         // TODO Auto-generated method stub
         DokterModel dokter = appointment.getDokter();

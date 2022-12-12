@@ -19,8 +19,6 @@ import java.util.Set;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
-    // ini langsung buat impl nya karena service interfacenya udh ada
-    // dr bawaan spring, yg implements itu.
     @Autowired
     private DokterDb dokterDb;
 

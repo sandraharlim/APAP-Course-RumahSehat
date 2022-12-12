@@ -8,11 +8,10 @@ import java.util.List;
 
 public interface TagihanService {
     List<TagihanModel> getListTagihan();
+    void addTagihan(TagihanModel tagihan);
+    TagihanModel getTagihanById(Long id);
     TagihanModel addTagihanByDokter(AppointmentModel appointment);
     TagihanModel getTagihanByKode(String kode);
     Boolean bayarTagihan(TagihanModel tagihan, PasienModel pasien);
-
-//    List<TagihanModel> getListTagihanByUuid(String uuid);
-
 
 }

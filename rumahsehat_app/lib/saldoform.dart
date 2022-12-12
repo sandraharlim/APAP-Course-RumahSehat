@@ -20,13 +20,10 @@ class FormSaldoState extends State<FormSaldo> {
   String token_prefix = "Bearer ";
 
   Future<Pasien> fetchPasien() async {
-    // String url = "https://apap-061.cs.ui.ac.id/api/pasien/profile";
-
-    String url = 'http://10.0.2.2:8080/api/pasien/profile';
+    String url = 'https://apap-061.cs.ui.ac.id/api/pasien/profile';
 
     final response = await http.get(Uri.parse(url), headers: <String, String>{
       "Authorization": (token_prefix + jwtToken),
-      // "Content-Type": "application/json;charset=UTF-8"
     });
     if (response.statusCode == 200) {
       var data = json.decode(response.body);
@@ -38,8 +35,7 @@ class FormSaldoState extends State<FormSaldo> {
   }
 
   void updateSaldo(int saldo) async {
-    // String url = "https://apap-061.cs.ui.ac.id/api/pasien/profile/update-saldo";
-    String url = 'http://10.0.2.2:8080/api/pasien/profile/update-saldo';
+    String url = "https://apap-061.cs.ui.ac.id/api/pasien/profile/update-saldo";
     final response = await http.put(
       Uri.parse(url),
       headers: {
@@ -53,7 +49,6 @@ class FormSaldoState extends State<FormSaldo> {
     );
     if (response.statusCode == 200) {
       print("Success!");
-      // return Pasien.fromJson(jsonDecode(response.body));
     } else {
       throw Exception('Failed Top Up Saldo');
     }

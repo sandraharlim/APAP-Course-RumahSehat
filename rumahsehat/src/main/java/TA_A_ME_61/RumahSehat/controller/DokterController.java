@@ -86,4 +86,11 @@ public class DokterController {
 
     }
 
+    @GetMapping("/dokter/chart/lineBulanan")
+    public String linePendapatan(Model model) {
+        List<DokterModel> listDokter = dokterService.getListDokter();
+        model.addAttribute("listDokter", listDokter);
+        return "line-pendapatan-bulanan";
+    }
+
 }

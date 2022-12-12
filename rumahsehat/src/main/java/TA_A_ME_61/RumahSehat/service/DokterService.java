@@ -19,5 +19,4 @@ public interface DokterService {
 
     DokterModel getDokterByUsername(String username);
 
-
 }

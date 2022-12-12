@@ -1,8 +1,6 @@
 package TA_A_ME_61.RumahSehat.controller;
 
-import TA_A_ME_61.RumahSehat.model.JumlahModel;
 import TA_A_ME_61.RumahSehat.model.ObatModel;
-import TA_A_ME_61.RumahSehat.model.ResepModel;
 import TA_A_ME_61.RumahSehat.service.JumlahService;
 import TA_A_ME_61.RumahSehat.service.ObatService;
 import TA_A_ME_61.RumahSehat.service.ResepService;
@@ -12,7 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
