@@ -11,7 +11,4 @@ public interface TagihanService {
     TagihanModel getTagihanById(Long id);
     TagihanModel addTagihanByDokter(AppointmentModel appointment);
 
-//    List<TagihanModel> getListTagihanByUuid(String uuid);
-
-
 }

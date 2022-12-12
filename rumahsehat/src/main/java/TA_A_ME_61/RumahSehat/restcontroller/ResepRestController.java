@@ -2,7 +2,6 @@ package TA_A_ME_61.RumahSehat.restcontroller;
 
 import TA_A_ME_61.RumahSehat.model.JumlahModel;
 import TA_A_ME_61.RumahSehat.model.ResepModel;
-import TA_A_ME_61.RumahSehat.restmodel.JumlahRestModel;
 import TA_A_ME_61.RumahSehat.restmodel.ResepRestModel;
 import TA_A_ME_61.RumahSehat.service.ResepService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,11 +15,12 @@ import org.springframework.web.server.ResponseStatusException;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/resep")
 public class ResepRestController {
@@ -59,9 +59,11 @@ public class ResepRestController {
             resepGet.setApoteker(apoteker);
             resepGet.setJumlah(jumlah);
 
+            log.info("User berhasil melihat detail resepnya");
             return resepGet;
         }
         catch (NoSuchElementException e){
+            log.info("User tidak berhasil melihat detail resepnya");
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "ID Resep " + id + " not found");
         }
     }

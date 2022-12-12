@@ -65,7 +65,6 @@ public class AppointmentController {
 
     @PostMapping("/finish/{kode}")
     private String finishAppointment(@PathVariable String kode, Model model){
-        System.out.println(kode);
         AppointmentModel appointment = appointmentService.getAppointmentByKode(kode);
         ResepModel resep = appointment.getResep();
         if (resep == null || // harus di konfirmasi dulu oleh dokter (ada pop up)

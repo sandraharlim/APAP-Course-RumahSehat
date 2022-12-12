@@ -12,14 +12,6 @@ import java.util.Optional;
 
 @Repository
 public interface AppointmentDb  extends JpaRepository<AppointmentModel, Long> {
-//    Optional<CourseModel> findByCode(String code);
-//
-//    @Query("SELECT c FROM CourseModel c WHERE c.code = :code")
-//    Optional<CourseModel> findByCodeUsingQuery(@Param("code") String code);
-//
-//    @Query("SELECT c FROM CourseModel c ORDER BY c.nameCourse")
-//    List<CourseModel> findAllSorted();
-
     @Query("SELECT a FROM AppointmentModel a ORDER BY a.isDone")
     List<AppointmentModel> findAll();
 
@@ -28,9 +20,6 @@ public interface AppointmentDb  extends JpaRepository<AppointmentModel, Long> {
 
     @Query("SELECT a FROM AppointmentModel a WHERE a.pasien.uuid = :uuid ORDER BY a.isDone")
     List<AppointmentModel> findAllByPasien(@Param("uuid") String uuid);
-
-//    @Query("SELECT a FROM AppointmentModel a WHERE a.dokter.uuid = :uuid AND a.waktuAwal.getYear() = :year AND a.waktuAwal.getDayOfYear() = :dayOfYear")
-//    List<AppointmentModel> findAllByDokterAndDate(@Param("uuid") String uuid, @Param("year") int year, @Param("dayOfYear") int dayOfYear);
 
     Optional<AppointmentModel> getAppointmentModelByKode(String kode);
 

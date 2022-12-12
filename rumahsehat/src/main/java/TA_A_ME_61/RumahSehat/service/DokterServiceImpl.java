@@ -1,6 +1,5 @@
 package TA_A_ME_61.RumahSehat.service;
 
-import TA_A_ME_61.RumahSehat.model.AdminModel;
 import TA_A_ME_61.RumahSehat.model.DokterModel;
 import TA_A_ME_61.RumahSehat.repository.DokterDb;
 import org.springframework.beans.factory.annotation.Autowired;

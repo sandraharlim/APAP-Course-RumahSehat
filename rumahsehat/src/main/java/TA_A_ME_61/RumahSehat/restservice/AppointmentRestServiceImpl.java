@@ -2,7 +2,6 @@ package TA_A_ME_61.RumahSehat.restservice;
 
 import TA_A_ME_61.RumahSehat.model.AppointmentModel;
 import TA_A_ME_61.RumahSehat.model.DokterModel;
-import TA_A_ME_61.RumahSehat.model.PasienModel;
 import TA_A_ME_61.RumahSehat.repository.AppointmentDb;
 import TA_A_ME_61.RumahSehat.restmodel.AppointmentRestModel;
 import TA_A_ME_61.RumahSehat.restmodel.DokterDropdownItem;
@@ -10,8 +9,6 @@ import TA_A_ME_61.RumahSehat.service.DokterService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
@@ -19,7 +16,6 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional
