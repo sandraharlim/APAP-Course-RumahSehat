@@ -137,7 +137,7 @@ class _AppointmentFormState extends State<AppointmentForm> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('Create Appointment'),
+        title: const Text('Create Appointment'),
       ),
       drawer: const NavigationDrawer(),
       body: Form(
@@ -153,8 +153,8 @@ class _AppointmentFormState extends State<AppointmentForm> {
                 Column(
                   children: <Widget>[
                     Padding(
-                      padding: EdgeInsets.fromLTRB(0, 30, 0, 0),
-                      child: Text(
+                      padding: const EdgeInsets.fromLTRB(0, 30, 0, 0),
+                      child: const Text(
                         'Choose Date',
                         style: TextStyle(
                             fontStyle: FontStyle.italic,
@@ -169,11 +169,11 @@ class _AppointmentFormState extends State<AppointmentForm> {
                       child: Container(
                         width: _width / 1.7,
                         height: _height / 9,
-                        margin: EdgeInsets.only(top: 20),
+                        margin: const EdgeInsets.only(top: 20),
                         alignment: Alignment.center,
                         decoration: BoxDecoration(color: Colors.grey[200]),
                         child: TextFormField(
-                          style: TextStyle(fontSize: 40),
+                          style: const TextStyle(fontSize: 40),
                           textAlign: TextAlign.center,
                           enabled: false,
                           keyboardType: TextInputType.text,
@@ -183,7 +183,7 @@ class _AppointmentFormState extends State<AppointmentForm> {
                             print(val);
                             print(_setDate);
                           },
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                               disabledBorder: UnderlineInputBorder(
                                   borderSide: BorderSide.none),
                               // labelText: 'Time',
@@ -195,9 +195,10 @@ class _AppointmentFormState extends State<AppointmentForm> {
                 ),
                 Column(
                   children: <Widget>[
+                    // ignore: prefer_const_constructors
                     Padding(
-                      padding: EdgeInsets.fromLTRB(0, 30, 0, 0),
-                      child: Text(
+                      padding: const EdgeInsets.fromLTRB(0, 30, 0, 0),
+                      child: const Text(
                         'Choose Time',
                         style: TextStyle(
                             fontStyle: FontStyle.italic,
@@ -210,13 +211,13 @@ class _AppointmentFormState extends State<AppointmentForm> {
                         _selectTime(context);
                       },
                       child: Container(
-                        margin: EdgeInsets.only(top: 20),
+                        margin: const EdgeInsets.only(top: 20),
                         width: _width / 1.7,
                         height: _height / 9,
                         alignment: Alignment.center,
                         decoration: BoxDecoration(color: Colors.grey[200]),
                         child: TextFormField(
-                          style: TextStyle(fontSize: 40),
+                          style: const TextStyle(fontSize: 40),
                           textAlign: TextAlign.center,
                           onSaved: (val) {
                             _setTime = val!;
@@ -226,7 +227,7 @@ class _AppointmentFormState extends State<AppointmentForm> {
                           enabled: false,
                           keyboardType: TextInputType.text,
                           controller: _timeController,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                               disabledBorder: UnderlineInputBorder(
                                   borderSide: BorderSide.none),
                               // labelText: 'Time',
@@ -238,9 +239,10 @@ class _AppointmentFormState extends State<AppointmentForm> {
                 ),
                 Column(
                   children: <Widget>[
+                    // ignore: prefer_const_constructors
                     Padding(
-                      padding: EdgeInsets.fromLTRB(0, 30, 0, 0),
-                      child: Text(
+                      padding: const EdgeInsets.fromLTRB(0, 30, 0, 0),
+                      child: const Text(
                         'Choose Doctor',
                         style: TextStyle(
                             fontStyle: FontStyle.italic,
@@ -249,7 +251,7 @@ class _AppointmentFormState extends State<AppointmentForm> {
                       ),
                     ),
                     Padding(
-                        padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
+                        padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
                         child: DropdownButton<String>(
                           value: selectedNamaTarif,
                           isDense: true,
@@ -259,7 +261,7 @@ class _AppointmentFormState extends State<AppointmentForm> {
                               value: val,
                               child: Text(
                                 val,
-                                style: TextStyle(fontSize: 20),
+                                style: const TextStyle(fontSize: 20),
                               ),
                             );
                           }).toList(),
@@ -272,7 +274,7 @@ class _AppointmentFormState extends State<AppointmentForm> {
                   ],
                 ),
                 Padding(
-                  padding: EdgeInsets.only(top: 40.0),
+                  padding: const EdgeInsets.only(top: 40.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -290,7 +292,7 @@ class _AppointmentFormState extends State<AppointmentForm> {
                             )),
                       ),
                       Padding(
-                        padding: EdgeInsets.only(left: 20.0),
+                        padding: const EdgeInsets.only(left: 20.0),
                         child: ElevatedButton(
                           child: const Text(
                             "Submit",
@@ -327,8 +329,7 @@ class _AppointmentFormState extends State<AppointmentForm> {
   Future<void> submitForm() async {
     String? token = Provider.of<Appointment>(context, listen: false).token;
 
-    // const urlPost = "https://apap-061.cs.ui.ac.id/api/appointment/create";
-    const urlPost = "http://10.0.2.2:8080/api/appointment/create";
+    const urlPost = "https://apap-061.cs.ui.ac.id/api/appointment/create";
     try {
       final response = await http.post(Uri.parse(urlPost),
           body: jsonEncode({

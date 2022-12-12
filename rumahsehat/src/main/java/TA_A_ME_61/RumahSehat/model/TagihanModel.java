@@ -36,7 +36,7 @@ public class TagihanModel implements Serializable {
     @Column(name = "jumlahTagihan", nullable = false)
     private Long jumlahTagihan;
 
-    @OneToOne(cascade = CascadeType.ALL) // blom atur cardinality
+    @OneToOne(cascade = CascadeType.ALL) 
     private AppointmentModel appointment;
 
 }

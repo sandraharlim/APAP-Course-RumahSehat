@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 
-import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -92,35 +91,6 @@ public class DokterServiceImpl implements DokterService{
             listDokter.add(dokter);
         }
         return listDokter;
-    }
-
-    public List getPendapatanBulan(int bulan,int tahun, String username){
-        List<AppointmentModel> appointmentList = appointmentDb.findAllByDokter_UsernameAndIsDoneAndTagihan_IsPaid(username, true,true);
-        List<HashMap<String, Integer>> pendapatanDataRaw = new ArrayList<HashMap<String, Integer>>();
-        for (AppointmentModel appt : appointmentList){
-            if(appt.getTagihan().getTanggalBayar() != null && appt.getTagihan().getTanggalBayar().getMonthValue() == bulan
-                    && appt.getTagihan().getTanggalBayar().getYear() == tahun){
-                HashMap<String, Integer> tagihan = new HashMap<>();
-                tagihan.put("tanggal",appt.getTagihan().getTanggalBayar().getDayOfMonth());
-                tagihan.put("pendapatan",(appt.getDokter().getTarif()).intValue());
-                pendapatanDataRaw.add(tagihan);
-            }
-        }
-        List<HashMap<String, Integer>> pendapatanDataFinal = new ArrayList<HashMap<String, Integer>>();
-        for (int i = 1; i <= YearMonth.of(tahun, 2).lengthOfMonth(); i++){
-            int sum = 0;
-            for (HashMap<String, Integer> rawData : pendapatanDataRaw){
-                if (rawData.get("tanggal") == i){
-                    sum += rawData.get("pendapatan");
-                }
-            }
-            HashMap<String, Integer> datePendapatan = new HashMap<>();
-            datePendapatan.put("tanggal",i);
-            datePendapatan.put("pendapatan",sum);
-            pendapatanDataFinal.add(datePendapatan);
-        }
-
-        return pendapatanDataFinal;
     }
 
     public HashMap<String,String> getDokterName(String username){
