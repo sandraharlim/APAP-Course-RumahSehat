@@ -8,11 +8,17 @@
   <!-- Optional theme -->
   <link rel="stylesheet"
         href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" />
-    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
-    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+
+  <title>Rumah Sehat</title>
+  <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+  <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+        type="text/css"/>
+  <link rel="stylesheet" th:href="@{/css/style.css}"/>
+
 </head>
 <body>
-    <nav th:replace="fragments/fragment :: navbar (${'/barchart'})"></nav>
+<nav th:replace="fragments/fragment :: navbar('chart')"></nav>
 <div class="container">
   <h2 align="center">Graph Total Appointment Setiap Dokter yg Dipilih</h2>
 
@@ -22,8 +28,7 @@
 <script
         src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <!-- Latest compiled and minified JavaScript -->
-<script
-        src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
 <script th:inline="javascript">
