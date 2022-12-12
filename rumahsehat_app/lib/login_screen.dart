@@ -84,6 +84,14 @@ class StartState extends State<LoginScreen> {
               enabledBorder: InputBorder.none,
               focusedBorder: InputBorder.none,
             ),
+            validator: (text) {
+                if (text == null || text.isEmpty) {
+                  return 'username tidak boleh kosong';
+                } else if (text != usernameController.text.toString()) {
+                  return 'username salah';
+                }
+                return null;
+              }
           ),
         ),
         Container(
@@ -113,6 +121,14 @@ class StartState extends State<LoginScreen> {
               enabledBorder: InputBorder.none,
               focusedBorder: InputBorder.none,
             ),
+            validator: (text) {
+                if (text == null || text.isEmpty) {
+                  return 'password tidak boleh kosong';
+                } else if (text != passwordController.text.toString()) {
+                  return 'password salah';
+                }
+                return null;
+              }
           ),
         ),
         Container(

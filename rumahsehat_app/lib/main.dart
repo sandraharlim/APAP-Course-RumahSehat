@@ -46,6 +46,11 @@ class MyHomePage extends StatelessWidget {
                 },
                 child: Container(
                   decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image:
+                          AssetImage('images/TaeAugust11-removebg-preview/png'),
+                      fit: BoxFit.fill,
+                    ),
                     borderRadius: BorderRadius.circular(20),
                     color: Color.fromARGB(255, 119, 176, 233),
                   ),
