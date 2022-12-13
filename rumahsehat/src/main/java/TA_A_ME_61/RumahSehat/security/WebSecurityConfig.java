@@ -37,7 +37,7 @@ public class WebSecurityConfig {
                     .antMatchers("/resep").hasAnyAuthority("Admin","Apoteker","admin","apoteker")
                     .antMatchers("/resep/detail/{id}").hasAnyAuthority("Admin","Apoteker","admin","apoteker", "Dokter", "dokter")
                     .antMatchers("/resep/confirmation").hasAnyAuthority("Apoteker","apoteker")
-                    .antMatchers("/appointment/finish").hasAnyAuthority("Dokter", "dokter")
+                    .antMatchers("/appointment/finish/{kode}").hasAnyAuthority("Dokter", "dokter")
 
                     .antMatchers("/dokter/").hasAnyAuthority("Admin")
                     .antMatchers("/dokter/add").hasAnyAuthority("Admin")
