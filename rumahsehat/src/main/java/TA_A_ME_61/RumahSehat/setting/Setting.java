@@ -1,7 +1,7 @@
 package TA_A_ME_61.RumahSehat.setting;
 
 public class Setting {
-    final public static String CLIENT_BASE_URL = "http://localhost:8080";
+    final public static String CLIENT_BASE_URL = "https://apap-061.cs.ui.ac.id";
     final public static String CLIENT_LOGIN = CLIENT_BASE_URL + "/validate-ticket";
     final public static String CLIENT_LOGOUT = CLIENT_BASE_URL + "/logout";
 
