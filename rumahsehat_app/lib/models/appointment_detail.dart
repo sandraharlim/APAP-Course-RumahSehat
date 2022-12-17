@@ -82,7 +82,7 @@ class _AppointmentDetailState extends State<AppointmentDetail> {
                           borderRadius: BorderRadius.all(Radius.circular(5)),
                         )),
                   )
-                : Text(""), // blom ada resep
+                : const Text(""), // blom ada resep
           ])),
         )));
   }

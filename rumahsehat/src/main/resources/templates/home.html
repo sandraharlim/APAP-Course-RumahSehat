@@ -35,11 +35,17 @@
         </div>
 
         <div class="box" sec:authorize="hasAuthority('Admin')"
+             onclick="location.href='/pasien/'">
+            <img src="https://i.ibb.co/xsWY6st/doctor-1-removebg-preview.png">
+            <h3>Lihat Daftar Pasien</h3>
+        </div>
+
+        <div class="box" sec:authorize="hasAuthority('Admin')"
              onclick="location.href='/apoteker/add/'">
             <img src="https://i.ibb.co/Ss9xCXg/pharmacy-2-removebg-preview.png">
             <h3>Tambah Apoteker</h3>
         </div>
-
+        
         <div class="box" sec:authorize="hasAuthority('Admin')"
              onclick="location.href='/apoteker/'">
             <img src="https://i.ibb.co/Ss9xCXg/pharmacy-2-removebg-preview.png">

@@ -17,6 +17,7 @@ class AppointmentViewAll extends StatefulWidget {
 
 class _AppointmentViewAllState extends State<AppointmentViewAll> {
   List<AppointmentModel> listAppointment = [];
+  // ignore: non_constant_identifier_names
   String token_prefix = "Bearer ";
 
   Future<void> getData() async {
@@ -40,14 +41,14 @@ class _AppointmentViewAllState extends State<AppointmentViewAll> {
         listAppointment = listAppointmentFromServer;
       });
     } catch (p) {
-      print(p);
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Anda bukan pasien.")),
+        const SnackBar(content: Text("Anda bukan pasien.")),
       );
     }
   }
 
   @override
+  // ignore: must_call_super
   void initState() {
     getData();
   }

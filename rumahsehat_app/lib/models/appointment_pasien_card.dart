@@ -47,23 +47,25 @@ class _AppointmentPasienCardState extends State<AppointmentPasienCard> {
                 letterSpacing: 0.5,
               ),
             ),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          AppointmentDetail(widget.appointment)),
-                );
-              },
-              child: const Text('Detail'),
-              style: ElevatedButton.styleFrom(
-                  primary: Colors.black,
-                  onPrimary: Colors.white,
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(5)),
-                  )),
-            ),
+            widget.appointment.resepId != "0"
+                ? ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                AppointmentDetail(widget.appointment)),
+                      );
+                    },
+                    child: const Text('Detail'),
+                    style: ElevatedButton.styleFrom(
+                        primary: Colors.black,
+                        onPrimary: Colors.white,
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(5)),
+                        )),
+                  )
+                : const Text(""),
           ],
         ),
       ),

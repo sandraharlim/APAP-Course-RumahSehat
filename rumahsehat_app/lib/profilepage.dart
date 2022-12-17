@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:rumahsehat_app/main.dart';
 import 'package:rumahsehat_app/models/pasienmodel.dart';
@@ -39,8 +38,6 @@ class ProfilePage extends State<ProfilePageState> {
       "Authorization": (token_prefix + token_pass),
     });
     if (response.statusCode == 200) {
-      var data = json.decode(response.body);
-      print(data);
       return Pasien.fromJson(jsonDecode(response.body));
     } else {
       throw Exception("Failed to fetch pasien data");

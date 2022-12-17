@@ -16,10 +16,10 @@ class NavigationDrawer extends StatelessWidget {
       child: ListView(
         padding: EdgeInsets.zero,
         children: <Widget>[
-          DrawerHeader(child: Text("Navigation Menu")),
+          const DrawerHeader(child: Text("Navigation Menu")),
           ListTile(
-            leading: Icon(Icons.home),
-            title: Text('Home'),
+            leading: const Icon(Icons.home),
+            title: const Text('Home'),
             onTap: () {
               Navigator.push(
                 context,
@@ -28,8 +28,8 @@ class NavigationDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: Icon(Icons.person),
-            title: Text("Profile"),
+            leading: const Icon(Icons.person),
+            title: const Text("Profile"),
             onTap: () {
               Navigator.push(
                   context,
@@ -38,8 +38,8 @@ class NavigationDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: Icon(Icons.money),
-            title: Text("View All Tagihan"),
+            leading: const Icon(Icons.money),
+            title: const Text("View All Tagihan"),
             onTap: () {
               Navigator.push(
                   context,
@@ -48,12 +48,12 @@ class NavigationDrawer extends StatelessWidget {
             },
           ),
           ExpansionTile(
-            title: Text("Appointment"),
-            leading: Icon(Icons.calendar_today_sharp),
+            title: const Text("Appointment"),
+            leading: const Icon(Icons.calendar_today_sharp),
             children: <Widget>[
               ListTile(
-                leading: Icon(Icons.add),
-                title: Text('Create'),
+                leading: const Icon(Icons.add),
+                title: const Text('Create'),
                 onTap: () {
                   Navigator.push(
                     context,
@@ -62,13 +62,13 @@ class NavigationDrawer extends StatelessWidget {
                 },
               ),
               ListTile(
-                leading: Icon(Icons.calendar_today_sharp),
-                title: Text('View'),
+                leading: const Icon(Icons.calendar_today_sharp),
+                title: const Text('View'),
                 onTap: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => AppointmentViewAll()),
+                        builder: (context) => const AppointmentViewAll()),
                   );
                 },
               ),

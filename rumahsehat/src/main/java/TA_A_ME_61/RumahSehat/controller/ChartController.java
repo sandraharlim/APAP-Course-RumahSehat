@@ -5,11 +5,13 @@ import TA_A_ME_61.RumahSehat.model.DokterModel;
 import TA_A_ME_61.RumahSehat.model.TagihanModel;
 import TA_A_ME_61.RumahSehat.service.AppointmentService;
 import TA_A_ME_61.RumahSehat.service.ChartService;
+import TA_A_ME_61.RumahSehat.service.DokterService;
 import TA_A_ME_61.RumahSehat.service.TagihanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -24,6 +26,9 @@ public class ChartController {
 
     @Autowired
     ChartService chartService;
+
+    @Autowired
+    DokterService dokterService;
 
     @Autowired
     TagihanService tagihanService;
@@ -110,4 +115,74 @@ public class ChartController {
         return "linechart-yearly";
 
     }
+
+    @GetMapping("/line/bulanan")
+    public String viewPemasukanDokterChartTahun(Model model) {
+        List<DokterModel> listDokter = dokterService.getListDokter();
+        model.addAttribute("listDokter", listDokter);
+        return "form-linechart-monthly";
+    }
+
+    @GetMapping(value = "/line/bulanan", params = {"bulan","tahun", "id1", "id2", "id3", "id4", "id5"})
+    public String showLineChart(
+            Model model,
+            @RequestParam int bulan,
+            @RequestParam int tahun,
+            @RequestParam String id1,
+            @RequestParam String id2,
+            @RequestParam String id3,
+            @RequestParam String id4,
+            @RequestParam String id5) {
+
+        List<DokterModel> listDokter = chartService.getListDokterLineChart(id1, id2, id3, id4, id5);
+        List<TagihanModel> listTagihan = tagihanService.getListTagihan();
+
+        // Map dokter, pendapatan tiap bulan
+        Map<String, List<Integer>> totalIncomeAllDokter = new LinkedHashMap<>();
+        for (DokterModel dokter : listDokter) {
+            List<Integer> incomePerDayPerDokter = Arrays.asList(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
+            for (int i = 0; i < 30; i++) {
+                int incomePerDay = 0;
+                for (TagihanModel tagihan : listTagihan){
+                    if (tagihanService.getTagihanById(tagihan.getId()).getAppointment().getDokter().getUsername().equals(dokterService.getDokterByUuid(dokter.getUuid()).getUsername())){
+
+                        if (tagihan.getTanggalTerbuat().getYear() == tahun &&
+                                tagihan.getTanggalTerbuat().getMonthValue() == bulan &&
+                                tagihan.getTanggalTerbuat().getDayOfMonth() == (i+1)){
+                            incomePerDay += tagihan.getAppointment().getDokter().getTarif();
+                        }
+                    }
+                }
+                incomePerDayPerDokter.set(i, incomePerDay);
+            }
+            totalIncomeAllDokter.put(dokter.getNama(), incomePerDayPerDokter);
+        }
+        List<String> lstDokter = new ArrayList<String>(totalIncomeAllDokter.keySet());
+        List<List<Integer>> lstIncome = new ArrayList<List<Integer>>(totalIncomeAllDokter.values());
+
+        if (lstIncome.size() < 5) {
+            List<Integer> fillZero = Arrays.asList(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
+            int size = lstIncome.size();
+            for (int i = 0; i < 5 - size; i++) {
+                lstIncome.add(fillZero);
+            }
+        }
+
+        if (lstDokter.size() < 5) {
+            String fillEmpty = "Not Selected";
+            int size = lstDokter.size();
+            for (int i = 0; i < 5 - size; i++) {
+                lstDokter.add(fillEmpty);
+            }
+        }
+
+        model.addAttribute("lstDokter", lstDokter);
+        model.addAttribute("lstIncome", lstIncome);
+        model.addAttribute("tahun", tahun);
+        model.addAttribute("bulan", bulan);
+
+        return "line-chart-monthly";
+
+    }
+
 }

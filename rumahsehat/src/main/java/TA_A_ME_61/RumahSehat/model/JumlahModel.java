@@ -27,7 +27,7 @@ public class JumlahModel implements Serializable {
     private ObatModel obat;
 
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
-    @JoinColumn(name = "id_resep", referencedColumnName = "id") // 0 .. *
+    @JoinColumn(name = "id_resep", referencedColumnName = "id") 
     @OnDelete(action = OnDeleteAction.CASCADE)
     private ResepModel resep;
 }

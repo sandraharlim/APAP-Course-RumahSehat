@@ -1,15 +1,8 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:http/http.dart' as http;
-import 'package:rumahsehat_app/login_screen.dart';
 
 import 'package:provider/provider.dart';
-import 'package:rumahsehat_app/login_screen.dart';
 import 'package:rumahsehat_app/providers/auth.dart';
-
-import 'package:flutter/services.dart';
-import 'package:http/http.dart' as http;
 
 class SignUpScreen extends StatefulWidget {
   @override

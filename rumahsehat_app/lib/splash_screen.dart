@@ -42,19 +42,18 @@ class StartState extends State<SplashScreen> {
           Container(
             decoration: BoxDecoration(
                 color: Color.fromARGB(255, 138, 198, 224),
-                gradient: LinearGradient(
-                    colors: const [
-                (Color.fromARGB(255, 138, 198, 224)),
-                Color.fromARGB(255, 75, 183, 210)],
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter)),
+                gradient: LinearGradient(colors: const [
+                  (Color.fromARGB(255, 138, 198, 224)),
+                  Color.fromARGB(255, 75, 183, 210)
+                ], begin: Alignment.topCenter, end: Alignment.bottomCenter)),
           ),
           Center(
             child: Container(
-              child: Image.asset("images/19836-removebg-preview.png",
-                              height: 200,
-                              width: 250,),
-            
+              child: Image.asset(
+                "images/19836-removebg-preview.png",
+                height: 200,
+                width: 250,
+              ),
             ),
           )
         ],

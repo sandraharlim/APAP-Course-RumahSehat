@@ -37,7 +37,7 @@ public class WebSecurityConfig {
                     .antMatchers("/resep").hasAnyAuthority("Admin","Apoteker","admin","apoteker")
                     .antMatchers("/resep/detail/{id}").hasAnyAuthority("Admin","Apoteker","admin","apoteker", "Dokter", "dokter")
                     .antMatchers("/resep/confirmation").hasAnyAuthority("Apoteker","apoteker")
-                    .antMatchers("/appointment/finish").hasAnyAuthority("Dokter", "dokter")
+                    .antMatchers("/appointment/finish/{kode}").hasAnyAuthority("Dokter", "dokter")
 
                     .antMatchers("/dokter/").hasAnyAuthority("Admin")
                     .antMatchers("/dokter/add").hasAnyAuthority("Admin")
@@ -64,8 +64,10 @@ public class WebSecurityConfig {
                     .logoutSuccessUrl("/login").permitAll();
         }
 
+
         @Autowired
         private PasswordEncoder passwordEncoder;
+
 
        @Autowired
        public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
@@ -116,7 +118,6 @@ public class WebSecurityConfig {
                             .antMatchers("/api/resep/detail/{id}")
                             .antMatchers("/api/pasien/profile")
                             .antMatchers("/api/pasien/profile/update-saldo")
-                            //Cek apakah dibutuhkan
                             .antMatchers("/sign-up/pasien")
                             .antMatchers("/api/pasien/tagihan")
                             .antMatchers("/api/pasien/tagihan/{kode}/bayar")

@@ -4,9 +4,7 @@ import TA_A_ME_61.RumahSehat.model.AppointmentModel;
 import TA_A_ME_61.RumahSehat.model.PasienModel;
 import TA_A_ME_61.RumahSehat.model.TagihanModel;
 import TA_A_ME_61.RumahSehat.restmodel.TagihanRestModel;
-import TA_A_ME_61.RumahSehat.restservice.AppointmentRestService;
 import TA_A_ME_61.RumahSehat.service.AppointmentService;
-import TA_A_ME_61.RumahSehat.service.DokterService;
 import TA_A_ME_61.RumahSehat.service.PasienService;
 import TA_A_ME_61.RumahSehat.service.TagihanService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +22,6 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @RequestMapping("/api/pasien")
 public class TagihanRestController {
-    // @Qualifier("tagihanServiceImpl")
     @Autowired
     private TagihanService tagihanService;
 
@@ -94,23 +91,6 @@ public class TagihanRestController {
         }
         return "Gagal, saldo tidak mencukupi";
     }
-
-
-
-
-
-
-
-
-//    @PostMapping(value = "/add")
-//    private TagihanModel addTagihan(@Valid @RequestBody TagihanModel tagihan, BindingResult bindingResult) {
-//        if (bindingResult.hasFieldErrors()) {
-//            throw new ResponseStatusException(
-//                    HttpStatus.BAD_REQUEST, "Request body has invalid type or missing field.");
-//        } else {
-//            return tagihanService.addTagihan(tagihan);
-//        }
-//    }
 
 }
 
