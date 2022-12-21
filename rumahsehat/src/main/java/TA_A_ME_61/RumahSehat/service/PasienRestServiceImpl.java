@@ -2,6 +2,7 @@ package TA_A_ME_61.RumahSehat.service;
 
 import TA_A_ME_61.RumahSehat.model.PasienModel;
 import TA_A_ME_61.RumahSehat.repository.PasienDb;
+import TA_A_ME_61.RumahSehat.restmodel.PasienDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -29,6 +30,18 @@ public class PasienRestServiceImpl implements PasienRestService{
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String hashedPassword = passwordEncoder.encode(password);
         return hashedPassword;
+    }
+
+    @Override
+    public PasienDTO getPasienDto(PasienModel pasien) {
+
+        PasienDTO pasienDTO = new PasienDTO();
+        pasienDTO.setNama(pasien.getNama());
+        pasienDTO.setUsername(pasien.getUsername());
+        pasienDTO.setEmail(pasien.getEmail());
+        pasienDTO.setSaldo(pasien.getSaldo());
+
+        return pasienDTO;
     }
 
     @Override
