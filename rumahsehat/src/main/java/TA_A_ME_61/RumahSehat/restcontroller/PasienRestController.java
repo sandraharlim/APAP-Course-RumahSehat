@@ -23,9 +23,9 @@ public class PasienRestController {
     private PasienRestService pasienRestService;
 
     @GetMapping("/profile")
-    private PasienDTO getPasien() {
+    public PasienDTO getPasien() {
         log.info("User mencoba melihat halaman profilenya");
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        var auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
         PasienModel pasien = pasienRestService.getPasienByUsername(username);
 
@@ -34,8 +34,8 @@ public class PasienRestController {
     }
 
     @PutMapping("/profile/update-saldo")
-    private void topUpSaldo(@RequestBody Map<String, Long> saldo) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    public void topUpSaldo(@RequestBody Map<String, Long> saldo) {
+        var auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
         try {
             log.info("User berhasil menambah saldo miliknya di RumahSehat");

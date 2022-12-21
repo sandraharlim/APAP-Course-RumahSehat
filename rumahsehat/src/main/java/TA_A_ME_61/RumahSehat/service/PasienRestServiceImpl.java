@@ -27,9 +27,8 @@ public class PasienRestServiceImpl implements PasienRestService{
 
     @Override
     public String encrypt(String password) {
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        String hashedPassword = passwordEncoder.encode(password);
-        return hashedPassword;
+        var passwordEncoder = new BCryptPasswordEncoder();
+        return passwordEncoder.encode(password);
     }
 
     @Override
@@ -72,8 +71,7 @@ public class PasienRestServiceImpl implements PasienRestService{
 
     @Override
     public PasienModel getPasienByUsername(String username){
-        PasienModel pasien = pasienDb.findByUsername(username);
-        return pasien;
+        return pasienDb.findByUsername(username);
     }
 
 }

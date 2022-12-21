@@ -43,7 +43,7 @@ public class PasienServiceImpl implements PasienService{
 
     @Override
     public void addPasien(PasienModel pasien){
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        var passwordEncoder = new BCryptPasswordEncoder();
         String pass = passwordEncoder.encode(pasien.getPassword());
         pasien.setPassword(pass);
         pasienDb.save(pasien);
@@ -51,7 +51,6 @@ public class PasienServiceImpl implements PasienService{
 
     @Override
     public void updatePasien(PasienModel pasien) {
-        // TODO Auto-generated method stub
         pasienDb.save(pasien);
     }
 }
