@@ -205,7 +205,6 @@ public class AppointmentRestServiceImpl implements AppointmentRestService{
 
     @Override
     public List<AppointmentRestModel> convertApptToRestAppt(List<AppointmentModel> listAppointment) {
-        // TODO Auto-generated method stub
         List<AppointmentRestModel> response = new ArrayList<>();
 
         for (AppointmentModel appt: listAppointment) {
