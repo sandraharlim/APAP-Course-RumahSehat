@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring_security">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE-edge">
+  <meta name="viewport" content="width-device-width, initial-scale-1.0">
+  <title>Rumah Sehat</title>
+  <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+  <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" type="text/css" />
+  <link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+<body>
+<nav th:replace="fragments/fragment :: navbar('chart')"></nav>
+<div class="container">
+  <div class="card m-4 p-4">
+    <div class="card-body">
+      <div class="justify-content-center">
+        <h2 th:text= "'Laporan Pendapatan Dokter Bulan '+ ${bulan}+' Tahun '+ ${tahun}" class="text-center"></h2>
+        <div class="chart-container" style="position: relative; height:500px; width:800px">
+          <canvas id="myChart"></canvas>
+        </div>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script th:inline="javascript">
+          const labels = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10","11", "12", "13", "14", "15", "16", "17", "18", "19", "20","21", "22", "23", "24", "25", "26", "27", "28", "29", "30", ];
+          const data = {
+            labels: labels,
+            datasets: [{
+              label: [[${lstDokter.get(0)}]],
+              data: [[${lstIncome.get(0)}]],
+              fill: true,
+              borderColor: 'rgb(75, 192, 192)',
+              tension: 0.1
+            },
+              {
+                label: [[${lstDokter.get(1)}]],
+                data: [[${lstIncome.get(1)}]],
+                fill: true,
+                borderColor: 'rgb(0, 192, 110)',
+                tension: 0.1
+              },
+              {
+                label: [[${lstDokter.get(2)}]],
+                data: [[${lstIncome.get(2)}]],
+                fill: true,
+                borderColor: 'rgb(200, 54, 152)',
+                tension: 0.1
+              },
+              {
+                label: [[${lstDokter.get(3)}]],
+                data: [[${lstIncome.get(3)}]],
+                fill: true,
+                borderColor: 'rgb(242, 202, 92)',
+                tension: 0.1
+              },
+              {
+                label: [[${lstDokter.get(4)}]],
+                data: [[${lstIncome.get(4)}]],
+                fill: true,
+                borderColor: 'rgb(0, 82, 101)',
+                tension: 0.1
+              },
+            ]
+          };
+
+          const config = {
+            type: 'line',
+            data,
+            options: {
+              scales: {
+                y: {
+                  beginAtZero: true
+                }
+              }
+            },
+          };
+
+          const myChart = new Chart(
+                  document.getElementById('myChart'), config
+          );
+        </script>
+      </div>
+    </div>
+  </div>
+</div>
+<footer th:replace="fragments/fragment :: footer"></footer>
+</body>
+</html>

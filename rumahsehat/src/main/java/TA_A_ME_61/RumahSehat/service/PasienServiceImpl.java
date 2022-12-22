@@ -51,7 +51,6 @@ public class PasienServiceImpl implements PasienService{
 
     @Override
     public void updatePasien(PasienModel pasien) {
-        // TODO Auto-generated method stub
         pasienDb.save(pasien);
     }
 }

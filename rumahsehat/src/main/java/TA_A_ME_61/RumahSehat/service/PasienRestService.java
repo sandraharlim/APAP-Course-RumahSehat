@@ -1,6 +1,7 @@
 package TA_A_ME_61.RumahSehat.service;
 
 import TA_A_ME_61.RumahSehat.model.PasienModel;
+import TA_A_ME_61.RumahSehat.restmodel.PasienDTO;
 
 public interface PasienRestService {
 
@@ -14,4 +15,6 @@ public interface PasienRestService {
     PasienModel getPasienByUsername(String username);
 
     String encrypt(String password);
+
+    PasienDTO getPasienDto(PasienModel pasien);
 }

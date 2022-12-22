@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,7 +40,6 @@ public class TagihanServiceImpl implements TagihanService{
     }
     
     public TagihanModel addTagihanByDokter(AppointmentModel appointment) {
-        // TODO Auto-generated method stub
         DokterModel dokter = appointment.getDokter();
         Long tarif = dokter.getTarif();
         TagihanModel tagihan = new TagihanModel();
@@ -57,7 +55,6 @@ public class TagihanServiceImpl implements TagihanService{
 
     @Override
     public TagihanModel getTagihanByKode(String kode) {
-        // TODO Auto-generated method stub
         Optional<TagihanModel> tagihan = tagihanDb.findByKode(kode);
         if(tagihan.isPresent()){
             return tagihan.get();
@@ -67,7 +64,6 @@ public class TagihanServiceImpl implements TagihanService{
 
     @Override
     public Boolean bayarTagihan(TagihanModel tagihan, PasienModel pasien) {
-        // TODO Auto-generated method stub
         Long biaya = tagihan.getJumlahTagihan();
         Long saldo = pasien.getSaldo();
 
@@ -83,17 +79,4 @@ public class TagihanServiceImpl implements TagihanService{
         }
         return false;
     }
-
-//    @Override
-//    public List<TagihanModel> getListTagihanByUuid(String uuid) {
-//        List<TagihanModel> allTagihan = tagihanDb.findAll();
-//
-//        List<TagihanModel> specificTagihan = new ArrayList<>();
-//        for(TagihanModel tagihan : allTagihan){
-//            if (tagihan.getAppointment().getPasien().getUuid().equalsIgnoreCase(uuid)){
-//                specificTagihan.add(tagihan);
-//            }
-//        }
-//        return specificTagihan;
-//    }
 }

@@ -37,14 +37,13 @@ public class WebSecurityConfig {
                     .antMatchers("/login-sso", "/validate-ticket").permitAll()
                     .antMatchers("/obat/").hasAnyAuthority(adminKapital, apotekerKapital)
                     .antMatchers("/obat/ubah-stok/{idObat}").hasAuthority(apotekerKapital)
-                    .antMatchers("/appointment/viewall").hasAnyAuthority(adminKapital,dokterKapital, admin, dokter)
+                    .antMatchers("/appointment/viewall").hasAnyAuthority(adminKapital, dokterKapital, admin, dokter)
                     .antMatchers("/appointment/view/{kode}").hasAnyAuthority(adminKapital,dokterKapital, admin, dokter)
-                    .antMatchers("/appointment/finish").hasAnyAuthority(dokter, dokterKapital)
+                    .antMatchers("/appointment/finish/{kode}").hasAnyAuthority(dokter, dokterKapital)
                     .antMatchers("/resep/create/{idAppointment}").hasAnyAuthority(dokter, dokterKapital)
-                    .antMatchers("/resep").hasAnyAuthority(adminKapital,apotekerKapital, admin, apoteker)
-                    .antMatchers("/resep/detail/{id}").hasAnyAuthority(adminKapital,apotekerKapital, admin, apoteker, dokter, dokterKapital)
+                    .antMatchers("/resep").hasAnyAuthority(adminKapital, apotekerKapital, admin, apoteker)
+                    .antMatchers("/resep/detail/{id}").hasAnyAuthority(adminKapital, apotekerKapital, admin, apoteker, dokter, dokterKapital)
                     .antMatchers("/resep/confirmation").hasAnyAuthority(apotekerKapital, apoteker)
-                    .antMatchers("/appointment/finish").hasAnyAuthority(dokterKapital, dokter)
 
                     .antMatchers("/dokter/").hasAnyAuthority(adminKapital)
                     .antMatchers("/dokter/add").hasAnyAuthority(adminKapital)
@@ -71,8 +70,10 @@ public class WebSecurityConfig {
                     .logoutSuccessUrl("/login").permitAll();
         }
 
+
         @Autowired
         private PasswordEncoder passwordEncoder;
+
 
        @Autowired
        public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
@@ -123,9 +124,7 @@ public class WebSecurityConfig {
                             .antMatchers("/api/resep/detail/{id}")
                             .antMatchers("/api/pasien/profile")
                             .antMatchers("/api/pasien/profile/update-saldo")
-                            //Cek apakah dibutuhkan
                             .antMatchers("/sign-up/pasien")
-                            .antMatchers("/api/pasien/sign-up")
                             .antMatchers("/api/pasien/tagihan")
                             .antMatchers("/api/pasien/tagihan/{kode}/bayar")
 

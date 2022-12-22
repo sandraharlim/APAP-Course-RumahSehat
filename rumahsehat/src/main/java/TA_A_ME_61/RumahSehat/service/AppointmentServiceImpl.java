@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -72,7 +71,6 @@ public class AppointmentServiceImpl implements AppointmentService{
 
     @Override
     public Map<String, Integer> getTotalApptDokters(List<DokterModel> listDokter) {
-        // TODO Auto-generated method stub
         Map<String, Integer> totalApptDokter = new LinkedHashMap<>();
         
         for (DokterModel dokter: listDokter) {

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:rumahsehat_app/models/tagihan_detail.dart';
 import 'package:rumahsehat_app/models/tagihan_model.dart';
 
@@ -24,7 +23,7 @@ class _TagihanCardState extends State<TagihanCard> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             ListTile(
-              title: Text('${widget.tagihan.kode}',
+              title: Text(widget.tagihan.kode,
                   style: TextStyle(
                     fontSize: 18,
                     letterSpacing: 0.5,
@@ -51,7 +50,7 @@ class _TagihanCardState extends State<TagihanCard> {
                           context,
                           MaterialPageRoute(
                               builder: (context) =>
-                                  new TagihanDetail(widget.tagihan)));
+                                  TagihanDetail(widget.tagihan)));
                     },
                     icon: const Icon(Icons.arrow_circle_down),
                   )

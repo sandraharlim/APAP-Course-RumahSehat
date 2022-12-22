@@ -9,10 +9,12 @@ import 'navbar.dart';
 import 'appointment_form.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -33,13 +35,12 @@ class MyApp extends StatelessWidget {
       ],
       builder: (context, child) => Consumer<Authentication>(
         builder: (context, auth, child) => MaterialApp(
-          title: 'Rumah Sehat',
-          debugShowCheckedModeBanner: false,
-          theme: ThemeData(
-            primarySwatch: Colors.lightBlue,
-          ),
-          home: auth.isAuth ? MyHomePage() : LoginScreen()
-        ),
+            title: 'Rumah Sehat',
+            debugShowCheckedModeBanner: false,
+            theme: ThemeData(
+              primarySwatch: Colors.lightBlue,
+            ),
+            home: auth.isAuth ? MyHomePage() : LoginScreen()),
       ),
     );
   }
@@ -74,7 +75,7 @@ class MyHomePage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: const [
                       Icon(
-                        Icons.book,
+                        Icons.add,
                         size: 50,
                         color: Colors.white,
                       ),
@@ -127,6 +128,11 @@ class MyHomePage extends StatelessWidget {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: const [
+                      Icon(
+                        Icons.money,
+                        size: 50,
+                        color: Colors.white,
+                      ),
                       Text(
                         "Lihat Daftar Tagihan",
                         style: TextStyle(color: Colors.white, fontSize: 20),
