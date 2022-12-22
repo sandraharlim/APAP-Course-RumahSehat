@@ -23,37 +23,43 @@ public class WebSecurityConfig {
     public static class UIWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter{
         @Override
         protected void configure(HttpSecurity httpSecurity) throws Exception{
+            var adminKapital = "Admin";
+            var admin = "admin";
+            var dokterKapital = "Dokter";
+            var dokter = "dokter";
+            var apotekerKapital = "Apoteker";
+            var apoteker = "apoteker";
+
             httpSecurity
                     .authorizeRequests()
                     .antMatchers("/css/**").permitAll()
                     .antMatchers("/js/**").permitAll()
                     .antMatchers("/login-sso", "/validate-ticket").permitAll()
-                    .antMatchers("/obat/").hasAnyAuthority("Admin","Apoteker")
-                    .antMatchers("/obat/ubah-stok/{idObat}").hasAuthority("Apoteker")
-                    .antMatchers("/appointment/viewall").hasAnyAuthority("Admin","Dokter", "admin", "dokter")
-                    .antMatchers("/appointment/view/{kode}").hasAnyAuthority("Admin","Dokter", "admin", "dokter")
-                    .antMatchers("/appointment/finish").hasAnyAuthority("Dokter", "dokter")
-                    .antMatchers("/resep/create/{idAppointment}").hasAnyAuthority("Dokter", "dokter")
-                    .antMatchers("/resep").hasAnyAuthority("Admin","Apoteker","admin","apoteker")
-                    .antMatchers("/resep/detail/{id}").hasAnyAuthority("Admin","Apoteker","admin","apoteker", "Dokter", "dokter")
-                    .antMatchers("/resep/confirmation").hasAnyAuthority("Apoteker","apoteker")
-                    .antMatchers("/appointment/finish/{kode}").hasAnyAuthority("Dokter", "dokter")
+                    .antMatchers("/obat/").hasAnyAuthority(adminKapital, apotekerKapital)
+                    .antMatchers("/obat/ubah-stok/{idObat}").hasAuthority(apotekerKapital)
+                    .antMatchers("/appointment/viewall").hasAnyAuthority(adminKapital, dokterKapital, admin, dokter)
+                    .antMatchers("/appointment/view/{kode}").hasAnyAuthority(adminKapital,dokterKapital, admin, dokter)
+                    .antMatchers("/appointment/finish/{kode}").hasAnyAuthority(dokter, dokterKapital)
+                    .antMatchers("/resep/create/{idAppointment}").hasAnyAuthority(dokter, dokterKapital)
+                    .antMatchers("/resep").hasAnyAuthority(adminKapital, apotekerKapital, admin, apoteker)
+                    .antMatchers("/resep/detail/{id}").hasAnyAuthority(adminKapital, apotekerKapital, admin, apoteker, dokter, dokterKapital)
+                    .antMatchers("/resep/confirmation").hasAnyAuthority(apotekerKapital, apoteker)
 
-                    .antMatchers("/dokter/").hasAnyAuthority("Admin")
-                    .antMatchers("/dokter/add").hasAnyAuthority("Admin")
-                    .antMatchers("/dokter/update/{uuid}").hasAnyAuthority("Admin")
-                    .antMatchers("/dokter/delete/{uuid}").hasAnyAuthority("Admin")
+                    .antMatchers("/dokter/").hasAnyAuthority(adminKapital)
+                    .antMatchers("/dokter/add").hasAnyAuthority(adminKapital)
+                    .antMatchers("/dokter/update/{uuid}").hasAnyAuthority(adminKapital)
+                    .antMatchers("/dokter/delete/{uuid}").hasAnyAuthority(adminKapital)
 
-                    .antMatchers("/apoteker/").hasAnyAuthority("Admin")
-                    .antMatchers("/apoteker/add").hasAnyAuthority("Admin")
-                    .antMatchers("/apoteker/delete/{uuid}").hasAnyAuthority("Admin")
+                    .antMatchers("/apoteker/").hasAnyAuthority(adminKapital)
+                    .antMatchers("/apoteker/add").hasAnyAuthority(adminKapital)
+                    .antMatchers("/apoteker/delete/{uuid}").hasAnyAuthority(adminKapital)
 
-                    .antMatchers("/pasien/").hasAnyAuthority("Admin")
-                    .antMatchers("/pasien/delete/{uuid}").hasAnyAuthority("Admin")
+                    .antMatchers("/pasien/").hasAnyAuthority(adminKapital)
+                    .antMatchers("/pasien/delete/{uuid}").hasAnyAuthority(adminKapital)
 
-                    .antMatchers("/dokter/barchart").hasAnyAuthority("Admin", "admin")
-                    .antMatchers("/chart/line/default").hasAnyAuthority("Admin", "admin")
-                    .antMatchers("/chart/line/tahunan").hasAnyAuthority("Admin", "admin")
+                    .antMatchers("/dokter/barchart").hasAnyAuthority(adminKapital, admin)
+                    .antMatchers("/chart/line/default").hasAnyAuthority(adminKapital, admin)
+                    .antMatchers("/chart/line/tahunan").hasAnyAuthority(adminKapital, admin)
 
                     .anyRequest().authenticated()
                     .and()
