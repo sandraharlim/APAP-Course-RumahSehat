@@ -138,8 +138,8 @@ public class ChartController {
         Map<String, List<Integer>> totalIncomeAllDokter = new LinkedHashMap<>();
         for (DokterModel dokter : listDokter) {
             List<Integer> incomePerDayPerDokter = Arrays.asList(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
-            for (int i = 0; i < 30; i++) {
-                int incomePerDay = 0;
+            for (var i = 0; i < 30; i++) {
+                var incomePerDay = 0;
                 for (TagihanModel tagihan : listTagihan){
                     if (tagihanService.getTagihanById(tagihan.getId()).getAppointment().getDokter().getUsername().equals(dokterService.getDokterByUuid(dokter.getUuid()).getUsername()) &&
                         tagihan.getTanggalTerbuat().getYear() == tahun &&
@@ -158,15 +158,15 @@ public class ChartController {
         if (lstIncome.size() < 5) {
             List<Integer> fillZero = Arrays.asList(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
             int size = lstIncome.size();
-            for (int i = 0; i < 5 - size; i++) {
+            for (var i = 0; i < 5 - size; i++) {
                 lstIncome.add(fillZero);
             }
         }
 
         if (lstDokter.size() < 5) {
-            String fillEmpty = "Not Selected";
+            var fillEmpty = "Not Selected";
             int size = lstDokter.size();
-            for (int i = 0; i < 5 - size; i++) {
+            for (var i = 0; i < 5 - size; i++) {
                 lstDokter.add(fillEmpty);
             }
         }

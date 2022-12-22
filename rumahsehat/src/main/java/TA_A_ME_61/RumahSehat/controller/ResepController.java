@@ -35,12 +35,12 @@ public class ResepController {
 
     @GetMapping("/resep/create/{idAppointment}")
     public String createResepForm(Model model, @PathVariable Long idAppointment) {
-        ResepModel resep = new ResepModel();
+        var resep = new ResepModel();
         resep.setAppointment(appointmentService.getAppointmentById(idAppointment));
         resep.setIsDone(false);
 
-        JumlahModel jumlah = new JumlahModel();
-        ObatModel obat = new ObatModel();
+        var jumlah = new JumlahModel();
+        var obat = new ObatModel();
         jumlah.setObat(obat);
         List<ObatModel> listObat = obatService.getDaftarObat();
 
@@ -60,7 +60,7 @@ public class ResepController {
             jumlahx.setResep(resep);
         }
 
-        LocalDateTime now = LocalDateTime.now();
+        var now = LocalDateTime.now();
         resep.setCreatedAt(now);
         resep.setIsDone(false);
         resep.setAppointment(appointmentService.getAppointmentById(resep.getAppointment().getId()));
@@ -83,8 +83,8 @@ public class ResepController {
             resep.setListJumlah(new ArrayList<>());
         }
 
-        JumlahModel jumlah = new JumlahModel();
-        ObatModel obat = new ObatModel();
+        var jumlah = new JumlahModel();
+        var obat = new ObatModel();
         jumlah.setObat(obat);
         resep.getListJumlah().add(jumlah);
         List<ObatModel> listObat = obatService.getDaftarObat();
@@ -101,7 +101,7 @@ public class ResepController {
             @RequestParam("deleteRowObat") Integer row,
             Model model
     ) {
-        final Integer rowId = row;
+        final var rowId = row;
         resep.getListJumlah().remove(rowId);
 
         List<ObatModel> listObat = obatService.getDaftarObat();
@@ -124,19 +124,19 @@ public class ResepController {
     public String viewDetailResep(@PathVariable Long id, Model model) {
         ResepModel resep = resepService.getResepById(id);
 
-        String namaApoteker = "-";
+        var namaApoteker = "-";
         String namaDokter = resep.getAppointment().getDokter().getNama();
         String namaPasien = resep.getAppointment().getPasien().getNama();
 
         List<JumlahModel> listJumlah = resep.getListJumlah();
-        String status = "Belum Selesai";
+        var status = "Belum Selesai";
 
         if(resep.getIsDone()){
             status = "Selesai";
             namaApoteker = resep.getApoteker().getNama();
         }
 
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        var auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
         ApotekerModel apoteker = apotekerService.getApotekerByUsername(username);
 
@@ -157,7 +157,7 @@ public class ResepController {
     public String konfirmasiResep(@ModelAttribute ResepModel resep,
                                   Model model) {
         ResepModel resepnow = resepService.getResepById(resep.getId());
-        int bayarTagihan = 0;
+        var bayarTagihan = 0;
 
         for (JumlahModel jumlahx : resepnow.getListJumlah()) {
             jumlahx.setResep(resepnow);
@@ -175,7 +175,7 @@ public class ResepController {
 
         }
 
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        var auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
         ApotekerModel apoteker = apotekerService.getApotekerByUsername(username);
 
@@ -190,10 +190,10 @@ public class ResepController {
         appointmentService.addAppointment(appointment);
 
         //Ngeset tagihannya
-        TagihanModel tagihan = new TagihanModel();
+        var tagihan = new TagihanModel();
         tagihan.setAppointment(resepnow.getAppointment());
         tagihan.setIsPaid(false);
-        LocalDateTime now = LocalDateTime.now();
+        var now = LocalDateTime.now();
         tagihan.setTanggalTerbuat(now);
         bayarTagihan = bayarTagihan + (appointment.getDokter().getTarif()).intValue();
         tagihan.setJumlahTagihan(Long.valueOf(bayarTagihan));
