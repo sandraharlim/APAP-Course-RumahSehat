@@ -30,11 +30,11 @@ public class ChartController {
 
 
     @GetMapping("/line/default")
-    private String lineChartDefault(Model model){
+    public String lineChartDefault(Model model){
 
-        LocalDateTime date = LocalDateTime.now();
-        LocalDateTime firstDate = LocalDateTime.of(date.getYear(), 1, 1, 0, 0);
-        LocalDateTime lastDate = LocalDateTime.of(date.getYear(), 12, 1, 0, 0).plusMonths(1).minusMinutes(1);
+        var date = LocalDateTime.now();
+        var firstDate = LocalDateTime.of(date.getYear(), 1, 1, 0, 0);
+        var lastDate = LocalDateTime.of(date.getYear(), 12, 1, 0, 0).plusMonths(1).minusMinutes(1);
 
         List<AppointmentModel> listAppointment = appointmentService.getAllAptAnnual(firstDate, lastDate);
 
