@@ -121,37 +121,35 @@ public class ChartController {
         Map<String, List<Integer>> totalIncomeAllDokter = new LinkedHashMap<>();
         for (DokterModel dokter : listDokter) {
             List<Integer> incomePerDayPerDokter = Arrays.asList(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
-            for (int i = 0; i < 30; i++) {
-                int incomePerDay = 0;
+            for (var i = 0; i < 30; i++) {
+                var incomePerDay = 0;
                 for (TagihanModel tagihan : listTagihan){
-                    if (tagihanService.getTagihanById(tagihan.getId()).getAppointment().getDokter().getUsername().equals(dokterService.getDokterByUuid(dokter.getUuid()).getUsername())){
-
-                        if (tagihan.getTanggalTerbuat().getYear() == tahun &&
-                                tagihan.getTanggalTerbuat().getMonthValue() == bulan &&
-                                tagihan.getTanggalTerbuat().getDayOfMonth() == (i+1)){
-                            incomePerDay += tagihan.getAppointment().getDokter().getTarif();
-                        }
+                    if (tagihanService.getTagihanById(tagihan.getId()).getAppointment().getDokter().getUsername().equals(dokterService.getDokterByUuid(dokter.getUuid()).getUsername()) &&
+                        tagihan.getTanggalTerbuat().getYear() == tahun &&
+                        tagihan.getTanggalTerbuat().getMonthValue() == bulan &&
+                        tagihan.getTanggalTerbuat().getDayOfMonth() == (i+1)){
+                        incomePerDay += tagihan.getAppointment().getDokter().getTarif();
                     }
                 }
                 incomePerDayPerDokter.set(i, incomePerDay);
             }
             totalIncomeAllDokter.put(dokter.getNama(), incomePerDayPerDokter);
         }
-        List<String> lstDokter = new ArrayList<String>(totalIncomeAllDokter.keySet());
-        List<List<Integer>> lstIncome = new ArrayList<List<Integer>>(totalIncomeAllDokter.values());
+        List<String> lstDokter = new ArrayList<>(totalIncomeAllDokter.keySet());
+        List<List<Integer>> lstIncome = new ArrayList<>(totalIncomeAllDokter.values());
 
         if (lstIncome.size() < 5) {
             List<Integer> fillZero = Arrays.asList(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
             int size = lstIncome.size();
-            for (int i = 0; i < 5 - size; i++) {
+            for (var i = 0; i < 5 - size; i++) {
                 lstIncome.add(fillZero);
             }
         }
 
         if (lstDokter.size() < 5) {
-            String fillEmpty = "Not Selected";
+            var fillEmpty = "Not Selected";
             int size = lstDokter.size();
-            for (int i = 0; i < 5 - size; i++) {
+            for (var i = 0; i < 5 - size; i++) {
                 lstDokter.add(fillEmpty);
             }
         }
