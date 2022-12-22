@@ -22,7 +22,7 @@ public class ChartServiceImpl implements ChartService {
 
         for (AppointmentModel apt : listAppointment){
 
-            hasil[apt.getWaktuAwal().getMonthValue() - 1] = apt.getDokter().getTarif().intValue();
+            hasil[apt.getWaktuAwal().getMonthValue() - 1] += apt.getDokter().getTarif().intValue();
         }
         return hasil;
     }
