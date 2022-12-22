@@ -1,8 +1,5 @@
 package TA_A_ME_61.RumahSehat.restcontroller;
 
-import TA_A_ME_61.RumahSehat.model.AdminModel;
-import TA_A_ME_61.RumahSehat.model.ApotekerModel;
-import TA_A_ME_61.RumahSehat.model.DokterModel;
 import TA_A_ME_61.RumahSehat.model.PasienModel;
 import TA_A_ME_61.RumahSehat.restmodel.JwtRequest;
 import TA_A_ME_61.RumahSehat.restmodel.JwtResponse;
@@ -16,7 +13,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -48,14 +44,14 @@ public class JwtAuthenticationController {
     @Autowired
     private AdminService adminService;
 
-    @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
+    @PostMapping(value = "/authenticate")
     public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest)
             throws Exception {
 
         log.info("User mencoba membuat token jwt baru");
         authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
 
-        final UserDetails userDetails = jwtInMemoryUserDetailsService
+        final var userDetails = jwtInMemoryUserDetailsService
                 .loadUserByUsername(authenticationRequest.getUsername());
 
         final String token = jwtTokenUtil.generateToken(userDetails);
@@ -79,13 +75,13 @@ public class JwtAuthenticationController {
 
     @PostMapping("/sign-up")
     public ResponseEntity<?> signUp(@RequestBody PasienDTO pasienDTO){
-        DokterModel dokter = dokterService.getDokterByUsername(pasienDTO.getUsername());
-        ApotekerModel apoteker = apotekerService.getApotekerByUsername(pasienDTO.getUsername());
-        PasienModel pasienModel = pasienService.getPasienByUsername(pasienDTO.getUsername());
-        AdminModel admin = adminService.getAdminByUsername(pasienDTO.getUsername());
+        var dokter = dokterService.getDokterByUsername(pasienDTO.getUsername());
+        var apoteker = apotekerService.getApotekerByUsername(pasienDTO.getUsername());
+        var pasienModel = pasienService.getPasienByUsername(pasienDTO.getUsername());
+        var admin = adminService.getAdminByUsername(pasienDTO.getUsername());
 
         if (dokter == null && apoteker == null && pasienModel == null && admin == null){
-            PasienModel pasien = new PasienModel();
+            var pasien = new PasienModel();
             pasien.setNama(pasienDTO.getNama());
             pasien.setUsername(pasienDTO.getUsername());
             pasien.setEmail(pasienDTO.getEmail());
@@ -95,7 +91,7 @@ public class JwtAuthenticationController {
             pasien.setSaldo(0L);
             pasienService.addPasien(pasien);
 
-            final UserDetails userDetails = jwtInMemoryUserDetailsService
+            final var userDetails = jwtInMemoryUserDetailsService
                     .loadUserByUsername(pasien.getUsername());
 
             final String token = jwtTokenUtil.generateToken(userDetails);
