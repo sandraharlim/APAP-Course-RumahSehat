@@ -34,7 +34,7 @@ public class ObatController {
 
     @PostMapping(value = "/ubah-stok/{idObat}", params = {"save"})
     public String submitUbahStokObat(@ModelAttribute ObatRestModel obat, Model model){
-        ObatModel obatModel = new ObatModel();
+        var obatModel = new ObatModel();
         obatModel.setIdObat(obat.getIdObat());
         obatModel.setNamaObat(obat.getNamaObat());
         obatModel.setHarga(obat.getHarga());
