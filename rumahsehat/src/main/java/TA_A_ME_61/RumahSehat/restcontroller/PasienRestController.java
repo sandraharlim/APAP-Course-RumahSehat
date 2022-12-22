@@ -29,8 +29,7 @@ public class PasienRestController {
         String username = auth.getName();
         PasienModel pasien = pasienRestService.getPasienByUsername(username);
 
-        PasienDTO pasienDTO = pasienRestService.getPasienDto(pasien);
-        return pasienDTO;
+        return pasienRestService.getPasienDto(pasien);
     }
 
     @PutMapping("/profile/update-saldo")
