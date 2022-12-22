@@ -42,7 +42,7 @@ public class BaseController {
     private WebClient webClient = WebClient.builder().build();
 
     @GetMapping("/")
-    private String Home(Model model){
+    public String Home(Model model){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
         DokterModel dokter = dokterService.getDokterByUsername(username);
@@ -68,15 +68,16 @@ public class BaseController {
             @RequestParam(value = "ticket", required = false) String ticket,
             HttpServletRequest request
     ){
-        ServiceResponse serviceResponse = this.webClient.get().uri(
+        var serviceResponse = this.webClient.get().uri(
                 String.format(
                         Setting.SERVER_VALIDATE_TICKET,
                         ticket,
                         Setting.CLIENT_LOGIN
                 )
         ).retrieve().bodyToMono(ServiceResponse.class).block();
+        assert serviceResponse != null;
 
-        Attributes attributes = serviceResponse.getAuthenticationSuccess().getAttributes();
+        var attributes = serviceResponse.getAuthenticationSuccess().getAttributes();
         String username = serviceResponse.getAuthenticationSuccess().getUser();
 
         AdminModel admin = adminService.getAdminByUsername(username);
@@ -94,10 +95,10 @@ public class BaseController {
 
         Authentication authentication = new UsernamePasswordAuthenticationToken(username, "belajarbelajar");
 
-        SecurityContext securityContext = SecurityContextHolder.getContext();
+        var securityContext = SecurityContextHolder.getContext();
         securityContext.setAuthentication(authentication);
 
-        HttpSession httpSession = request.getSession(true);
+        var httpSession = request.getSession(true);
         httpSession.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, securityContext);
 
         return new ModelAndView("redirect:/");
@@ -106,7 +107,7 @@ public class BaseController {
     @GetMapping(value = "/logout-sso")
     public ModelAndView logoutSSO(Principal principal){
         AdminModel admin = adminService.getAdminByUsername(principal.getName());
-        if (admin.getIsSso() == false) {
+        if (!admin.getIsSso()) {
             return new ModelAndView("redirect:/logout");
         }
 
@@ -117,5 +118,4 @@ public class BaseController {
     public ModelAndView loginSSO(){
         return new ModelAndView("redirect:"+Setting.SERVER_LOGIN + Setting.CLIENT_LOGIN);
     }
-
 }

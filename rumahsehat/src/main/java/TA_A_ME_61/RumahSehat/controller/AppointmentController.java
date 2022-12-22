@@ -80,7 +80,6 @@ public class AppointmentController {
             // maka Dokter tidak dapat menyelesaikan appointment.
 
         }
-        String kembalian = "redirect:/appointment/view/" + kode;
-        return kembalian;
+        return "redirect:/appointment/view/" + kode;
     }
 }
