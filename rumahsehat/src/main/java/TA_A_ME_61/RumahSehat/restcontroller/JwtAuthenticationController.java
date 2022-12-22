@@ -1,8 +1,5 @@
 package TA_A_ME_61.RumahSehat.restcontroller;
 
-import TA_A_ME_61.RumahSehat.model.AdminModel;
-import TA_A_ME_61.RumahSehat.model.ApotekerModel;
-import TA_A_ME_61.RumahSehat.model.DokterModel;
 import TA_A_ME_61.RumahSehat.model.PasienModel;
 import TA_A_ME_61.RumahSehat.restmodel.JwtRequest;
 import TA_A_ME_61.RumahSehat.restmodel.JwtResponse;
@@ -16,7 +13,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
