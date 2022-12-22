@@ -36,16 +36,14 @@ public class AppointmentController {
         DokterModel dokter = dokterService.getDokterByUsername(username);
         AdminModel admin = adminService.getAdminByUsername(username);
 
-        List<AppointmentModel> listAppointment = new ArrayList<>();
-
         if (admin != null) {
-            listAppointment = appointmentService.getAllAppt();
+            List<AppointmentModel> listAppointment = appointmentService.getAllAppt();
             listAppointment = (listAppointment == null) ? new ArrayList<>() : listAppointment; // kalau null diisi list kosong aja
             model.addAttribute("listAppointment", listAppointment);
             return "appointment/viewall-admin-appointment";
 
         } else if (dokter != null) {
-            listAppointment = appointmentService.getAllApptByDokter(dokter);
+            List<AppointmentModel> listAppointment = appointmentService.getAllApptByDokter(dokter);
             listAppointment = (listAppointment == null) ? new ArrayList<>() : listAppointment; // kalau null diisi list kosong aja
             model.addAttribute("listAppointment", listAppointment);
             return "appointment/viewall-dokter-appointment";
@@ -57,14 +55,14 @@ public class AppointmentController {
     }
 
     @GetMapping("/view/{kode}")
-    private String getDetailAppointment(@PathVariable String kode, Model model){
+    public String getDetailAppointment(@PathVariable String kode, Model model){
         AppointmentModel appointment = appointmentService.getAppointmentByKode(kode);
         model.addAttribute("appointment", appointment);
         return "appointment/detail-appointment";
     }
 
     @PostMapping("/finish/{kode}")
-    private String finishAppointment(@PathVariable String kode, Model model){
+    public String finishAppointment(@PathVariable String kode, Model model){
         AppointmentModel appointment = appointmentService.getAppointmentByKode(kode);
         ResepModel resep = appointment.getResep();
         if (resep == null || // harus di konfirmasi dulu oleh dokter (ada pop up)
@@ -82,7 +80,6 @@ public class AppointmentController {
             // maka Dokter tidak dapat menyelesaikan appointment.
 
         }
-        String kembalian = "redirect:/appointment/view/" + kode;
-        return kembalian;
+        return "redirect:/appointment/view/" + kode;
     }
 }

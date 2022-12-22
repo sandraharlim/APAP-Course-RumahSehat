@@ -3,16 +3,12 @@ package TA_A_ME_61.RumahSehat.controller;
 import TA_A_ME_61.RumahSehat.model.AdminModel;
 import TA_A_ME_61.RumahSehat.model.ApotekerModel;
 import TA_A_ME_61.RumahSehat.model.DokterModel;
-import TA_A_ME_61.RumahSehat.model.PasienModel;
-import TA_A_ME_61.RumahSehat.model.UserModel;
-import TA_A_ME_61.RumahSehat.security.xml.Attributes;
 import TA_A_ME_61.RumahSehat.security.xml.ServiceResponse;
 import TA_A_ME_61.RumahSehat.service.*;
 import TA_A_ME_61.RumahSehat.setting.Setting;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.stereotype.Controller;
@@ -24,7 +20,6 @@ import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.security.Principal;
 
 @Controller
@@ -44,7 +39,7 @@ public class BaseController {
     private WebClient webClient = WebClient.builder().build();
 
     @GetMapping("/")
-    private String Home(Model model){
+    public String Home(Model model){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
         DokterModel dokter = dokterService.getDokterByUsername(username);
@@ -60,7 +55,7 @@ public class BaseController {
         return "home";
     }
 
-    @RequestMapping("/login")
+    @GetMapping("/login")
     public String login() {
         return "login";
     }
@@ -70,15 +65,16 @@ public class BaseController {
             @RequestParam(value = "ticket", required = false) String ticket,
             HttpServletRequest request
     ){
-        ServiceResponse serviceResponse = this.webClient.get().uri(
+        var serviceResponse = this.webClient.get().uri(
                 String.format(
                         Setting.SERVER_VALIDATE_TICKET,
                         ticket,
                         Setting.CLIENT_LOGIN
                 )
         ).retrieve().bodyToMono(ServiceResponse.class).block();
+        assert serviceResponse != null;
 
-        Attributes attributes = serviceResponse.getAuthenticationSuccess().getAttributes();
+        var attributes = serviceResponse.getAuthenticationSuccess().getAttributes();
         String username = serviceResponse.getAuthenticationSuccess().getUser();
 
         AdminModel admin = adminService.getAdminByUsername(username);
@@ -96,10 +92,10 @@ public class BaseController {
 
         Authentication authentication = new UsernamePasswordAuthenticationToken(username, "belajarbelajar");
 
-        SecurityContext securityContext = SecurityContextHolder.getContext();
+        var securityContext = SecurityContextHolder.getContext();
         securityContext.setAuthentication(authentication);
 
-        HttpSession httpSession = request.getSession(true);
+        var httpSession = request.getSession(true);
         httpSession.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, securityContext);
 
         return new ModelAndView("redirect:/");
@@ -108,7 +104,7 @@ public class BaseController {
     @GetMapping(value = "/logout-sso")
     public ModelAndView logoutSSO(Principal principal){
         AdminModel admin = adminService.getAdminByUsername(principal.getName());
-        if (admin.getIsSso() == false) {
+        if (!admin.getIsSso()) {
             return new ModelAndView("redirect:/logout");
         }
 
@@ -119,5 +115,4 @@ public class BaseController {
     public ModelAndView loginSSO(){
         return new ModelAndView("redirect:"+Setting.SERVER_LOGIN + Setting.CLIENT_LOGIN);
     }
-
 }

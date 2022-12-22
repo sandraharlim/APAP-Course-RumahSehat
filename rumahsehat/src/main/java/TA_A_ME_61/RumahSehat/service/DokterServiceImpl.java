@@ -1,6 +1,5 @@
 package TA_A_ME_61.RumahSehat.service;
 
-import TA_A_ME_61.RumahSehat.model.AppointmentModel;
 import TA_A_ME_61.RumahSehat.model.DokterModel;
 import TA_A_ME_61.RumahSehat.repository.AppointmentDb;
 import TA_A_ME_61.RumahSehat.repository.DokterDb;
@@ -71,7 +70,6 @@ public class DokterServiceImpl implements DokterService{
     @Override
     public List<DokterModel> getListDokterBarchart(String id1, String id2, String id3, String id4, String id5,
             String id6, String id7, String id8) {
-        // TODO Auto-generated method stub
         List<DokterModel> listDokter = new ArrayList<>();
         listDokter = addDokterToList(listDokter, id1);
         listDokter = addDokterToList(listDokter, id2);
@@ -96,7 +94,9 @@ public class DokterServiceImpl implements DokterService{
     public HashMap<String,String> getDokterName(String username){
         Optional<DokterModel> doctor = Optional.ofNullable(dokterDb.findByUsername(username));
         HashMap<String,String> map = new HashMap<>();
-        map.put("name",doctor.get().getNama());
+        if(doctor.isPresent()){
+            map.put("name",doctor.get().getNama());
+        }
         return map;
     }
 

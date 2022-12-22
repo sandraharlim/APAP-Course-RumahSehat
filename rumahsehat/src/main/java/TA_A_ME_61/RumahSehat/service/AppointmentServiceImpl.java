@@ -71,7 +71,6 @@ public class AppointmentServiceImpl implements AppointmentService{
 
     @Override
     public Map<String, Integer> getTotalApptDokters(List<DokterModel> listDokter) {
-        // TODO Auto-generated method stub
         Map<String, Integer> totalApptDokter = new LinkedHashMap<>();
         
         for (DokterModel dokter: listDokter) {

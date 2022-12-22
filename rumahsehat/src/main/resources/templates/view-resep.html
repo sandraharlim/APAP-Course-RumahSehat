@@ -17,8 +17,8 @@
             <div class="justify-content-center">
                 <h2>Rician Resep</h2>
                 <br>
-                <p th:text="'ID Resep                : ' + ${resep.id}"></p>
-                <p th:text="'Tanggal dan Waktu Resep : ' + ${#temporals.format(resep.createdAt, 'dd MMMM yyyy HH:mm')}"></p>
+                <p th:text="'ID Resep                : ' + ${resepIn.id}"></p>
+                <p th:text="'Tanggal dan Waktu Resep : ' + ${#temporals.format(resepIn.createdAt, 'dd MMMM yyyy HH:mm')}"></p>
                 <p th:text="'Nama Dokter             : ' + ${namaDokter}"></p>
                 <p th:text="'Nama Pasien             : ' + ${namaPasien}"></p>
                 <p th:text="'Status Resep            : ' + ${status}"></p>
@@ -47,7 +47,7 @@
 <!--                cek dulu dia apoteker or bukan-->
                 <div th:if="${#strings.equals(role, 'Apoteker')}">
                     <div th:if="${#strings.equals(status, 'Belum Selesai')}">
-                        <form th:action="@{/resep/confirmation}" th:object="${resep}" method="POST">
+                        <form th:action="@{/resep/confirmation}" th:object="${resepIn}" method="POST">
                             <input type="hidden" th:field="*{id}">
                             <input type="submit" value="Konfirmasi Resep" class="btn btn-outline-success">
                         </form>

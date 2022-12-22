@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -35,11 +34,11 @@ public class ChartController {
 
 
     @GetMapping("/line/default")
-    private String lineChartDefault(Model model){
+    public String lineChartDefault(Model model){
 
-        LocalDateTime date = LocalDateTime.now();
-        LocalDateTime firstDate = LocalDateTime.of(date.getYear(), 1, 1, 0, 0);
-        LocalDateTime lastDate = LocalDateTime.of(date.getYear(), 12, 1, 0, 0).plusMonths(1).minusMinutes(1);
+        var date = LocalDateTime.now();
+        var firstDate = LocalDateTime.of(date.getYear(), 1, 1, 0, 0);
+        var lastDate = LocalDateTime.of(date.getYear(), 12, 1, 0, 0).plusMonths(1).minusMinutes(1);
 
         List<AppointmentModel> listAppointment = appointmentService.getAllAptAnnual(firstDate, lastDate);
 
@@ -69,41 +68,22 @@ public class ChartController {
         List<DokterModel> listDokter = chartService.getListDokterLineChart(id1, id2, id3, id4, id5);
         List<TagihanModel> listTagihan = tagihanService.getListTagihan();
 
-        // Map dokter, pendapatan tiap bulan
-        Map<String, List<Integer>> totalIncomeAllDokter = new LinkedHashMap<>();
-        for (DokterModel dokter : listDokter) {
-            List<Integer> incomePerMonthPerDokter = Arrays.asList(0,0,0,0,0,0,0,0,0,0,0,0);
-            for (int i = 0; i < 12; i++) {
-                int incomePerMonth = 0;
-                for (TagihanModel tagihan : listTagihan){
-                    if (tagihan.getIsPaid() &&
-                            tagihan.getAppointment().getDokter().uuid.equals(dokter.uuid) &&
-                            tagihan.getTanggalTerbuat().getYear() == tahun)
-                    {
-                        if (tagihan.getTanggalTerbuat().getMonthValue() == (i+1) ) {
-                            incomePerMonth += tagihan.getJumlahTagihan().intValue();
-                        }
-                    }
-                }
-                incomePerMonthPerDokter.set(i, incomePerMonth);
-            }
-            totalIncomeAllDokter.put(dokter.getNama(), incomePerMonthPerDokter);
-        }
-        List<String> lstDokter = new ArrayList<String>(totalIncomeAllDokter.keySet());
-        List<List<Integer>> lstIncome = new ArrayList<List<Integer>>(totalIncomeAllDokter.values());
+        Map<String, List<Integer>> totalIncomeAllDokter = chartService.getIncomeAllDokter(listDokter, listTagihan, tahun);
+        List<String> lstDokter = new ArrayList<>(totalIncomeAllDokter.keySet());
+        List<List<Integer>> lstIncome = new ArrayList<>(totalIncomeAllDokter.values());
 
         if (lstIncome.size() < 5) {
             List<Integer> fillZero = Arrays.asList(0,0,0,0,0,0,0,0,0,0,0,0);
             int size = lstIncome.size();
-            for (int i = 0; i < 5 - size; i++) {
+            for (var i = 0; i < 5 - size; i++) {
                 lstIncome.add(fillZero);
             }
         }
 
         if (lstDokter.size() < 5) {
-            String fillEmpty = "Not Selected";
+            var fillEmpty = "Not Selected";
             int size = lstDokter.size();
-            for (int i = 0; i < 5 - size; i++) {
+            for (var i = 0; i < 5 - size; i++) {
                 lstDokter.add(fillEmpty);
             }
         }
@@ -141,37 +121,36 @@ public class ChartController {
         Map<String, List<Integer>> totalIncomeAllDokter = new LinkedHashMap<>();
         for (DokterModel dokter : listDokter) {
             List<Integer> incomePerDayPerDokter = Arrays.asList(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
-            for (int i = 0; i < 30; i++) {
-                int incomePerDay = 0;
+            for (var i = 0; i < 30; i++) {
+                var incomePerDay = 0;
                 for (TagihanModel tagihan : listTagihan){
-                    if (tagihanService.getTagihanById(tagihan.getId()).getAppointment().getDokter().getUsername().equals(dokterService.getDokterByUuid(dokter.getUuid()).getUsername())){
-
-                        if (tagihan.getTanggalTerbuat().getYear() == tahun &&
-                                tagihan.getTanggalTerbuat().getMonthValue() == bulan &&
-                                tagihan.getTanggalTerbuat().getDayOfMonth() == (i+1)){
-                            incomePerDay += tagihan.getAppointment().getDokter().getTarif();
-                        }
+                    if (tagihanService.getTagihanById(tagihan.getId()).getAppointment().getDokter().getUsername().equals(dokterService.getDokterByUuid(dokter.getUuid()).getUsername()) &&
+                        tagihan.getIsPaid() &&
+                        tagihan.getTanggalTerbuat().getYear() == tahun &&
+                        tagihan.getTanggalTerbuat().getMonthValue() == bulan &&
+                        tagihan.getTanggalTerbuat().getDayOfMonth() == (i+1)){
+                        incomePerDay += tagihan.getAppointment().getDokter().getTarif();
                     }
                 }
                 incomePerDayPerDokter.set(i, incomePerDay);
             }
             totalIncomeAllDokter.put(dokter.getNama(), incomePerDayPerDokter);
         }
-        List<String> lstDokter = new ArrayList<String>(totalIncomeAllDokter.keySet());
-        List<List<Integer>> lstIncome = new ArrayList<List<Integer>>(totalIncomeAllDokter.values());
+        List<String> lstDokter = new ArrayList<>(totalIncomeAllDokter.keySet());
+        List<List<Integer>> lstIncome = new ArrayList<>(totalIncomeAllDokter.values());
 
         if (lstIncome.size() < 5) {
             List<Integer> fillZero = Arrays.asList(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
             int size = lstIncome.size();
-            for (int i = 0; i < 5 - size; i++) {
+            for (var i = 0; i < 5 - size; i++) {
                 lstIncome.add(fillZero);
             }
         }
 
         if (lstDokter.size() < 5) {
-            String fillEmpty = "Not Selected";
+            var fillEmpty = "Not Selected";
             int size = lstDokter.size();
-            for (int i = 0; i < 5 - size; i++) {
+            for (var i = 0; i < 5 - size; i++) {
                 lstDokter.add(fillEmpty);
             }
         }
