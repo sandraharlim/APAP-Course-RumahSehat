@@ -25,6 +25,7 @@
                             <th>No</th>
                             <th>Id Resep</th>
                             <th>Date and Time Created</th>
+                            <th>Status</th>
                             <th class="text-center">Action</th>
                         </tr>
                         </thead>
@@ -34,6 +35,9 @@
                             <td th:text="${iterationStatus.count}"></td>
                             <td th:text="${resep.id}"></td>
                             <td class="col-md-3" th:text="${#temporals.format(resep.createdAt, 'dd MMMM yyyy || HH:mm')}"></td>
+                            <td th:text="${resep.id}"></td>
+                            <td th:if="${resep.isDone}" th:text="'Sudah Dikonfirmasi'" style="color: #28a745"></td>
+                            <td th:unless="${resep.isDone}" th:text="'Belum Dikonfirmasi'" style="color: #a71d2a"></td>
                             <td class="text-center">
                                 <a class="btn btn-outline-info" th:href="@{/resep/detail/} + ${resep.id}" >See Details</a>
                             </td>

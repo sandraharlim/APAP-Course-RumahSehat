@@ -3,7 +3,6 @@ package TA_A_ME_61.RumahSehat.controller;
 import TA_A_ME_61.RumahSehat.model.*;
 import TA_A_ME_61.RumahSehat.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,6 +32,10 @@ public class ResepController {
     @Autowired
     private TagihanService tagihanService;
 
+    private static final String formResep = "form-create-resep";
+    private static final String strResep = "resep";
+    private static final String strListObat = "listObat";
+
     @GetMapping("/resep/create/{idAppointment}")
     public String createResepForm(Model model, @PathVariable Long idAppointment) {
         var resep = new ResepModel();
@@ -48,9 +51,9 @@ public class ResepController {
         resep.setListJumlah(listJumlahNew);
         resep.getListJumlah().add(jumlah);
 
-        model.addAttribute("resep", resep);
-        model.addAttribute("listObat", listObat);
-        return "form-create-resep";
+        model.addAttribute(strResep, resep);
+        model.addAttribute(strListObat, listObat);
+        return formResep;
     }
 
     @PostMapping("/resep/create")
@@ -90,9 +93,9 @@ public class ResepController {
         List<ObatModel> listObat = obatService.getDaftarObat();
 
 
-        model.addAttribute("resep", resep);
-        model.addAttribute("listObat", listObat);
-        return "form-create-resep";
+        model.addAttribute(strResep, resep);
+        model.addAttribute(strListObat, listObat);
+        return formResep;
     }
 
     @PostMapping(value = "/resep/create", params = {"deleteRowObat"})
@@ -101,15 +104,21 @@ public class ResepController {
             @RequestParam("deleteRowObat") Integer row,
             Model model
     ) {
-        final var rowId = row;
-        resep.getListJumlah().remove(rowId);
+        List<JumlahModel> listJumlahResep = resep.getListJumlah();
+        List<JumlahModel> listJumlahResepNew = new ArrayList<>();
+
+        for (var i = 0; i < listJumlahResep.size(); i++){
+            if (i != row){
+                listJumlahResepNew.add(listJumlahResep.get(i));
+            }
+        }
+        resep.setListJumlah(listJumlahResepNew);
 
         List<ObatModel> listObat = obatService.getDaftarObat();
 
-
-        model.addAttribute("resep", resep);
-        model.addAttribute("listObat", listObat);
-        return "form-create-resep";
+        model.addAttribute(strResep, resep);
+        model.addAttribute(strListObat, listObat);
+        return formResep;
     }
 
     @GetMapping("/resep")
