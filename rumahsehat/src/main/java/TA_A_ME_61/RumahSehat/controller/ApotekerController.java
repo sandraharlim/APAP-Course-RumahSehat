@@ -1,6 +1,7 @@
 package TA_A_ME_61.RumahSehat.controller;
 
 import TA_A_ME_61.RumahSehat.model.ApotekerModel;
+import TA_A_ME_61.RumahSehat.restmodel.ApotekerRestModel;
 import TA_A_ME_61.RumahSehat.service.ApotekerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -39,11 +40,33 @@ public class ApotekerController {
         return "form-add-apoteker";
     }
 
+//    @PostMapping(value = "/apoteker/add")
+//    public String addApotekerSubmitPage(@ModelAttribute ApotekerModel apoteker, BindingResult result,
+//                                      RedirectAttributes redirectAttrs) {
+//        apoteker.setRole("Apoteker");
+//        apotekerService.addApoteker(apoteker);
+//        if (result.hasErrors()) {
+//            redirectAttrs.addFlashAttribute("error", "The error occurred.");
+//            return "redirect:/apoteker/add";
+//        }
+//
+//        redirectAttrs.addFlashAttribute("success",
+//                String.format("Apoteker dengan nama " + apoteker.getNama() + "  berhasil ditambahkan "));
+//
+//        return "redirect:/apoteker/";
+//    }
+
     @PostMapping(value = "/apoteker/add")
-    public String addApotekerSubmitPage(@ModelAttribute ApotekerModel apoteker, BindingResult result,
-                                      RedirectAttributes redirectAttrs) {
-        apoteker.setRole("Apoteker");
-        apotekerService.addApoteker(apoteker);
+    public String addApotekerSubmitPage(@ModelAttribute ApotekerRestModel apoteker, BindingResult result,
+                                        RedirectAttributes redirectAttrs) {
+        var apotekerModel = new ApotekerModel();
+        apotekerModel.setNama(apoteker.getNama());
+        apotekerModel.setRole("Apoteker");
+        apotekerModel.setUsername(apoteker.getUsername());
+        apotekerModel.setEmail(apoteker.getEmail());
+        apotekerModel.setPassword(apoteker.getPassword());
+        apotekerService.addApoteker(apotekerModel);
+
         if (result.hasErrors()) {
             redirectAttrs.addFlashAttribute("error", "The error occurred.");
             return "redirect:/apoteker/add";
