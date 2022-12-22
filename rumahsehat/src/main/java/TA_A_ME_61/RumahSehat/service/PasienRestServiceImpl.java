@@ -34,7 +34,7 @@ public class PasienRestServiceImpl implements PasienRestService{
     @Override
     public PasienDTO getPasienDto(PasienModel pasien) {
 
-        PasienDTO pasienDTO = new PasienDTO();
+        var pasienDTO = new PasienDTO();
         pasienDTO.setNama(pasien.getNama());
         pasienDTO.setUsername(pasien.getUsername());
         pasienDTO.setEmail(pasien.getEmail());
