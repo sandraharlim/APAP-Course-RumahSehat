@@ -1,6 +1,7 @@
 package TA_A_ME_61.RumahSehat.controller;
 
 import TA_A_ME_61.RumahSehat.model.DokterModel;
+import TA_A_ME_61.RumahSehat.restmodel.DokterRestModel;
 import TA_A_ME_61.RumahSehat.service.DokterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -38,11 +39,33 @@ public class DokterController {
         return "form-add-dokter";
     }
 
+//    @PostMapping(value = "/dokter/add")
+//    public String addDokterSubmitPage(@ModelAttribute DokterModel dokter, BindingResult result,
+//                                       RedirectAttributes redirectAttrs) {
+//        dokter.setRole("Dokter");
+//        dokterService.addDokter(dokter);
+//        if (result.hasErrors()) {
+//            redirectAttrs.addFlashAttribute("error", "The error occurred.");
+//            return "redirect:/dokter/add";
+//        }
+//
+//        redirectAttrs.addFlashAttribute("success",
+//                String.format("Dokter dengan nama " + dokter.getNama() + "  berhasil ditambahkan "));
+//
+//        return "redirect:/dokter/";
+//    }
+
     @PostMapping(value = "/dokter/add")
-    public String addDokterSubmitPage(@ModelAttribute DokterModel dokter, BindingResult result,
-                                       RedirectAttributes redirectAttrs) {
-        dokter.setRole("Dokter");
-        dokterService.addDokter(dokter);
+    public String addDokterSubmitPage(@ModelAttribute DokterRestModel dokter, BindingResult result,
+                                      RedirectAttributes redirectAttrs) {
+        var dokterModel = new DokterModel();
+        dokterModel.setNama(dokter.getNama());
+        dokterModel.setRole("Dokter");
+        dokterModel.setUsername(dokter.getUsername());
+        dokterModel.setEmail(dokter.getEmail());
+        dokterModel.setPassword(dokter.getPassword());
+        dokterModel.setTarif(dokter.getTarif());
+        dokterService.addDokter(dokterModel);
         if (result.hasErrors()) {
             redirectAttrs.addFlashAttribute("error", "The error occurred.");
             return "redirect:/dokter/add";
@@ -62,10 +85,33 @@ public class DokterController {
         return "form-update-dokter";
     }
 
+//    @PostMapping("/dokter/update/{uuid}")
+//    public String updateDokterSubmitPage(@ModelAttribute DokterModel dokter, BindingResult result,
+//                                         RedirectAttributes redirectAttrs){
+//        dokterService.updateDokter(dokter);
+//        if (result.hasErrors()) {
+//            redirectAttrs.addFlashAttribute("error", "The error occurred.");
+//            return "redirect:/dokter/update";
+//        }
+//
+//        redirectAttrs.addFlashAttribute("success",
+//                String.format("Dokter dengan nama " + dokter.getNama() + "  berhasil diubah "));
+//
+//        return "redirect:/dokter/";
+//    }
+
     @PostMapping("/dokter/update/{uuid}")
-    public String updateDokterSubmitPage(@ModelAttribute DokterModel dokter, BindingResult result,
+    public String updateDokterSubmitPage(@ModelAttribute DokterRestModel dokter, BindingResult result,
                                          RedirectAttributes redirectAttrs){
-        dokterService.updateDokter(dokter);
+        var dokterModel = new DokterModel();
+        dokterModel.setUuid(dokter.getUuid());
+        dokterModel.setNama(dokter.getNama());
+        dokterModel.setRole("Dokter");
+        dokterModel.setUsername(dokter.getUsername());
+        dokterModel.setEmail(dokter.getEmail());
+        dokterModel.setPassword(dokter.getPassword());
+        dokterModel.setTarif(dokter.getTarif());
+        dokterService.updateDokter(dokterModel);
         if (result.hasErrors()) {
             redirectAttrs.addFlashAttribute("error", "The error occurred.");
             return "redirect:/dokter/update";
