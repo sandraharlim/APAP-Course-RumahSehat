@@ -94,7 +94,9 @@ public class DokterServiceImpl implements DokterService{
     public HashMap<String,String> getDokterName(String username){
         Optional<DokterModel> doctor = Optional.ofNullable(dokterDb.findByUsername(username));
         HashMap<String,String> map = new HashMap<>();
-        map.put("name",doctor.get().getNama());
+        if(doctor.isPresent()){
+            map.put("name",doctor.get().getNama());
+        }
         return map;
     }
 

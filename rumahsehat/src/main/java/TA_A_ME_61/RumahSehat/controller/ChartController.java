@@ -141,21 +141,19 @@ public class ChartController {
             for (int i = 0; i < 30; i++) {
                 int incomePerDay = 0;
                 for (TagihanModel tagihan : listTagihan){
-                    if (tagihanService.getTagihanById(tagihan.getId()).getAppointment().getDokter().getUsername().equals(dokterService.getDokterByUuid(dokter.getUuid()).getUsername())){
-
-                        if (tagihan.getTanggalTerbuat().getYear() == tahun &&
-                                tagihan.getTanggalTerbuat().getMonthValue() == bulan &&
-                                tagihan.getTanggalTerbuat().getDayOfMonth() == (i+1)){
-                            incomePerDay += tagihan.getAppointment().getDokter().getTarif();
-                        }
+                    if (tagihanService.getTagihanById(tagihan.getId()).getAppointment().getDokter().getUsername().equals(dokterService.getDokterByUuid(dokter.getUuid()).getUsername()) &&
+                        tagihan.getTanggalTerbuat().getYear() == tahun &&
+                        tagihan.getTanggalTerbuat().getMonthValue() == bulan &&
+                        tagihan.getTanggalTerbuat().getDayOfMonth() == (i+1)){
+                        incomePerDay += tagihan.getAppointment().getDokter().getTarif();
                     }
                 }
                 incomePerDayPerDokter.set(i, incomePerDay);
             }
             totalIncomeAllDokter.put(dokter.getNama(), incomePerDayPerDokter);
         }
-        List<String> lstDokter = new ArrayList<String>(totalIncomeAllDokter.keySet());
-        List<List<Integer>> lstIncome = new ArrayList<List<Integer>>(totalIncomeAllDokter.values());
+        List<String> lstDokter = new ArrayList<>(totalIncomeAllDokter.keySet());
+        List<List<Integer>> lstIncome = new ArrayList<>(totalIncomeAllDokter.values());
 
         if (lstIncome.size() < 5) {
             List<Integer> fillZero = Arrays.asList(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);

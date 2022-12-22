@@ -14,9 +14,9 @@
   <div class="card m-4 p-4">
     <div class="card-body">
       <div class="justify-content-center">
-        <h2 th:text="'Resep untuk appointment code ' + ${resep.appointment.kode} + ' berhasil dikonfirmasi.'"></h2>
+        <h2 th:text="'Resep untuk appointment code ' + ${resepNow.appointment.kode} + ' berhasil dikonfirmasi.'"></h2>
         <br>
-        <a class="btn btn-primary" th:href="@{/resep/detail/} + ${resep.id}">Lihat Resep</a>
+        <a class="btn btn-primary" th:href="@{/resep/detail/} + ${resepNow.id}">Lihat Resep</a>
         <a class="btn btn-primary" href="/">     Home      </a>
       </div>
     </div>
