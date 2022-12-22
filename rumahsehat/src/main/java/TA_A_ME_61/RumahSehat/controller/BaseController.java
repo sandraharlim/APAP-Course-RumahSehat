@@ -55,7 +55,7 @@ public class BaseController {
         return "home";
     }
 
-    @RequestMapping("/login")
+    @GetMapping("/login")
     public String login() {
         return "login";
     }
