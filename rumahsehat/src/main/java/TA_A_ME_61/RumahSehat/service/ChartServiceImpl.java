@@ -21,8 +21,9 @@ public class ChartServiceImpl implements ChartService {
         var hasil = new int[12];
 
         for (AppointmentModel apt : listAppointment){
-
-            hasil[apt.getWaktuAwal().getMonthValue() - 1] += apt.getDokter().getTarif().intValue();
+            if(apt.getTagihan() != null && apt.getTagihan().getIsPaid()){
+                hasil[apt.getWaktuAwal().getMonthValue() - 1] += apt.getDokter().getTarif().intValue();
+            }
         }
         return hasil;
     }
