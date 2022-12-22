@@ -32,6 +32,7 @@ public class ChartController {
     @Autowired
     TagihanService tagihanService;
 
+    private static final String strTahun = "tahun";
 
     @GetMapping("/line/default")
     public String lineChartDefault(Model model){
@@ -43,7 +44,7 @@ public class ChartController {
         List<AppointmentModel> listAppointment = appointmentService.getAllAptAnnual(firstDate, lastDate);
 
         model.addAttribute("pendapatan", chartService.getIncome(listAppointment));
-        model.addAttribute("tahun", date.getYear());
+        model.addAttribute(strTahun, date.getYear());
 
         return "linechart-default";
     }
@@ -90,7 +91,7 @@ public class ChartController {
 
         model.addAttribute("lstDokter", lstDokter);
         model.addAttribute("lstIncome", lstIncome);
-        model.addAttribute("tahun", tahun);
+        model.addAttribute(strTahun, tahun);
 
         return "linechart-yearly";
 
@@ -157,7 +158,7 @@ public class ChartController {
 
         model.addAttribute("lstDokter", lstDokter);
         model.addAttribute("lstIncome", lstIncome);
-        model.addAttribute("tahun", tahun);
+        model.addAttribute(strTahun, tahun);
         model.addAttribute("bulan", bulan);
 
         return "line-chart-monthly";
