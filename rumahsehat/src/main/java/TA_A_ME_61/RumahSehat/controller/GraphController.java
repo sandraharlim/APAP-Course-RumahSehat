@@ -70,7 +70,7 @@ public class GraphController {
             long pendapatan = 0;
             for (TagihanModel tagihan : listTagihan){
                 if (tagihan.getIsPaid() && tagihan.getAppointment().getDokter().uuid.equals(dokter.uuid)){
-                    pendapatan += tagihan.getJumlahTagihan();
+                    pendapatan += dokter.getTarif();
                 }
             }
             totalPendapatan.put(dokter.getNama(), pendapatan);
