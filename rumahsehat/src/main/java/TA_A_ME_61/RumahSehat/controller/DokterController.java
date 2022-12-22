@@ -39,22 +39,6 @@ public class DokterController {
         return "form-add-dokter";
     }
 
-//    @PostMapping(value = "/dokter/add")
-//    public String addDokterSubmitPage(@ModelAttribute DokterModel dokter, BindingResult result,
-//                                       RedirectAttributes redirectAttrs) {
-//        dokter.setRole("Dokter");
-//        dokterService.addDokter(dokter);
-//        if (result.hasErrors()) {
-//            redirectAttrs.addFlashAttribute("error", "The error occurred.");
-//            return "redirect:/dokter/add";
-//        }
-//
-//        redirectAttrs.addFlashAttribute("success",
-//                String.format("Dokter dengan nama " + dokter.getNama() + "  berhasil ditambahkan "));
-//
-//        return "redirect:/dokter/";
-//    }
-
     @PostMapping(value = "/dokter/add")
     public String addDokterSubmitPage(@ModelAttribute DokterRestModel dokter, BindingResult result,
                                       RedirectAttributes redirectAttrs) {
@@ -84,21 +68,6 @@ public class DokterController {
 
         return "form-update-dokter";
     }
-
-//    @PostMapping("/dokter/update/{uuid}")
-//    public String updateDokterSubmitPage(@ModelAttribute DokterModel dokter, BindingResult result,
-//                                         RedirectAttributes redirectAttrs){
-//        dokterService.updateDokter(dokter);
-//        if (result.hasErrors()) {
-//            redirectAttrs.addFlashAttribute("error", "The error occurred.");
-//            return "redirect:/dokter/update";
-//        }
-//
-//        redirectAttrs.addFlashAttribute("success",
-//                String.format("Dokter dengan nama " + dokter.getNama() + "  berhasil diubah "));
-//
-//        return "redirect:/dokter/";
-//    }
 
     @PostMapping("/dokter/update/{uuid}")
     public String updateDokterSubmitPage(@ModelAttribute DokterRestModel dokter, BindingResult result,

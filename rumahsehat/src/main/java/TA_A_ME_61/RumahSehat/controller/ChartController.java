@@ -125,6 +125,7 @@ public class ChartController {
                 var incomePerDay = 0;
                 for (TagihanModel tagihan : listTagihan){
                     if (tagihanService.getTagihanById(tagihan.getId()).getAppointment().getDokter().getUsername().equals(dokterService.getDokterByUuid(dokter.getUuid()).getUsername()) &&
+                        tagihan.getIsPaid() &&
                         tagihan.getTanggalTerbuat().getYear() == tahun &&
                         tagihan.getTanggalTerbuat().getMonthValue() == bulan &&
                         tagihan.getTanggalTerbuat().getDayOfMonth() == (i+1)){

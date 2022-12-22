@@ -58,7 +58,7 @@ public class ChartServiceImpl implements ChartService {
                             tagihan.getTanggalTerbuat().getYear() == tahun &&
                             tagihan.getTanggalTerbuat().getMonthValue() == (i+1))
                     {
-                        incomePerMonth += tagihan.getJumlahTagihan().intValue();
+                        incomePerMonth += dokter.getTarif();
                     }
                 }
                 incomePerMonthPerDokter.set(i, incomePerMonth);

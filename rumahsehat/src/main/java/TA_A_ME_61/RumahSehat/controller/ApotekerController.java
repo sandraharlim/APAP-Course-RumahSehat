@@ -40,22 +40,6 @@ public class ApotekerController {
         return "form-add-apoteker";
     }
 
-//    @PostMapping(value = "/apoteker/add")
-//    public String addApotekerSubmitPage(@ModelAttribute ApotekerModel apoteker, BindingResult result,
-//                                      RedirectAttributes redirectAttrs) {
-//        apoteker.setRole("Apoteker");
-//        apotekerService.addApoteker(apoteker);
-//        if (result.hasErrors()) {
-//            redirectAttrs.addFlashAttribute("error", "The error occurred.");
-//            return "redirect:/apoteker/add";
-//        }
-//
-//        redirectAttrs.addFlashAttribute("success",
-//                String.format("Apoteker dengan nama " + apoteker.getNama() + "  berhasil ditambahkan "));
-//
-//        return "redirect:/apoteker/";
-//    }
-
     @PostMapping(value = "/apoteker/add")
     public String addApotekerSubmitPage(@ModelAttribute ApotekerRestModel apoteker, BindingResult result,
                                         RedirectAttributes redirectAttrs) {
