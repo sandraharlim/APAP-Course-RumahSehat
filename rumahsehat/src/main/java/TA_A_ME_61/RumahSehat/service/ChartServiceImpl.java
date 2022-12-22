@@ -19,7 +19,7 @@ public class ChartServiceImpl implements ChartService {
     DokterDb dokterDb;
     @Override
     public int[] getIncome(List<AppointmentModel> listAppointment){
-        int[] hasil = new int[12];
+        var hasil = new int[12];
 
         for (AppointmentModel apt : listAppointment){
 

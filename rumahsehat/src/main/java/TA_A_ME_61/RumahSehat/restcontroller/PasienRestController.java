@@ -1,6 +1,7 @@
 package TA_A_ME_61.RumahSehat.restcontroller;
 
 import TA_A_ME_61.RumahSehat.model.PasienModel;
+import TA_A_ME_61.RumahSehat.restmodel.PasienDTO;
 import TA_A_ME_61.RumahSehat.service.PasienRestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,17 +23,18 @@ public class PasienRestController {
     private PasienRestService pasienRestService;
 
     @GetMapping("/profile")
-    private PasienModel getPasien() {
+    public PasienDTO getPasien() {
         log.info("User mencoba melihat halaman profilenya");
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        var auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
         PasienModel pasien = pasienRestService.getPasienByUsername(username);
-        return pasien;
+
+        return pasienRestService.getPasienDto(pasien);
     }
 
     @PutMapping("/profile/update-saldo")
-    private void topUpSaldo(@RequestBody Map<String, Long> saldo) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    public void topUpSaldo(@RequestBody Map<String, Long> saldo) {
+        var auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
         try {
             log.info("User berhasil menambah saldo miliknya di RumahSehat");
