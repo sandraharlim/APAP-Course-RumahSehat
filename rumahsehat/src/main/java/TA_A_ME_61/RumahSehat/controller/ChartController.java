@@ -68,24 +68,7 @@ public class ChartController {
         List<DokterModel> listDokter = chartService.getListDokterLineChart(id1, id2, id3, id4, id5);
         List<TagihanModel> listTagihan = tagihanService.getListTagihan();
 
-        Map<String, List<Integer>> totalIncomeAllDokter = new LinkedHashMap<>();
-        for (DokterModel dokter : listDokter) {
-            List<Integer> incomePerMonthPerDokter = Arrays.asList(0,0,0,0,0,0,0,0,0,0,0,0);
-            for (var i = 0; i < 12; i++) {
-                var incomePerMonth = 0;
-                for (TagihanModel tagihan : listTagihan){
-                    if (tagihan.getIsPaid() &&
-                        tagihan.getAppointment().getDokter().uuid.equals(dokter.uuid) &&
-                        tagihan.getTanggalTerbuat().getYear() == tahun &&
-                        tagihan.getTanggalTerbuat().getMonthValue() == (i+1))
-                    {
-                        incomePerMonth += tagihan.getJumlahTagihan().intValue();
-                    }
-                }
-                incomePerMonthPerDokter.set(i, incomePerMonth);
-            }
-            totalIncomeAllDokter.put(dokter.getNama(), incomePerMonthPerDokter);
-        }
+        Map<String, List<Integer>> totalIncomeAllDokter = chartService.getIncomeAllDokter(listDokter, listTagihan, tahun);
         List<String> lstDokter = new ArrayList<>(totalIncomeAllDokter.keySet());
         List<List<Integer>> lstIncome = new ArrayList<>(totalIncomeAllDokter.values());
 
