@@ -1,9 +1,7 @@
 package TA_A_ME_61.RumahSehat.controller;
 
 import TA_A_ME_61.RumahSehat.model.ObatModel;
-import TA_A_ME_61.RumahSehat.service.JumlahService;
 import TA_A_ME_61.RumahSehat.service.ObatService;
-import TA_A_ME_61.RumahSehat.service.ResepService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
