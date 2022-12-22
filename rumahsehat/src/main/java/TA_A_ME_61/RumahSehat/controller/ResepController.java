@@ -35,12 +35,12 @@ public class ResepController {
 
     @GetMapping("/resep/create/{idAppointment}")
     public String createResepForm(Model model, @PathVariable Long idAppointment) {
-        ResepModel resep = new ResepModel();
+        var resep = new ResepModel();
         resep.setAppointment(appointmentService.getAppointmentById(idAppointment));
         resep.setIsDone(false);
 
-        JumlahModel jumlah = new JumlahModel();
-        ObatModel obat = new ObatModel();
+        var jumlah = new JumlahModel();
+        var obat = new ObatModel();
         jumlah.setObat(obat);
         List<ObatModel> listObat = obatService.getDaftarObat();
 
@@ -58,11 +58,9 @@ public class ResepController {
 
         for (JumlahModel jumlahx : resep.getListJumlah()) {
             jumlahx.setResep(resep);
-            ObatModel obat = jumlahx.getObat();
-            ObatModel obatDb = obatService.getObatByIdObat(obat.getIdObat());
         }
 
-        LocalDateTime now = LocalDateTime.now();
+        var now = LocalDateTime.now();
         resep.setCreatedAt(now);
         resep.setIsDone(false);
         resep.setAppointment(appointmentService.getAppointmentById(resep.getAppointment().getId()));
@@ -72,21 +70,21 @@ public class ResepController {
             jumlahService.addJumlah(jumlahxx);
         }
 
-        model.addAttribute("resep", resep);
+        model.addAttribute("resepMade", resep);
         return "create-resep";
     }
 
     @PostMapping(value = "/resep/create", params = {"addRowObat"})
-    private String addRowJumlahMultiple(
+    public String addRowJumlahMultiple(
             @ModelAttribute ResepModel resep,
             Model model
     ) {
-        if (resep.getListJumlah() == null || resep.getListJumlah().size() == 0) {
+        if (resep.getListJumlah() == null || resep.getListJumlah().isEmpty()) {
             resep.setListJumlah(new ArrayList<>());
         }
 
-        JumlahModel jumlah = new JumlahModel();
-        ObatModel obat = new ObatModel();
+        var jumlah = new JumlahModel();
+        var obat = new ObatModel();
         jumlah.setObat(obat);
         resep.getListJumlah().add(jumlah);
         List<ObatModel> listObat = obatService.getDaftarObat();
@@ -98,13 +96,13 @@ public class ResepController {
     }
 
     @PostMapping(value = "/resep/create", params = {"deleteRowObat"})
-    private String deleteRowJumlahMultiple(
+    public String deleteRowJumlahMultiple(
             @ModelAttribute ResepModel resep,
             @RequestParam("deleteRowObat") Integer row,
             Model model
     ) {
-        final Integer rowId = Integer.valueOf(row);
-        resep.getListJumlah().remove(rowId.intValue());
+        final var rowId = row;
+        resep.getListJumlah().remove(rowId);
 
         List<ObatModel> listObat = obatService.getDaftarObat();
 
@@ -115,7 +113,7 @@ public class ResepController {
     }
 
     @GetMapping("/resep")
-    private String viewAllResep(Model model) {
+    public String viewAllResep(Model model) {
         List<ResepModel> listResep = resepService.getListResep();
 
         model.addAttribute("listResep", listResep);
@@ -126,19 +124,19 @@ public class ResepController {
     public String viewDetailResep(@PathVariable Long id, Model model) {
         ResepModel resep = resepService.getResepById(id);
 
-        String namaApoteker = "-";
+        var namaApoteker = "-";
         String namaDokter = resep.getAppointment().getDokter().getNama();
         String namaPasien = resep.getAppointment().getPasien().getNama();
 
         List<JumlahModel> listJumlah = resep.getListJumlah();
-        String status = "Belum Selesai";
+        var status = "Belum Selesai";
 
         if(resep.getIsDone()){
             status = "Selesai";
             namaApoteker = resep.getApoteker().getNama();
         }
 
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        var auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
         ApotekerModel apoteker = apotekerService.getApotekerByUsername(username);
 
@@ -146,7 +144,7 @@ public class ResepController {
             model.addAttribute("role", "Apoteker");
         }
 
-        model.addAttribute("resep", resep);
+        model.addAttribute("resepIn", resep);
         model.addAttribute("namaApoteker", namaApoteker);
         model.addAttribute("namaDokter", namaDokter);
         model.addAttribute("namaPasien", namaPasien);
@@ -159,7 +157,7 @@ public class ResepController {
     public String konfirmasiResep(@ModelAttribute ResepModel resep,
                                   Model model) {
         ResepModel resepnow = resepService.getResepById(resep.getId());
-        int bayarTagihan = 0;
+        var bayarTagihan = 0;
 
         for (JumlahModel jumlahx : resepnow.getListJumlah()) {
             jumlahx.setResep(resepnow);
@@ -168,8 +166,6 @@ public class ResepController {
             ObatModel obatDb = obatService.getObatByIdObat(obat.getIdObat());
 
             if (jumlahx.getKuantitas() > obatDb.getStok()) {
-                model.addAttribute("resep", resepnow);
-                bayarTagihan  = 0;
                 return "gabisa-konfirmasi-resep";
             } else {
                 obatDb.setStok(obatDb.getStok() - jumlahx.getKuantitas());
@@ -179,7 +175,7 @@ public class ResepController {
 
         }
 
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        var auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
         ApotekerModel apoteker = apotekerService.getApotekerByUsername(username);
 
@@ -194,23 +190,23 @@ public class ResepController {
         appointmentService.addAppointment(appointment);
 
         //Ngeset tagihannya
-        TagihanModel tagihan = new TagihanModel();
+        var tagihan = new TagihanModel();
         tagihan.setAppointment(resepnow.getAppointment());
         tagihan.setIsPaid(false);
-        LocalDateTime now = LocalDateTime.now();
+        var now = LocalDateTime.now();
         tagihan.setTanggalTerbuat(now);
         bayarTagihan = bayarTagihan + (appointment.getDokter().getTarif()).intValue();
         tagihan.setJumlahTagihan(Long.valueOf(bayarTagihan));
         tagihanService.addTagihan(tagihan);
 
         TagihanModel tagihannow = tagihanService.getTagihanById(tagihan.getId());
-        tagihannow.setKode("BILL-"+String.valueOf(tagihannow.getId()));
+        tagihannow.setKode("BILL-"+ tagihannow.getId());
         tagihanService.addTagihan(tagihannow);
 
         appointment.setTagihan(tagihanService.getTagihanById(tagihannow.getId()));
         appointmentService.addAppointment(appointment);
 
-        model.addAttribute("resep", resepnow);
+        model.addAttribute("resepNow", resepnow);
         return "konfirmasi-resep";
     }
 }
