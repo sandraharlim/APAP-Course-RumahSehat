@@ -52,7 +52,7 @@ public class TagihanRestController {
             if (tagihan == null) {
 
             } else {
-                TagihanRestModel tagihanRest = new TagihanRestModel();
+                var tagihanRest = new TagihanRestModel();
                 tagihanRest.setIsPaid(tagihan.getIsPaid());
                 tagihanRest.setJumlahTagihan(tagihan.getJumlahTagihan());
                 tagihanRest.setKode(tagihan.getKode());

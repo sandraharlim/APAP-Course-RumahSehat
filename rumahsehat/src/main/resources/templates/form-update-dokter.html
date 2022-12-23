@@ -22,7 +22,7 @@
       <div class="justify-content-center">
         <h2 style="text-align: center" >Tambah Dokter Baru</h2>
         <br>
-        <form th:action="@{/dokter/update/} + ${dokter.nama}" th:object="${dokter}" method="POST">
+        <form th:action="@{/dokter/update/} + ${updateDokter.nama}" th:object="${updateDokter}" method="POST">
           <input type = "hidden" th:field="*{uuid}">
 
           Nama : <br>
