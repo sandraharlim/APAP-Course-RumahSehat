@@ -33,7 +33,7 @@ public class ApotekerController {
 
     @GetMapping("/apoteker/add")
     public String addApotekerFormPage(Model model) {
-        ApotekerModel apoteker = new ApotekerModel();
+        var apoteker = new ApotekerModel();
 
         model.addAttribute("apoteker", apoteker);
 
@@ -57,7 +57,7 @@ public class ApotekerController {
         }
 
         redirectAttrs.addFlashAttribute("success",
-                String.format("Apoteker dengan nama " + apoteker.getNama() + "  berhasil ditambahkan "));
+                String.format("Apoteker dengan nama %s berhasil ditambahkan ", apoteker.getNama()));
 
         return "redirect:/apoteker/";
     }

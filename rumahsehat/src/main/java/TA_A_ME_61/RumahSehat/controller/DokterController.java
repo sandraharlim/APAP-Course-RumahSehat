@@ -32,7 +32,7 @@ public class DokterController {
 
     @GetMapping("/dokter/add")
     public String addDokterFormPage(Model model) {
-        DokterModel dokter = new DokterModel();
+        var dokter = new DokterModel();
 
         model.addAttribute("dokter", dokter);
 
@@ -56,7 +56,7 @@ public class DokterController {
         }
 
         redirectAttrs.addFlashAttribute("success",
-                String.format("Dokter dengan nama " + dokter.getNama() + "  berhasil ditambahkan "));
+                String.format("Dokter dengan nama %s berhasil ditambahkan ", dokter.getNama()));
 
         return "redirect:/dokter/";
     }
@@ -64,7 +64,7 @@ public class DokterController {
     @GetMapping("/dokter/update/{uuid}")
     public String updateDokterFormPage(@PathVariable String uuid, Model model){
         DokterModel dokter = dokterService.getDokterByUuid(uuid);
-        model.addAttribute("dokter", dokter);
+        model.addAttribute("updateDokter", dokter);
 
         return "form-update-dokter";
     }
@@ -87,7 +87,7 @@ public class DokterController {
         }
 
         redirectAttrs.addFlashAttribute("success",
-                String.format("Dokter dengan nama " + dokter.getNama() + "  berhasil diubah "));
+                String.format("Dokter dengan nama %s berhasil diubah ", dokter.getNama() ));
 
         return "redirect:/dokter/";
     }
@@ -95,7 +95,7 @@ public class DokterController {
     @GetMapping("/dokter/delete/{uuid}")
     public String deleteDokter(@PathVariable String uuid, Model model){
         DokterModel dokter = dokterService.getDokterByUuid(uuid);
-        model.addAttribute("dokter", dokter);
+        model.addAttribute("deleteDokter", dokter);
         dokterService.deleteDokter(dokter);
         return "delete-dokter";
 
